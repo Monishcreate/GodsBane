@@ -19,4 +19,4 @@ MonoBehaviour:
   runDeccelAmount: 16.666666
   accelInAir: 0.01
   deccelInAir: 0.01
-  doConserveMomentum: 1
+  doConserveMomentum: 0

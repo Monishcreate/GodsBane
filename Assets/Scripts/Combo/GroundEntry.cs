@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class GroundEntry : MeleeBaseState
 {
+    public ComboCharacter cc;
     public override void OnEnter(StateMachine _stateMachine)
     {
         base.OnEnter(_stateMachine);
 
         //Attack
+        cc = GetComponent<ComboCharacter>();
         attackIndex = 1;
-        duration = 0.5f;
+        cc.cooldown = 1f;
+        
+        duration = 0.27f;
+        realduration = 0.42f;
         animator.SetTrigger("Attack" + attackIndex);
         Debug.Log("Player Attack" + attackIndex + "Fired!");
     }
@@ -18,17 +23,25 @@ public class GroundEntry : MeleeBaseState
     public override void OnUpdate()
     {
         base.OnUpdate();
-
+      
         if (fixedtime >= duration)
         {
+            
             if (shouldCombo)
             {
                 stateMachine.SetNextState(new GroundCombo1());
             }
             else
             {
-                stateMachine.SetNextStateToMain();
+                if (fixedtime >= realduration)
+                {
+                    stateMachine.SetNextStateToMain();
+                }
+               
+                    
             }
         }
     }
+
+   
 }

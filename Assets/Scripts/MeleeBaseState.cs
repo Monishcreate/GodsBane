@@ -6,6 +6,8 @@ public class MeleeBaseState : State
 {
     public float duration;
 
+    public float realduration;
+
     protected Animator animator;
 
     protected bool shouldCombo;
@@ -27,12 +29,14 @@ public class MeleeBaseState : State
         collidersDamaged = new List<Collider2D>();
         hitCollider = GetComponent<ComboCharacter>().hitbox;
         HitEffectPrefab = GetComponent<ComboCharacter>().Hiteffect;
+        
     }
 
     public override void OnUpdate()
     {
         base.OnUpdate();
         AttackPressedTimer -= Time.deltaTime;
+        
 
         if (animator.GetFloat("Weapon.Active") > 0f )
         {

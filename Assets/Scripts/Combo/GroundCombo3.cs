@@ -10,7 +10,8 @@ public class GroundCombo3 : MeleeBaseState
 
         //Attack
         attackIndex = 4;
-        duration = 0.5f;
+        duration = 0.6f;
+        realduration = 1f;
         animator.SetTrigger("Attack" + attackIndex);
         //animator.SetBool("isAttacking", true);
         Debug.Log("Player Attack" + attackIndex + "Fired!");
@@ -28,7 +29,11 @@ public class GroundCombo3 : MeleeBaseState
             }
             else
             {
-                stateMachine.SetNextStateToMain();
+                if (fixedtime >= realduration) 
+                {
+                    stateMachine.SetNextStateToMain();
+                }
+                
                 //animator.SetBool("isAttacking", false);
             }
         }
