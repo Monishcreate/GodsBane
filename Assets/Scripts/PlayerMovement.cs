@@ -8,6 +8,7 @@
 
 using System;
 using System.Collections;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -27,12 +28,15 @@ public class PlayerMovement : MonoBehaviour
     //Variables control the various actions the player can perform at any time.
     //These are fields which can are public allowing for other sctipts to read them
     //but can only be privately written to.
+    public bool canMove;
     public bool IsFacingRight { get; private set; }
     public float LastOnGroundTime { get; private set; }
 
     bool DoublePress;
     float LastATime;
     float LastDTime;
+
+    float PlayerFacingSide;
 
     #endregion
 
@@ -54,11 +58,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
+        canMove = true;
         RB = GetComponent<Rigidbody2D>();
     }
 
     private void Start()
     {
+        
         IsFacingRight = true;
         anim = GetComponent<Animator>();
     }
@@ -130,6 +136,15 @@ public class PlayerMovement : MonoBehaviour
         if (Physics2D.OverlapBox(_groundCheckPoint.position, _groundCheckSize, 0, _groundLayer)) //checks if set box overlaps with ground
             LastOnGroundTime = 0.1f;
         #endregion
+
+        if (IsFacingRight)
+        {
+            PlayerFacingSide = 1;
+        }
+        else
+        {
+            PlayerFacingSide = -1;
+        }
     }
 
     private void FlipCheck()
@@ -172,7 +187,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Run();
+        if (canMove)
+        {
+            Run();
+        }
+        
+        
     }
 
     //MOVEMENT METHODS
@@ -243,7 +263,10 @@ public class PlayerMovement : MonoBehaviour
         float movement = speedDif * accelRate * sprintSpeed;
 
         //Convert this to a vector and apply to rigidbody
+        
         RB.AddForce(movement * Vector2.right, ForceMode2D.Force);
+        
+        
 
         /*
 		 * For those interested here is what AddForce() will do
@@ -266,6 +289,9 @@ public class PlayerMovement : MonoBehaviour
         
      
     }
+    
+
+    
     #endregion
 
 
