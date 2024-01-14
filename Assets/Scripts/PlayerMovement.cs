@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    
     //Scriptable object which holds all the player's movement parameters. If you don't want to use it
     //just paste in all the parameters, though you will need to manuly change all references in this script
     public PlayerData Data;
@@ -15,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform attackPoint;
     public float attackRange = 0.5f;
     public LayerMask enemyLayers;
+    public LayerMask snaptoLayers;
 
 
     #region COMPONENTS
@@ -64,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         canMove = true;
-      
+        
         IsFacingRight = true;
         anim = GetComponent<Animator>();
     }
@@ -190,6 +192,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         
+
+
     }
 
     private void FixedUpdate()
@@ -338,7 +342,18 @@ public class PlayerMovement : MonoBehaviour
             enemy.GetComponent<Enemy>().TakeDamage(20); 
         }
     }
+    
+    public void SnapToEnemy()
+    {
+        Collider2D[] SnapToTargets = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, snaptoLayers);
+        if (SnapToTargets.Length > 0f)
+        {
 
+            GameObject SnapToPoint = GameObject.Find("Teleport Position");
+            Vector2 snapPosition = SnapToPoint.transform.position;
+            RB.MovePosition(snapPosition);
+        }
+    }
     
     #endregion
 

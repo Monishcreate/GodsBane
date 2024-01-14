@@ -7,8 +7,7 @@ public class Enemy : MonoBehaviour
 {
     public Rigidbody2D rb;
     public Animator anim;
-    private float speed = 5f;
-    private float acceleration;
+    private bool attackMovable;
     [SerializeField] private int maxHealth = 100;
     int currentHealth;
     // Start is called before the first frame update
@@ -16,6 +15,8 @@ public class Enemy : MonoBehaviour
     {
         currentHealth = maxHealth;
         rb = GetComponent<Rigidbody2D>();
+        attackMovable = false;
+        
         
     }
 
@@ -35,13 +36,26 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-       
-                
+       if (attackMovable)
+        {
+            Vector2 target = new Vector2(rb.position.x + 0.13f, rb.position.y);
+            rb.MovePosition(target);
+        }
+
     }
 
     public void AttackMove()
     {
-        
+        //Vector2 target = new Vector2(rb.position.x + 1f, rb.position.y);
+        //rb.MovePosition(target);
+        if (attackMovable)
+        {
+            attackMovable = false;
+        }
+        else
+        {
+            attackMovable = true;
+        }
     }
 
     void Die()
