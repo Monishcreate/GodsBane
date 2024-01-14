@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class GroundCombo2 : MeleeBaseState
 {
+    public ComboCharacter cc;
     public override void OnEnter(StateMachine _stateMachine)
     {
         base.OnEnter(_stateMachine);
 
         //Attack
+        cc = GetComponent<ComboCharacter>();
+        cc.cooldown = 1f;
         attackIndex = 3;
-        duration = 0.7f;
+        duration = 0.63f;
         realduration = 1f;
         animator.SetTrigger("Attack" + attackIndex);
         //animator.SetBool("isAttacking", true);
@@ -32,9 +35,10 @@ public class GroundCombo2 : MeleeBaseState
                 if (fixedtime >= realduration)
                 {
                     stateMachine.SetNextStateToMain();
+                    animator.SetBool("isAttacking", false);
                 }
                 
-                //animator.SetBool("isAttacking", false);
+                //
             }
         }
     }

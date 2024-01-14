@@ -1,11 +1,3 @@
-/*
-	Created by @DawnosaurDev at youtube.com/c/DawnosaurStudios
-	Thanks so much for checking this out and I hope you find it helpful! 
-	If you have any further queries, questions or feedback feel free to reach out on my twitter or leave a comment on youtube :D
-
-	Feel free to use this in your own games, and I'd love to see anything you make!
- */
-
 using System;
 using System.Collections;
 using System.Runtime.CompilerServices;
@@ -68,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         canMove = true;
+      
         IsFacingRight = true;
         anim = GetComponent<Animator>();
     }
@@ -75,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-       
+        CanMoveCheck();
         FlipCheck();
        
         #region TIMERS
@@ -83,7 +76,11 @@ public class PlayerMovement : MonoBehaviour
         #endregion
 
         #region INPUT HANDLER
-        _moveInput.x = Input.GetAxisRaw("Horizontal");
+        if (canMove)
+        {
+            _moveInput.x = Input.GetAxisRaw("Horizontal");
+        }
+        
 
         if (_moveInput.x != 0)
         {
@@ -193,8 +190,7 @@ public class PlayerMovement : MonoBehaviour
     {
     
          Move();
-        
-        
+       
         
     }
 
@@ -281,7 +277,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if(!canMove && attackMove)
         {
-            RB.velocity = new Vector2 (3 * PlayerFacingSide, RB.velocity.y);
+            RB.velocity = new Vector2 (5 * PlayerFacingSide, RB.velocity.y);
         }
         else if (!canMove)
         {
@@ -305,16 +301,17 @@ public class PlayerMovement : MonoBehaviour
      
     }
 
-    public void SetMovableTrue()
+    private void CanMoveCheck()
     {
-        canMove = true;
+        if (anim.GetBool("isAttacking"))
+        {
+            canMove = false;
+        }
+        else
+        {
+            canMove = true;
+        }
     }
-    
-    public void SetMovableFalse()
-    {
-        canMove = false;
-    }
-
     public void SetAttackingTrue()
     {
         attackMove = true;
