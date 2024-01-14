@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MeleeBaseState : State
 {
+  
     public float duration;
 
     public float realduration;
@@ -40,6 +41,7 @@ public class MeleeBaseState : State
 
         if (animator.GetFloat("Weapon.Active") > 0f )
         {
+            
             Attack();
         }
         
@@ -74,6 +76,11 @@ public class MeleeBaseState : State
                 }
             }
         }
+    }
+
+    protected void MyAttack()
+    {
+        
     }
 
     public override void OnExit()

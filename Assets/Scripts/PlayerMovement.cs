@@ -12,6 +12,10 @@ public class PlayerMovement : MonoBehaviour
 
     private Animator anim;
 
+    public Transform attackPoint;
+    public float attackRange = 0.5f;
+    public LayerMask enemyLayers;
+
 
     #region COMPONENTS
     public Rigidbody2D RB { get; private set; }
@@ -184,14 +188,17 @@ public class PlayerMovement : MonoBehaviour
             LastATime = Time.time;
 
         }
+
+        
     }
 
     private void FixedUpdate()
     {
     
          Move();
-       
-        
+         
+
+
     }
 
     //MOVEMENT METHODS
@@ -322,6 +329,16 @@ public class PlayerMovement : MonoBehaviour
         attackMove = false;
     }
 
+    public void DealDamage()
+    {
+        Collider2D[] EnemiesToDamage = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+        foreach (Collider2D enemy in EnemiesToDamage)
+        {
+            Debug.Log("HIT");
+            enemy.GetComponent<Enemy>().TakeDamage(20); 
+        }
+    }
+
     
     #endregion
 
@@ -331,6 +348,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isMovingRight != IsFacingRight)
             Turn();
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
     #endregion
 }
