@@ -13,7 +13,7 @@ public class GroundCombo3 : MeleeBaseState
         cc = GetComponent<ComboCharacter>();
         cc.cooldown = 1f;
         attackIndex = 4;
-        duration = 0.53f;
+        duration = 0.4f;
         realduration = 0.86f;
         animator.SetTrigger("Attack" + attackIndex);
         //animator.SetBool("isAttacking", true);

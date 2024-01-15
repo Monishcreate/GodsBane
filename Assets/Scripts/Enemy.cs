@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    
     public Rigidbody2D rb;
     public Animator anim;
-    private bool attackMovable;
+    public bool attackMovable;
     [SerializeField] private int maxHealth = 100;
     int currentHealth;
     // Start is called before the first frame update
@@ -18,13 +19,15 @@ public class Enemy : MonoBehaviour
         attackMovable = false;
         
         
+        
     }
 
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+
+
        
-        
         anim.SetTrigger("Hurt");
 
         if (currentHealth <= 0)
@@ -40,6 +43,7 @@ public class Enemy : MonoBehaviour
         {
             Vector2 target = new Vector2(rb.position.x + 0.13f, rb.position.y);
             rb.MovePosition(target);
+            
         }
 
     }
