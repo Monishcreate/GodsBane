@@ -18,6 +18,10 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask enemyLayers;
     public LayerMask snaptoLayers;
 
+    [SerializeField] private int maxHealth = 100;
+    int currentHealth;
+
+
 
     #region COMPONENTS
     public Rigidbody2D RB { get; private set; }
@@ -66,7 +70,9 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         canMove = true;
+        currentHealth = maxHealth;
         
+
         IsFacingRight = true;
         anim = GetComponent<Animator>();
     }
@@ -331,6 +337,28 @@ public class PlayerMovement : MonoBehaviour
     public void SetAttackingFalse()
     {
         attackMove = false;
+    }
+
+    public void PlayerTakeDamage(int damage)
+    {
+        currentHealth -= damage;
+
+
+
+        anim.SetTrigger("Hurt");
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+
+        CameraShake.instance.ShakeCamera();
+
+    }
+
+    void Die()
+    {
+        Debug.Log("you died bro");
     }
 
     public void DealDamage()
