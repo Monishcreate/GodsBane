@@ -409,7 +409,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CanMoveCheck()
     {
-        if (anim.GetBool("isAttacking") || anim.GetBool("isHurt"))
+        if (anim.GetBool("isAttacking") || anim.GetBool("isHurt") || anim.GetBool("isParrying"))
         {
             canMove = false;
         }
