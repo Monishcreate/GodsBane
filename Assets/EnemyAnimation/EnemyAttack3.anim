@@ -324,6 +324,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.28333333
+    functionName: ParryableWindowEnable
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.48333332
     functionName: SetBoolAttackMove
     data: 
@@ -333,6 +340,13 @@ AnimationClip:
     messageOptions: 0
   - time: 0.5
     functionName: EnemyDealDamage
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.51666665
+    functionName: ParryableWindowDisable
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

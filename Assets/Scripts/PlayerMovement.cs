@@ -13,12 +13,15 @@ public class PlayerMovement : MonoBehaviour
     //just paste in all the parameters, though you will need to manuly change all references in this script
     public PlayerData Data;
 
+
     public Enemy enemy;
 
     private Animator anim;
 
     public BoxCollider2D box;
-    private bool parry;
+
+    private int Parry;
+    
 
     public Transform attackPoint;
     public float attackRange = 0.5f;
@@ -122,7 +125,17 @@ public class PlayerMovement : MonoBehaviour
             Collider2D[] ParryTargets = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, parryLayers);
             if (ParryTargets.Length > 0f)
             {
+
                 hasParried = true;
+                if (Parry < 1)
+                {
+                    Parry++;
+                }
+                else
+                {
+                    Parry = 0;
+                }
+                
 
             }
             LastRMBPressedTime = 0.5f;
@@ -269,6 +282,8 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
+
+       
         
 
 
@@ -427,11 +442,19 @@ public class PlayerMovement : MonoBehaviour
 
     public void PlayerTakeDamage(int damage)//we gotta make 2 diff ones for taking damage from front and back and use 2 different colliders to do this
     {
+        
+        
         if (hasParried)
         {
-            anim.SetTrigger("Parry");
-            enemy.GetComponent<Enemy>().TakeDamage(20);
+            
+            
+            
+            anim.SetTrigger("Parry" + Parry );
+            enemy.GetComponent<Enemy>().TakeParryDamage(20);
+            Hitstop.instance.doHitStop(0.24f);
+            CameraShake.instance.ShakeCamera();
             return;
+            
         }
         else
         {
