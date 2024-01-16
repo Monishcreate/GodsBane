@@ -13,12 +13,20 @@ public class PlayerMovement : MonoBehaviour
     //just paste in all the parameters, though you will need to manuly change all references in this script
     public PlayerData Data;
 
+    public Enemy enemy;
+
     private Animator anim;
+
+    public BoxCollider2D box;
+    private bool parry;
 
     public Transform attackPoint;
     public float attackRange = 0.5f;
     public LayerMask enemyLayers;
     public LayerMask snaptoLayers;
+    public LayerMask parryLayers;
+
+    private bool hitMovable;
 
     [SerializeField] private int maxHealth = 100;
     int currentHealth;
@@ -35,10 +43,18 @@ public class PlayerMovement : MonoBehaviour
     //Variables control the various actions the player can perform at any time.
     //These are fields which can are public allowing for other sctipts to read them
     //but can only be privately written to.
-    public bool attackMove = false;
-    public bool canMove = true;
+    private bool attackMove = false;
+    private bool canMove = true;
+    private bool hasParried = false;
+    private bool isSpamming = false;
     public bool IsFacingRight { get; private set; }
     public float LastOnGroundTime { get; private set; }
+
+    private float LastRMBPressedTime;
+
+    
+
+
 
     bool DoublePress;
     float LastATime;
@@ -68,10 +84,13 @@ public class PlayerMovement : MonoBehaviour
     {
        
         RB = GetComponent<Rigidbody2D>();
+     
+      
     }
 
     private void Start()
     {
+        hitMovable = false;
         canMove = true;
         currentHealth = maxHealth;
         
@@ -87,12 +106,50 @@ public class PlayerMovement : MonoBehaviour
         healthBar.value = healthUpdate;
         CanMoveCheck();
         FlipCheck();
-       
+        
+        LastRMBPressedTime -= Time.deltaTime;
         #region TIMERS
         LastOnGroundTime -= Time.deltaTime;
+
+
         #endregion
 
         #region INPUT HANDLER
+        
+        if (Input.GetMouseButtonDown(1) && enemy.canParry && !isSpamming)
+        {
+           
+            Collider2D[] ParryTargets = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, parryLayers);
+            if (ParryTargets.Length > 0f)
+            {
+                hasParried = true;
+
+            }
+            LastRMBPressedTime = 0.5f;
+           
+            
+        }
+       
+        else if (enemy.canParry == false)
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                LastRMBPressedTime = 0.5f;
+                isSpamming = true;
+                
+            }
+            
+            hasParried = false;
+        }
+
+        if (LastRMBPressedTime <= 0f)
+        {
+            isSpamming = false;
+        }
+
+
+
+
         if (canMove)
         {
             _moveInput.x = Input.GetAxisRaw("Horizontal");
@@ -163,6 +220,16 @@ public class PlayerMovement : MonoBehaviour
         {
             PlayerFacingSide = -1;
         }
+
+        if (hitMovable) // we need to move player based on which side he is attacked from
+        {
+            Vector2 target = new Vector2(RB.position.x - 2f * PlayerFacingSide, RB.position.y);
+            Vector2 newPos = Vector2.MoveTowards(RB.position, target, 5f * Time.fixedDeltaTime);//update new position to reach to newPos
+            RB.MovePosition(newPos);
+
+        }
+       
+        
     }
 
     private void FlipCheck()
@@ -211,7 +278,9 @@ public class PlayerMovement : MonoBehaviour
     {
     
          Move();
-         
+
+        
+        
 
 
     }
@@ -226,7 +295,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                sprintSpeed = 2;
+                sprintSpeed = 2.5f;
                 if (anim.GetBool("isMoving"))
                 {
                     anim.SetBool("isRunning", true);
@@ -325,7 +394,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CanMoveCheck()
     {
-        if (anim.GetBool("isAttacking"))
+        if (anim.GetBool("isAttacking") || anim.GetBool("isHurt"))
         {
             canMove = false;
         }
@@ -344,20 +413,42 @@ public class PlayerMovement : MonoBehaviour
         attackMove = false;
     }
 
-    public void PlayerTakeDamage(int damage)
+    public void setHitMovable()
     {
-        currentHealth -= damage;
-
-
-
-        anim.SetTrigger("Hurt");
-
-        if (currentHealth <= 0)
+        if (hitMovable)
         {
-            Die();
+            hitMovable = false;
         }
+        else
+        {
+            hitMovable = true;
+        }
+    }
 
-        CameraShake.instance.ShakeCamera();
+    public void PlayerTakeDamage(int damage)//we gotta make 2 diff ones for taking damage from front and back and use 2 different colliders to do this
+    {
+        if (hasParried)
+        {
+            anim.SetTrigger("Parry");
+            enemy.GetComponent<Enemy>().TakeDamage(20);
+            return;
+        }
+        else
+        {
+            currentHealth -= damage;
+
+
+
+            anim.SetTrigger("Hurt");
+
+            if (currentHealth <= 0)
+            {
+                Die();
+            }
+
+            CameraShake.instance.ShakeCamera();
+        }
+        
 
     }
 
@@ -372,7 +463,7 @@ public class PlayerMovement : MonoBehaviour
         foreach (Collider2D enemy in EnemiesToDamage)
         {
             Debug.Log("HIT");
-            enemy.GetComponent<Enemy>().TakeDamage(20); 
+            enemy.GetComponent<Enemy>().TakeDamage(20);
         }
     }
     

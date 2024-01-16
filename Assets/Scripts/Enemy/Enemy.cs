@@ -13,7 +13,8 @@ public class Enemy : MonoBehaviour
     public Animator anim;
     public bool hitMovable;
     public bool attackMove;
-
+    public BoxCollider2D box;
+    public bool canParry;
     public Slider healthBar;
     float sliderVelocity = 0f;
 
@@ -68,14 +69,17 @@ public class Enemy : MonoBehaviour
         healthBar.value = healthUpdate;
         if (hitMovable)
         {
-            Vector2 target = new Vector2(rb.position.x + 0.13f, rb.position.y);
-            rb.MovePosition(target);
+            Vector2 target = new Vector2(rb.position.x + 3f, rb.position.y); 
+            Vector2 newPos = Vector2.MoveTowards(rb.position, target, 5f * Time.fixedDeltaTime);//update new position to reach to newPos
+            rb.MovePosition(newPos);
+           
             
         }
        if (attackMove)
         {
-            Vector2 target = new Vector2(rb.position.x - 0.13f, rb.position.y);
-            rb.MovePosition(target);
+            Vector2 target = new Vector2(rb.position.x - 7f, rb.position.y);
+            Vector2 newPos = Vector2.MoveTowards(rb.position, target, 7f * Time.fixedDeltaTime);//update new position to reach to newPos
+            rb.MovePosition(newPos);
         }
 
        
@@ -147,6 +151,19 @@ public class Enemy : MonoBehaviour
             attackMove= true;
         }
     }
+
+    public void ParryableWindowEnable()
+    {
+        box.enabled = true;
+        canParry = true;
+    }
+
+    public void ParryableWindowDisable()
+    {
+        box.enabled = false;
+        canParry = false;
+    }
+
 
     void Die()
     {
