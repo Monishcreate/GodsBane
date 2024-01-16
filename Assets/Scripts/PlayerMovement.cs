@@ -236,8 +236,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (hitMovable) // we need to move player based on which side he is attacked from
         {
-            Vector2 target = new Vector2(RB.position.x - 2f * PlayerFacingSide, RB.position.y);
-            Vector2 newPos = Vector2.MoveTowards(RB.position, target, 5f * Time.fixedDeltaTime);//update new position to reach to newPos
+            Vector2 target = new Vector2(RB.position.x - 3f * PlayerFacingSide, RB.position.y);
+            Vector2 newPos = Vector2.MoveTowards(RB.position, target, 3f * Time.fixedDeltaTime);//update new position to reach to newPos
             RB.MovePosition(newPos);
 
         }
@@ -447,11 +447,9 @@ public class PlayerMovement : MonoBehaviour
         if (hasParried)
         {
             
-            
-            
             anim.SetTrigger("Parry" + Parry );
             enemy.GetComponent<Enemy>().TakeParryDamage(20);
-            Hitstop.instance.doHitStop(0.24f);
+            Hitstop.instance.doHitStop(0.2f);
             CameraShake.instance.ShakeCamera();
             return;
             
