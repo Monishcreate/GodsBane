@@ -3,6 +3,8 @@ using System.Collections;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -21,7 +23,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private int maxHealth = 100;
     int currentHealth;
 
-
+    public Slider healthBar;
+    float sliderVelocity = 0f;
 
     #region COMPONENTS
     public Rigidbody2D RB { get; private set; }
@@ -80,6 +83,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        float healthUpdate = Mathf.SmoothDamp(healthBar.value, currentHealth, ref sliderVelocity, 25 * Time.deltaTime);
+        healthBar.value = healthUpdate;
         CanMoveCheck();
         FlipCheck();
        
@@ -292,11 +297,11 @@ public class PlayerMovement : MonoBehaviour
              * Time.fixedDeltaTime is by default in Unity 0.02 seconds equal to 50 FixedUpdate() calls per second
             */
         }
-        else if(!canMove && attackMove)
+        else if(!canMove && attackMove) //when attackMove is called via attack animation
         {
-            RB.velocity = new Vector2 (5 * PlayerFacingSide, RB.velocity.y);
+            RB.velocity = new Vector2 (5 * PlayerFacingSide, RB.velocity.y); //move the player till that bool is true
         }
-        else if (!canMove)
+        else if (!canMove)//set velocity to 0 if canMove is set to false through attack animation
         {
             RB.velocity = new Vector2(0, RB.velocity.y);
         }
