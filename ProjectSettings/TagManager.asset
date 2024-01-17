@@ -23,9 +23,9 @@ TagManager:
   - DetectionZone
   - PlayerTeleport
   - Parry
-  - 
-  - 
-  - 
+  - BackTeleport
+  - PlayerFront
+  - PlayerBack
   - 
   - 
   - 

@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour
     public bool canParry;
     public Slider healthBar;
     float sliderVelocity = 0f;
+    public int enemyFacingDir;
 
     private float coolDowntime = 2f;
     private float coolDownCounter;
@@ -26,9 +27,16 @@ public class Enemy : MonoBehaviour
     
     public Vector2 detectRange;
     public float attackRange = 0.5f;
-    public LayerMask enemyLayers;
+
     public LayerMask detectionLayers;
-    public LayerMask snaptoLayers;
+    public LayerMask snaptofrontlayer;
+    public LayerMask snaptobacklayer;
+    public LayerMask playerfrontlayer;
+    public LayerMask playerbacklayer;
+
+    public GameObject Player;
+
+    public PlayerMovement pl;
 
 
     [SerializeField] private int maxHealth = 100;
@@ -82,22 +90,25 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        EnemyFlip();
         float healthUpdate = Mathf.SmoothDamp(healthBar.value, currentHealth, ref sliderVelocity, 25 * Time.deltaTime);
         healthBar.value = healthUpdate;
         if (hitMovable)
         {
-            Vector2 target = new Vector2(rb.position.x + 3f, rb.position.y); 
+            Vector2 target = new Vector2(rb.position.x - 3f * enemyFacingDir, rb.position.y); 
             Vector2 newPos = Vector2.MoveTowards(rb.position, target, 5f * Time.fixedDeltaTime);//update new position to reach to newPos
             rb.MovePosition(newPos);
            
             
         }
-       if (attackMove)
+        if (attackMove)
         {
-            Vector2 target = new Vector2(rb.position.x - 7f, rb.position.y);
+            Vector2 target = new Vector2(rb.position.x + 7f * enemyFacingDir, rb.position.y);
             Vector2 newPos = Vector2.MoveTowards(rb.position, target, 7f * Time.fixedDeltaTime);//update new position to reach to newPos
             rb.MovePosition(newPos);
         }
+
+        //rb.bodyType = RigidbodyType2D.Dynamic;
 
        
        
@@ -107,17 +118,38 @@ public class Enemy : MonoBehaviour
 
     }
 
+    public void EnemyFlip()
+    {
+        if (Player.transform.position.x < this.transform.position.x)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+            enemyFacingDir = -1;
+        }
+        else
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+            enemyFacingDir = 1;
+        }
+    }
+
     public void EnemyDealDamage()
     {
-        Collider2D[] PlayersToDamage = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
-        foreach (Collider2D player in PlayersToDamage)
+        Collider2D[] PlayersFrontDamage = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, playerfrontlayer);
+        if(PlayersFrontDamage.Length > 0)
         {
             Debug.Log("Player HIT");
-            player.GetComponent<PlayerMovement>().PlayerTakeDamage(20);
+            pl.PlayerTakeDamage(20);
             coolDownCounter = coolDowntime;
-
-
         }
+
+        Collider2D[] PlayersBackDamage = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, playerbacklayer);
+        if(PlayersBackDamage.Length > 0)
+        {
+            Debug.Log("Player HIT");
+            pl.PlayerBackDamage(50);
+            coolDownCounter = coolDowntime;
+        }
+
     }
 
     public void DetectPlayer()
@@ -126,22 +158,30 @@ public class Enemy : MonoBehaviour
         if (SnapToTargets.Length > 0f)
         {
             anim.SetTrigger("Attack");
-
-            
+  
         }
     }
     // YO we gotta snap to different positions depending on whether the teleport point is in front of the player or the back :)
-    public void SnapToPlayer()
-    {
-        Collider2D[] SnapToTargets = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, snaptoLayers);
-        if (SnapToTargets.Length > 0f)
-        {
+    //public void SnapToPlayer()
+    //{
+    //    Collider2D[] SnapToTargets = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, snaptofrontlayer);
+    //    if (SnapToTargets.Length > 0f)
+    //    {
 
-            GameObject SnapToPoint = GameObject.Find("Player Teleport Position");
-            Vector2 snapPosition = SnapToPoint.transform.position;
-            rb.MovePosition(snapPosition);
-        }
-    }
+    //        GameObject SnapToPoint = GameObject.Find("Player Teleport Position");
+    //        Vector2 snapPosition = SnapToPoint.transform.position;
+    //        rb.MovePosition(snapPosition);
+    //    }
+
+    //    Collider2D[] SnapToBack = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, snaptobacklayer);
+    //    if (SnapToBack.Length > 0f)
+    //    {
+
+    //        GameObject SnapToPoint = GameObject.Find("Player Teleport Back");
+    //        Vector2 snapPosition = SnapToPoint.transform.position;
+    //        rb.MovePosition(snapPosition);
+    //    }
+    //}
 
     public void AttackMove() //this is for movement of enemy when he gets hit
     {

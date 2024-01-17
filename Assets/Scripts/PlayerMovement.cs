@@ -473,6 +473,22 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    public void PlayerBackDamage(int damage)
+    {
+        currentHealth -= damage;
+
+
+
+        anim.SetTrigger("BackHurt");
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+
+        CameraShake.instance.ShakeCamera();
+    }
+
     void Die()
     {
         Debug.Log("you died bro");
