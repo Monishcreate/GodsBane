@@ -1358,7 +1358,7 @@ GameObject:
   - component: {fileID: 680724569}
   - component: {fileID: 680724570}
   m_Layer: 8
-  m_Name: Knockback Test
+  m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1543,7 +1543,7 @@ MonoBehaviour:
   attackPoint: {fileID: 1938352871}
   detectPoint: {fileID: 1184266714}
   detectRange: {x: 0.96, y: 1.21}
-  attackRange: 0.77
+  attackRange: 0.5
   detectionLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -2838,7 +2838,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 3
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -2944,6 +2944,7 @@ MonoBehaviour:
   box: {fileID: 1994588161}
   attackPoint: {fileID: 1147523525}
   attackRange: 0.77
+  jumpForce: 1200
   enemyLayers:
     serializedVersion: 2
     m_Bits: 256

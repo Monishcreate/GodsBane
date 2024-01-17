@@ -25,11 +25,13 @@ public class PlayerMovement : MonoBehaviour
 
     public Transform attackPoint;
     public float attackRange = 0.5f;
+    public float jumpForce = 2000f;
     public LayerMask enemyLayers;
     public LayerMask snaptoLayers;
     public LayerMask parryLayers;
 
     private bool hitMovable;
+    
 
     [SerializeField] private int maxHealth = 100;
     int currentHealth;
@@ -47,6 +49,7 @@ public class PlayerMovement : MonoBehaviour
     //These are fields which can are public allowing for other sctipts to read them
     //but can only be privately written to.
     private bool attackMove = false;
+    private bool isGrounded = true;
     private bool canMove = true;
     private bool hasParried = false;
     private bool isSpamming = false;
@@ -216,13 +219,21 @@ public class PlayerMovement : MonoBehaviour
             anim.SetBool("isMoving", false);
             anim.SetBool("isMovingBack", false);
         }
-            
+
         #endregion
 
         #region COLLISION CHECKS
         //Ground Check
-        if (Physics2D.OverlapBox(_groundCheckPoint.position, _groundCheckSize, 0, _groundLayer)) //checks if set box overlaps with ground
+        if (Physics2D.OverlapBox(_groundCheckPoint.position, _groundCheckSize, 0, _groundLayer))//checks if set box overlaps with ground
+        {
             LastOnGroundTime = 0.1f;
+            isGrounded = true;
+        }
+        else
+        {
+            isGrounded = false;
+        }
+
         #endregion
 
         if (IsFacingRight)
@@ -241,6 +252,9 @@ public class PlayerMovement : MonoBehaviour
             RB.MovePosition(newPos);
 
         }
+        Jump();
+        initGrab();
+        grabDamage();
        
         
     }
@@ -292,8 +306,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
     
-         Move();
-
+        Move();
         
         
 
@@ -409,7 +422,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CanMoveCheck()
     {
-        if (anim.GetBool("isAttacking") || anim.GetBool("isHurt") || anim.GetBool("isParrying"))
+        if (anim.GetBool("isAttacking") || anim.GetBool("isHurt") || anim.GetBool("isParrying") || anim.GetBool("isGrabbing"))
         {
             canMove = false;
         }
@@ -440,6 +453,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void parryToggle()
+    {
+        anim.SetBool("isParrying", false);
+    }
+
     public void PlayerTakeDamage(int damage)//we gotta make 2 diff ones for taking damage from front and back and use 2 different colliders to do this
     {
         
@@ -448,6 +466,7 @@ public class PlayerMovement : MonoBehaviour
         {
             
             anim.SetTrigger("Parry" + Parry );
+            anim.SetBool("isParrying", true);
             enemy.GetComponent<Enemy>().TakeParryDamage(20);
             Hitstop.instance.doHitStop(0.2f);
             CameraShake.instance.ShakeCamera();
@@ -487,6 +506,52 @@ public class PlayerMovement : MonoBehaviour
         }
 
         CameraShake.instance.ShakeCamera();
+    }
+
+    public void Jump()
+    {
+        if (Input.GetButtonDown("Jump"))
+        {
+            //anim.SetTrigger("PrepJump");
+        }
+        else if(Input.GetButtonUp("Jump") && isGrounded)
+        {
+            //anim.SetTrigger("Jump");
+            RB.AddForce(new Vector2(RB.velocity.x, jumpForce));
+        }
+        
+    }
+
+    public void initGrab()
+    {
+        if (Input.GetKeyDown(KeyCode.F) && !anim.GetBool("isParrying") && !anim.GetBool("isAttacking") && !anim.GetBool("isHurt"))
+        {
+            anim.SetBool("isGrabbing", true);
+            anim.SetTrigger("Grab");
+
+        }
+
+    }
+
+    public void grabDamage()
+    {
+        if (anim.GetBool("isGrabbing"))
+        {
+            Collider2D[] EnemiesToDamage = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+            if(EnemiesToDamage.Length > 0) 
+            {
+                anim.SetTrigger("grabAttacking");
+                anim.SetBool("isGrabbing", false);
+                
+            }
+        }
+    }
+
+
+
+    public void setGrabBool()
+    {
+        anim.SetBool("isGrabbing", false);
     }
 
     void Die()
