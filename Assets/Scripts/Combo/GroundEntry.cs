@@ -5,6 +5,7 @@ using UnityEngine;
 public class GroundEntry : MeleeBaseState
 {
     public ComboCharacter cc;
+    
 
    
     public override void OnEnter(StateMachine _stateMachine)
@@ -22,8 +23,9 @@ public class GroundEntry : MeleeBaseState
         
         duration = 0.38f;
         realduration = 0.6f;
-
+        
         animator.SetTrigger("Attack" + attackIndex);
+        
 
         animator.SetBool("isAttacking", true);
 
@@ -37,7 +39,7 @@ public class GroundEntry : MeleeBaseState
         if (fixedtime >= duration)
         {
             
-            if (shouldCombo)
+            if (shouldCombo && animator.GetBool("isPurple"))
             {
                 stateMachine.SetNextState(new GroundCombo1());
             }

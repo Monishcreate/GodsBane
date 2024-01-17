@@ -13,6 +13,13 @@ public class PlayerMovement : MonoBehaviour
     //just paste in all the parameters, though you will need to manuly change all references in this script
     public PlayerData Data;
 
+    private SpriteRenderer rend;
+
+    private Color color1 = Color.white;
+
+    private Color color2 = new Color(1f,0.5f,0f,1f);
+
+    private Color color3 = new Color(0.75f,0.45f,1f,1f);
 
     public Enemy enemy;
 
@@ -58,6 +65,10 @@ public class PlayerMovement : MonoBehaviour
 
     private float LastRMBPressedTime;
 
+    private float CharacterSwitchCooldown = 1.5f;
+
+    private float CharacterSwitchCounter;
+
     
 
 
@@ -99,15 +110,54 @@ public class PlayerMovement : MonoBehaviour
         hitMovable = false;
         canMove = true;
         currentHealth = maxHealth;
-        
 
+        rend = GetComponent<SpriteRenderer>();
+
+        rend.color = color1;
+
+        
         IsFacingRight = true;
         anim = GetComponent<Animator>();
+
+        anim.SetBool("isWhite", true);
     }
 
 
     private void Update()
     {
+        CharacterSwitchCounter -= Time.deltaTime;
+
+        if (Input.GetKeyDown(KeyCode.Alpha1) && CharacterSwitchCounter <= 0)
+        {
+            anim.SetBool("isWhite", true);
+            anim.SetBool("isOrange", false);
+            anim.SetBool("isPurple", false);
+            rend.color = color1;
+
+            CharacterSwitchCounter = CharacterSwitchCooldown;
+
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2) && CharacterSwitchCounter <= 0)
+        {
+            anim.SetBool("isWhite", false);
+            anim.SetBool("isOrange", true);
+            anim.SetBool("isPurple", false);
+            rend.color = color2;
+            CharacterSwitchCounter = CharacterSwitchCooldown;
+
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3) && CharacterSwitchCounter <= 0)
+        {
+            anim.SetBool("isWhite", false);
+            anim.SetBool("isOrange", false);
+            anim.SetBool("isPurple", true);
+            rend.color = color3;
+            CharacterSwitchCounter = CharacterSwitchCooldown;
+
+        }
+
+        
+
         float healthUpdate = Mathf.SmoothDamp(healthBar.value, currentHealth, ref sliderVelocity, 25 * Time.deltaTime);
         healthBar.value = healthUpdate;
         CanMoveCheck();
@@ -122,7 +172,7 @@ public class PlayerMovement : MonoBehaviour
 
         #region INPUT HANDLER
         
-        if (Input.GetMouseButtonDown(1) && enemy.canParry && !isSpamming)
+        if (Input.GetMouseButtonDown(1) && enemy.canParry && !isSpamming && anim.GetBool("isWhite"))
         {
            
             Collider2D[] ParryTargets = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, parryLayers);
@@ -252,9 +302,17 @@ public class PlayerMovement : MonoBehaviour
             RB.MovePosition(newPos);
 
         }
-        Jump();
-        initGrab();
-        grabDamage();
+        if (anim.GetBool("isOrange"))
+        {
+            Jump();
+        }
+        
+        if (anim.GetBool("isPurple"))
+        {
+            initGrab();
+            grabDamage();
+        }
+        
        
         
     }
@@ -323,7 +381,15 @@ public class PlayerMovement : MonoBehaviour
 
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                sprintSpeed = 2.5f;
+                if (anim.GetBool("isOrange"))
+                {
+                    sprintSpeed = 3f;
+                }
+                else
+                {
+                    sprintSpeed = 2.5f;
+                }
+                
                 if (anim.GetBool("isMoving"))
                 {
                     anim.SetBool("isRunning", true);

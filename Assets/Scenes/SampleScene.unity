@@ -1363,7 +1363,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &680724565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1437,7 +1437,7 @@ Transform:
   m_GameObject: {fileID: 680724564}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.29, y: -1.353, z: 0}
+  m_LocalPosition: {x: -0.04, y: -1.353, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2892,7 +2892,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 1037003235, guid: 3be802022d519314388b14c24b190bea, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7446202, g: 0.45911944, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2944,7 +2944,7 @@ MonoBehaviour:
   box: {fileID: 1994588161}
   attackPoint: {fileID: 1147523525}
   attackRange: 0.77
-  jumpForce: 1200
+  jumpForce: 1130
   enemyLayers:
     serializedVersion: 2
     m_Bits: 256
