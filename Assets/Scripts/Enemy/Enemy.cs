@@ -55,6 +55,7 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        
         currentHealth -= damage;
 
         
@@ -67,7 +68,8 @@ public class Enemy : MonoBehaviour
         }
 
         CameraShake.instance.ShakeCamera();
-        
+       
+
 
     }
     public void TakeParryDamage(int damage)

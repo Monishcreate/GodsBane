@@ -378,17 +378,21 @@ public class PlayerMovement : MonoBehaviour
         if (canMove)
         {
             float sprintSpeed;
+           
 
-            if (Input.GetKey(KeyCode.LeftShift))
+           
+
+            if ((!anim.GetBool("isPurple")) && (Input.GetKey(KeyCode.LeftShift) || anim.GetBool("isOrange")) )
             {
                 if (anim.GetBool("isOrange"))
                 {
-                    sprintSpeed = 3f;
+                    sprintSpeed = 3.5f;
                 }
                 else
                 {
-                    sprintSpeed = 2.5f;
+                    sprintSpeed = 2.0f;
                 }
+                
                 
                 if (anim.GetBool("isMoving"))
                 {
@@ -474,7 +478,7 @@ public class PlayerMovement : MonoBehaviour
     private void Turn()
     {
         //stores scale and flips the player along the x axis, 
-        if (Input.GetKey(KeyCode.LeftShift) || DoublePress)
+        if (Input.GetKey(KeyCode.LeftShift) || DoublePress || anim.GetBool("isOrange"))
         {
             Vector3 scale = transform.localScale;
             scale.x *= -1;
@@ -646,7 +650,9 @@ public class PlayerMovement : MonoBehaviour
             RB.MovePosition(snapPosition);
         }
     }
-    
+
+
+
     #endregion
 
 
