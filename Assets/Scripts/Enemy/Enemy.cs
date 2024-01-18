@@ -55,20 +55,21 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        
-        currentHealth -= damage;
-
-        
-       
-        anim.SetTrigger("Hurt");
-
-        if (currentHealth <= 0)
+        if (anim.GetBool("isTired"))
         {
-            Die();
-        }
+            currentHealth -= damage;
 
-        CameraShake.instance.ShakeCamera();
-       
+
+
+            anim.SetTrigger("Hurt");
+
+            if (currentHealth <= 0)
+            {
+                Die();
+            }
+
+            CameraShake.instance.ShakeCamera();
+        }
 
 
     }

@@ -8,6 +8,7 @@ TagManager:
   - teleport
   - FxTemporaire
   - ParryFX
+  - Retreat
   layers:
   - Default
   - TransparentFX
