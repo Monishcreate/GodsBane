@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour
     public bool hitMovable;
     public bool attackMove;
     public BoxCollider2D box;
+    public BoxCollider2D dashcollider;
     public bool canParry;
     public Slider healthBar;
     float sliderVelocity = 0f;
@@ -24,6 +25,7 @@ public class Enemy : MonoBehaviour
 
     public Transform attackPoint;
     public Transform detectPoint;
+    
     
     public Vector2 detectRange;
     public float attackRange = 0.5f;
@@ -48,6 +50,7 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         hitMovable = false;
         coolDownCounter = coolDowntime;
+        
 
 
 
@@ -115,9 +118,10 @@ public class Enemy : MonoBehaviour
 
        
        
-         DetectPlayer();
-            
-       
+        DetectPlayer();
+        EnemyDash();
+
+
 
     }
 
@@ -153,6 +157,19 @@ public class Enemy : MonoBehaviour
             coolDownCounter = coolDowntime;
         }
 
+    }
+
+    public void EnemyDash()
+    {
+
+        if (anim.GetBool("isDashing"))
+        {
+            dashcollider.enabled = true;
+        }
+        else
+        {
+            dashcollider.enabled = false;
+        }
     }
 
     public void DetectPlayer()
