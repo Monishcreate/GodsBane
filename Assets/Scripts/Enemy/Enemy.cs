@@ -118,7 +118,7 @@ public class Enemy : MonoBehaviour
 
        
        
-        DetectPlayer();
+        //DetectPlayer();
         EnemyDash();
 
 
@@ -177,8 +177,13 @@ public class Enemy : MonoBehaviour
         Collider2D[] SnapToTargets = Physics2D.OverlapBoxAll(detectPoint.position,detectRange, 1f, detectionLayers);
         if (SnapToTargets.Length > 0f)
         {
+            
             anim.SetTrigger("Attack");
   
+        }
+        else
+        {
+            anim.ResetTrigger("Attack");
         }
     }
     // YO we gotta snap to different positions depending on whether the teleport point is in front of the player or the back :)

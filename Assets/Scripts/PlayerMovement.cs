@@ -56,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
     //These are fields which can are public allowing for other sctipts to read them
     //but can only be privately written to.
     private bool attackMove = false;
-    private bool isGrounded = true;
+    public bool isGrounded = true;
     private bool canMove = true;
     private bool hasParried = false;
     private bool isSpamming = false;
@@ -386,7 +386,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (anim.GetBool("isOrange"))
                 {
-                    sprintSpeed = 3.5f;
+                    sprintSpeed = 2.0f;
                 }
                 else
                 {
@@ -600,6 +600,10 @@ public class PlayerMovement : MonoBehaviour
             anim.SetTrigger("Grab");
 
         }
+        else
+        {
+            anim.ResetTrigger("Grab");
+        }
 
     }
 
@@ -613,6 +617,10 @@ public class PlayerMovement : MonoBehaviour
                 anim.SetTrigger("grabAttacking");
                 anim.SetBool("isGrabbing", false);
                 
+            }
+            else
+            {
+                anim.ResetTrigger("grabAttacking");
             }
         }
     }
