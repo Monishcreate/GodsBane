@@ -401,7 +401,7 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.6
-    functionName: EnemyDealDamage
+    functionName: EnemyDealDamageLower
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
