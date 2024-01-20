@@ -226,6 +226,7 @@ public class Enemy : MonoBehaviour
         if (anim.GetBool("isDashing"))
         {
             dashcollider.enabled = true;
+            CameraShake.instance.ShakeCamera();
         }
         else
         {
