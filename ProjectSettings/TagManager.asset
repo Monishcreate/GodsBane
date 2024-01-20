@@ -9,6 +9,7 @@ TagManager:
   - FxTemporaire
   - ParryFX
   - Retreat
+  - DashPos
   layers:
   - Default
   - TransparentFX

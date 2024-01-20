@@ -191,7 +191,7 @@ public class PlayerMovement : MonoBehaviour
                 
 
             }
-            LastRMBPressedTime = 0.5f;
+            LastRMBPressedTime = 0.3f;
            
             
         }

@@ -20,19 +20,31 @@ public class EnemyRunBehaviour : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         
-            float diff = playerPos.position.x - rb.position.x;
-            if (diff < 0)
+            float xdiff = playerPos.position.x - rb.position.x;
+            float ydiff = playerPos.position.y - rb.position.y;
+            if (xdiff < 0)
             {
-               diff = diff * -1;
+               xdiff = xdiff * -1;
             }
+            if (ydiff < 0)
+            {
+                ydiff = ydiff * -1;
+            }
+
             Vector2 target = new Vector2(playerPos.position.x, rb.position.y);//update player position to target  
             Vector2 newPos = Vector2.MoveTowards(rb.position, target, 10f * Time.fixedDeltaTime);//update new position to reach to newPos
             rb.MovePosition(newPos);
 
-            if (diff <= 2.2f)
+            if (xdiff <= 2.2f)
             {
                animator.SetTrigger("Attack");
             }
+
+            if (ydiff >= 4f)
+            {
+                animator.SetTrigger("WalkFromRun");
+            }
+            
             
             
         

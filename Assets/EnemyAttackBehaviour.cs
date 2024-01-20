@@ -19,16 +19,32 @@ public class EnemyAttackBehaviour : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
 
-        float diff = playerPos.position.x - rb.position.x;
-        if (diff < 0)
+        float xdiff = playerPos.position.x - rb.position.x;
+        float ydiff = playerPos.position.y - rb.position.y;
+        if (xdiff < 0)
         {
-            diff = diff * -1;
+            xdiff =  xdiff * -1;
+        }
+
+        if (ydiff < 0)
+        {
+            ydiff = ydiff * -1;
         }
        
 
-        if (diff >= 5f)
+        if (xdiff >= 4f)
         {
             animator.SetTrigger("RunBackAtThatPussy");
+        }
+
+        else if (ydiff >= 5f)
+        {
+            animator.SetTrigger("RunBackAtThatPussy");
+        }
+        
+        else
+        {
+            animator.ResetTrigger("RunBackAtThatPussy");
         }
 
 
