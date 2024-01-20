@@ -7,7 +7,7 @@ public class CameraShake : MonoBehaviour
 {
     public static CameraShake instance;
     private CinemachineVirtualCamera Vcam;
-    private float shakeIntensity = 2f;
+    private float shakeIntensity = 4f;
     private float shakeTime = 0.1f;
 
 

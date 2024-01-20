@@ -20,6 +20,8 @@ public class Enemy : MonoBehaviour
     float sliderVelocity = 0f;
     public int enemyFacingDir;
 
+    private float tiredTimer;
+
     private float coolDowntime = 2f;
     private float coolDownCounter;
 
@@ -64,7 +66,28 @@ public class Enemy : MonoBehaviour
 
 
 
-            anim.SetTrigger("Hurt");
+            anim.SetTrigger("Hurt1");
+
+            if (currentHealth <= 0)
+            {
+                Die();
+            }
+
+            CameraShake.instance.ShakeCamera();
+        }
+
+
+    }
+
+    public void TakeDamageLower(int damage)
+    {
+        if (anim.GetBool("isTired"))
+        {
+            currentHealth -= damage;
+
+
+
+            anim.SetTrigger("Hurt2");
 
             if (currentHealth <= 0)
             {
@@ -96,7 +119,12 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+
+        tiredTimer -= Time.deltaTime;
+
         EnemyFlip();
+
+
         float healthUpdate = Mathf.SmoothDamp(healthBar.value, currentHealth, ref sliderVelocity, 25 * Time.deltaTime);
         healthBar.value = healthUpdate;
         if (hitMovable)
@@ -121,6 +149,17 @@ public class Enemy : MonoBehaviour
         //DetectPlayer();
         EnemyDash();
 
+
+        if (anim.GetBool("tiredTimer"))
+        {
+            tiredTimer = 7f;
+        }
+
+        if (anim.GetBool("isTired") && tiredTimer <= 0)
+        {
+            anim.SetTrigger("ExitTired");
+        }
+      
 
 
     }
@@ -153,9 +192,31 @@ public class Enemy : MonoBehaviour
         if(PlayersBackDamage.Length > 0)
         {
             Debug.Log("Player HIT");
-            pl.PlayerBackDamage(50);
+            pl.PlayerBackDamage(20);
             coolDownCounter = coolDowntime;
         }
+
+    }
+
+    public void EnemyDealDamageLower()
+    {
+        Collider2D[] PlayersFrontDamage = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, playerfrontlayer);
+        if (PlayersFrontDamage.Length > 0)
+        {
+            Debug.Log("Player HIT");
+            pl.PlayerTakeDamageLower(20);
+            coolDownCounter = coolDowntime;
+        }
+
+        Collider2D[] PlayersBackDamage = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, playerbacklayer);
+        if (PlayersBackDamage.Length > 0)
+        {
+            Debug.Log("Player HIT");
+            pl.PlayerBackDamage(20);
+            coolDownCounter = coolDowntime;
+        }
+
+
 
     }
 

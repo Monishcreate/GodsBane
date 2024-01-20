@@ -38,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask parryLayers;
 
     private bool hitMovable;
+    private bool backhitMovable;
     
 
     [SerializeField] private int maxHealth = 100;
@@ -302,6 +303,13 @@ public class PlayerMovement : MonoBehaviour
             RB.MovePosition(newPos);
 
         }
+        if (backhitMovable) // we need to move player based on which side he is attacked from
+        {
+            Vector2 target = new Vector2(RB.position.x + 3f * PlayerFacingSide, RB.position.y);
+            Vector2 newPos = Vector2.MoveTowards(RB.position, target, 3f * Time.fixedDeltaTime);//update new position to reach to newPos
+            RB.MovePosition(newPos);
+
+        }
         if (anim.GetBool("isOrange"))
         {
             Jump();
@@ -523,6 +531,18 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void setBackHitMovable()
+    {
+        if (backhitMovable)
+        {
+            backhitMovable = false;
+        }
+        else
+        {
+            backhitMovable = true;
+        }
+    }
+
     public void parryToggle()
     {
         anim.SetBool("isParrying", false);
@@ -535,7 +555,7 @@ public class PlayerMovement : MonoBehaviour
         if (hasParried)
         {
             
-            anim.SetTrigger("Parry" + Parry );
+            anim.SetTrigger("Parry0");
             anim.SetBool("isParrying", true);
             enemy.GetComponent<Enemy>().TakeParryDamage(20);
             Hitstop.instance.doHitStop(0.2f);
@@ -549,7 +569,7 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-            anim.SetTrigger("Hurt");
+            anim.SetTrigger("Hurt1");
 
             if (currentHealth <= 0)
             {
@@ -559,6 +579,40 @@ public class PlayerMovement : MonoBehaviour
             CameraShake.instance.ShakeCamera();
         }
         
+
+    }
+
+    public void PlayerTakeDamageLower(int damage)//we gotta make 2 diff ones for taking damage from front and back and use 2 different colliders to do this
+    {
+
+
+        if (hasParried)
+        {
+
+            anim.SetTrigger("Parry1");
+            anim.SetBool("isParrying", true);
+            enemy.GetComponent<Enemy>().TakeParryDamage(20);
+            Hitstop.instance.doHitStop(0.2f);
+            CameraShake.instance.ShakeCamera();
+            return;
+
+        }
+        else
+        {
+            currentHealth -= damage;
+
+
+
+            anim.SetTrigger("Hurt2");
+
+            if (currentHealth <= 0)
+            {
+                Die();
+            }
+
+            CameraShake.instance.ShakeCamera();
+        }
+
 
     }
 
@@ -642,11 +696,21 @@ public class PlayerMovement : MonoBehaviour
         Collider2D[] EnemiesToDamage = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
         foreach (Collider2D enemy in EnemiesToDamage)
         {
-            Debug.Log("HIT");
+         
             enemy.GetComponent<Enemy>().TakeDamage(20);
         }
     }
-    
+
+    public void DealDamageLower()
+    {
+        Collider2D[] EnemiesToDamage = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+        foreach (Collider2D enemy in EnemiesToDamage)
+        {
+           
+            enemy.GetComponent<Enemy>().TakeDamageLower(20);
+        }
+    }
+
     public void SnapToEnemy()
     {
         Collider2D[] SnapToTargets = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, snaptoLayers);
