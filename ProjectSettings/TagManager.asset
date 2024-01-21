@@ -10,6 +10,7 @@ TagManager:
   - ParryFX
   - Retreat
   - DashPos
+  - AddForce
   layers:
   - Default
   - TransparentFX
@@ -28,7 +29,7 @@ TagManager:
   - BackTeleport
   - PlayerFront
   - PlayerBack
-  - 
+  - AddForceLayer
   - 
   - 
   - 

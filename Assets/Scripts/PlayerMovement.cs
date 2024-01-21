@@ -39,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool hitMovable;
     private bool backhitMovable;
+    private bool KnockMovable;
     
 
     [SerializeField] private int maxHealth = 100;
@@ -603,6 +604,21 @@ public class PlayerMovement : MonoBehaviour
         }
         
 
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "AddForce")
+        {
+            canMove = false;
+            Vector2 Knockback = new Vector2(-100f + RB.velocity.x, 5f);
+            RB.AddForce(Knockback, ForceMode2D.Impulse);
+        }
+        else
+        {
+            canMove = true;
+        }
     }
 
     public void PlayerTakeDamageLower(int damage)//we gotta make 2 diff ones for taking damage from front and back and use 2 different colliders to do this

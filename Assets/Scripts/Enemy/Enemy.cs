@@ -1,5 +1,7 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,6 +28,7 @@ public class Enemy : MonoBehaviour
     private float coolDownCounter;
 
     public Transform attackPoint;
+    public Transform knockbackPoint;
     public Transform detectPoint;
     
     
@@ -37,6 +40,7 @@ public class Enemy : MonoBehaviour
     public LayerMask snaptobacklayer;
     public LayerMask playerfrontlayer;
     public LayerMask playerbacklayer;
+    public LayerMask playerlayer;
 
     public GameObject Player;
 
@@ -202,6 +206,7 @@ public class Enemy : MonoBehaviour
         }
 
     }
+
 
     public void EnemyDealDamageLower()
     {
