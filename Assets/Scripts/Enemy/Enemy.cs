@@ -22,6 +22,15 @@ public class Enemy : MonoBehaviour
     float sliderVelocity = 0f;
     public int enemyFacingDir;
 
+
+    [SerializeField] GameObject tp1;
+    [SerializeField] GameObject tp2;
+    [SerializeField] GameObject tp3;
+
+    float tploc1;
+    float tploc2;
+    float tploc3;
+
     private float tiredTimer;
 
     private float coolDowntime = 2f;
@@ -56,6 +65,8 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         hitMovable = false;
         coolDownCounter = coolDowntime;
+
+        
         
 
 
@@ -149,6 +160,29 @@ public class Enemy : MonoBehaviour
         if (anim.GetBool("isTired") && tiredTimer <= 0)
         {
             anim.SetTrigger("ExitTired");
+        }
+        if (anim.GetBool("teleportReady"))
+        {
+            tploc1 = tp1.transform.position.x;
+            tploc2 = tp2.transform.position.x;
+            tploc3 = tp3.transform.position.x;
+        }
+
+        if (anim.GetBool("isTeleport"))
+        {
+            if (Player.GetComponent<Animator>().GetBool("isMovingBack"))
+            {
+                gameObject.transform.position = new Vector3(tploc1, rb.position.y);
+            }
+            if (Player.GetComponent<Animator>().GetBool("isMoving") && !Player.GetComponent<Animator>().GetBool("isMovingBack"))
+            {
+                gameObject.transform.position = new Vector3(tploc2, rb.position.y);
+            }
+            if (!Player.GetComponent<Animator>().GetBool("isMoving"))
+            {
+                gameObject.transform.position = new Vector3(tploc3, rb.position.y);
+            }
+
         }
       
 
