@@ -73,7 +73,7 @@ public class Enemy : MonoBehaviour
                 Die();
             }
 
-            CameraShake.instance.ShakeCamera();
+            CameraShake.instance.ShakeCamera(4f);
         }
 
 
@@ -94,7 +94,7 @@ public class Enemy : MonoBehaviour
                 Die();
             }
 
-            CameraShake.instance.ShakeCamera();
+            CameraShake.instance.ShakeCamera(4f);
         }
 
 
@@ -127,20 +127,7 @@ public class Enemy : MonoBehaviour
 
         float healthUpdate = Mathf.SmoothDamp(healthBar.value, currentHealth, ref sliderVelocity, 25 * Time.deltaTime);
         healthBar.value = healthUpdate;
-        if (hitMovable)
-        {
-            Vector2 target = new Vector2(rb.position.x - 3f * enemyFacingDir, rb.position.y); 
-            Vector2 newPos = Vector2.MoveTowards(rb.position, target, 5f * Time.fixedDeltaTime);//update new position to reach to newPos
-            rb.MovePosition(newPos);
-           
-            
-        }
-        if (attackMove)
-        {
-            Vector2 target = new Vector2(rb.position.x + 7f * enemyFacingDir, rb.position.y);
-            Vector2 newPos = Vector2.MoveTowards(rb.position, target, 7f * Time.fixedDeltaTime);//update new position to reach to newPos
-            rb.MovePosition(newPos);
-        }
+        
 
         //rb.bodyType = RigidbodyType2D.Dynamic;
 
@@ -162,6 +149,24 @@ public class Enemy : MonoBehaviour
       
 
 
+    }
+
+    private void FixedUpdate()
+    {
+        if (hitMovable)
+        {
+            Vector2 target = new Vector2(rb.position.x - 3f * enemyFacingDir, rb.position.y);
+            Vector2 newPos = Vector2.MoveTowards(rb.position, target, 5f * Time.fixedDeltaTime);//update new position to reach to newPos
+            rb.MovePosition(newPos);
+
+
+        }
+        if (attackMove)
+        {
+            Vector2 target = new Vector2(rb.position.x + 7f * enemyFacingDir, rb.position.y);
+            Vector2 newPos = Vector2.MoveTowards(rb.position, target, 7f * Time.fixedDeltaTime);//update new position to reach to newPos
+            rb.MovePosition(newPos);
+        }
     }
 
     public void EnemyFlip()
@@ -226,7 +231,7 @@ public class Enemy : MonoBehaviour
         if (anim.GetBool("isDashing"))
         {
             dashcollider.enabled = true;
-            CameraShake.instance.ShakeCamera();
+            CameraShake.instance.ShakeCamera(7f);
         }
         else
         {

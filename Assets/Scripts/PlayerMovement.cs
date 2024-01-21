@@ -296,30 +296,7 @@ public class PlayerMovement : MonoBehaviour
             PlayerFacingSide = -1;
         }
 
-        if (hitMovable) // we need to move player based on which side he is attacked from
-        {
-            Vector2 target = new Vector2(RB.position.x - 3f * PlayerFacingSide, RB.position.y);
-            Vector2 newPos = Vector2.MoveTowards(RB.position, target, 3f * Time.fixedDeltaTime);//update new position to reach to newPos
-            RB.MovePosition(newPos);
-
-        }
-        if (backhitMovable) // we need to move player based on which side he is attacked from
-        {
-            Vector2 target = new Vector2(RB.position.x + 3f * PlayerFacingSide, RB.position.y);
-            Vector2 newPos = Vector2.MoveTowards(RB.position, target, 3f * Time.fixedDeltaTime);//update new position to reach to newPos
-            RB.MovePosition(newPos);
-
-        }
-        if (anim.GetBool("isOrange"))
-        {
-            Jump();
-        }
         
-        if (anim.GetBool("isPurple"))
-        {
-            initGrab();
-            grabDamage();
-        }
         
        
         
@@ -362,9 +339,33 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
+        if (anim.GetBool("isOrange"))
+        {
+            Jump();
+        }
 
-       
-        
+        if (RB.velocity.y > 0f)
+        {
+            anim.SetTrigger("Jump");
+            anim.SetBool("isJumping", true);
+            anim.SetBool("isFalling", false);
+        }
+
+        if (RB.velocity.y < -1f && !isGrounded)
+        {
+            anim.SetTrigger("Fall");
+            anim.SetBool("isFalling", true);
+            anim.SetBool("isJumping", false);
+            anim.ResetTrigger("Fall");
+        }
+
+        if (isGrounded)
+        {
+            anim.SetBool("isFalling", false);
+        }
+
+
+
 
 
     }
@@ -373,8 +374,30 @@ public class PlayerMovement : MonoBehaviour
     {
     
         Move();
+
+        if (hitMovable) // we need to move player based on which side he is attacked from
+        {
+            Vector2 target = new Vector2(RB.position.x - 3f * PlayerFacingSide, RB.position.y);
+            Vector2 newPos = Vector2.MoveTowards(RB.position, target, 3f * Time.fixedDeltaTime);//update new position to reach to newPos
+            RB.MovePosition(newPos);
+
+        }
+        if (backhitMovable) // we need to move player based on which side he is attacked from
+        {
+            Vector2 target = new Vector2(RB.position.x + 3f * PlayerFacingSide, RB.position.y);
+            Vector2 newPos = Vector2.MoveTowards(RB.position, target, 3f * Time.fixedDeltaTime);//update new position to reach to newPos
+            RB.MovePosition(newPos);
+
+        }
         
-        
+
+        if (anim.GetBool("isPurple"))
+        {
+            initGrab();
+            grabDamage();
+        }
+
+
 
 
     }
@@ -500,7 +523,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CanMoveCheck()
     {
-        if (anim.GetBool("isAttacking") || anim.GetBool("isHurt") || anim.GetBool("isParrying") || anim.GetBool("isGrabbing"))
+        if (anim.GetBool("isAttacking") || anim.GetBool("isHurt") || anim.GetBool("isParrying") || anim.GetBool("isGrabbing") || anim.GetBool("isCharging") )
         {
             canMove = false;
         }
@@ -559,7 +582,7 @@ public class PlayerMovement : MonoBehaviour
             anim.SetBool("isParrying", true);
             enemy.GetComponent<Enemy>().TakeParryDamage(20);
             Hitstop.instance.doHitStop(0.2f);
-            CameraShake.instance.ShakeCamera();
+            CameraShake.instance.ShakeCamera(4f);
             return;
             
         }
@@ -576,7 +599,7 @@ public class PlayerMovement : MonoBehaviour
                 Die();
             }
 
-            CameraShake.instance.ShakeCamera();
+            CameraShake.instance.ShakeCamera(4f);
         }
         
 
@@ -593,7 +616,7 @@ public class PlayerMovement : MonoBehaviour
             anim.SetBool("isParrying", true);
             enemy.GetComponent<Enemy>().TakeParryDamage(20);
             Hitstop.instance.doHitStop(0.2f);
-            CameraShake.instance.ShakeCamera();
+            CameraShake.instance.ShakeCamera(4f);
             return;
 
         }
@@ -610,7 +633,7 @@ public class PlayerMovement : MonoBehaviour
                 Die();
             }
 
-            CameraShake.instance.ShakeCamera();
+            CameraShake.instance.ShakeCamera(4f);
         }
 
 
@@ -629,18 +652,21 @@ public class PlayerMovement : MonoBehaviour
             Die();
         }
 
-        CameraShake.instance.ShakeCamera();
+        CameraShake.instance.ShakeCamera(4f);
     }
 
     public void Jump()
     {
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && isGrounded)
         {
-            //anim.SetTrigger("PrepJump");
+            anim.SetBool("isCharging",true);
+           
         }
         else if(Input.GetButtonUp("Jump") && isGrounded)
         {
             //anim.SetTrigger("Jump");
+           
+            anim.SetBool("isCharging", false);
             RB.AddForce(new Vector2(RB.velocity.x, jumpForce));
         }
         
