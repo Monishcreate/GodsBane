@@ -221,6 +221,12 @@ public class PlayerMovement : MonoBehaviour
         if (canMove)
         {
             _moveInput.x = Input.GetAxisRaw("Horizontal");
+
+        }
+
+        if (Input.GetAxisRaw("Horizontal") != 0)
+        {
+            Debug.Log("bro pressing move");
         }
         
 
@@ -228,6 +234,7 @@ public class PlayerMovement : MonoBehaviour
         {
             CheckDirectionToFace(_moveInput.x > 0);
             anim.SetBool("isMoving", true);
+            
 
         }
             
