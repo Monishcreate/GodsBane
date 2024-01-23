@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     public Animator anim;
     public bool hitMovable;
     public bool attackMove;
+    public bool isMeteor;
     public BoxCollider2D box;
     public BoxCollider2D dashcollider;
     public bool canParry;
@@ -54,6 +55,7 @@ public class Enemy : MonoBehaviour
     public GameObject Player;
 
     public PlayerMovement pl;
+    public MeteorShower meteor;
 
 
     [SerializeField] private int maxHealth = 100;
@@ -144,6 +146,8 @@ public class Enemy : MonoBehaviour
        
         //DetectPlayer();
         EnemyDash();
+
+        
 
 
         if (anim.GetBool("tiredTimer"))
