@@ -1,4 +1,4 @@
-Shader "Sprites/Custom/SpriteShadow"
+Shader "Universal Render Pipeline/Custom/SpriteShadow"
 {
     Properties
     {
