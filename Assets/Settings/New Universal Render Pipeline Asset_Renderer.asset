@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Active: 1
   m_Settings:
-    AOMethod: 0
+    AOMethod: 1
     Downsample: 0
-    AfterOpaque: 0
-    Source: 1
-    NormalSamples: 1
-    Intensity: 160.2
+    AfterOpaque: 1
+    Source: 0
+    NormalSamples: 2
+    Intensity: 1.67
     DirectLightingStrength: 0
-    Radius: 26.4
+    Radius: 3.04
     Samples: 1
     BlurQuality: 0
     Falloff: 120.5
