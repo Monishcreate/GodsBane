@@ -65,12 +65,6 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         hitMovable = false;
         coolDownCounter = coolDowntime;
-
-        
-        
-
-
-
     }
 
     public void TakeDamage(int damage)
