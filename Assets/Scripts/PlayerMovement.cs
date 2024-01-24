@@ -352,14 +352,14 @@ public class PlayerMovement : MonoBehaviour
             Jump();
         }
 
-        if (RB.velocity.y > 0f)
+        if (RB.velocity.y > 0f && !isGrounded)
         {
             anim.SetTrigger("Jump");
             anim.SetBool("isJumping", true);
             anim.SetBool("isFalling", false);
         }
 
-        if (RB.velocity.y < -1f && !isGrounded)
+        if (RB.velocity.y < -0f && !isGrounded)
         {
             anim.SetTrigger("Fall");
             anim.SetBool("isFalling", true);
@@ -370,6 +370,7 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded)
         {
             anim.SetBool("isFalling", false);
+            anim.SetBool("isJumping", false);
         }
 
 
@@ -619,7 +620,7 @@ public class PlayerMovement : MonoBehaviour
         if (collision.tag == "AddForce")
         {
             canMove = false;
-            Vector2 Knockback = new Vector2(-100f + RB.velocity.x, 5f);
+            Vector2 Knockback = new Vector2(-100f, 5f);
             RB.AddForce(Knockback, ForceMode2D.Impulse);
         }
         else
@@ -683,16 +684,19 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             anim.SetBool("isCharging",true);
-           
+     
+
         }
-        else if(Input.GetButtonUp("Jump") && isGrounded)
+        if (Input.GetButtonUp("Jump") && isGrounded)
         {
-            //anim.SetTrigger("Jump");
-           
+            
             anim.SetBool("isCharging", false);
             RB.AddForce(new Vector2(RB.velocity.x, jumpForce));
+            Hitstop.instance.doHitStop(0.2f);
+            CameraShake.instance.ShakeCamera(20f);
         }
-        
+
+
     }
 
     public void initGrab()
