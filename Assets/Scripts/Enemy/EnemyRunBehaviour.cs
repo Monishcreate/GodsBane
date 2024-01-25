@@ -24,11 +24,11 @@ public class EnemyRunBehaviour : StateMachineBehaviour
             float ydiff = playerPos.position.y - rb.position.y;
             if (xdiff < 0)
             {
-               xdiff = xdiff * -1;
+               xdiff *= -1;
             }
             if (ydiff < 0)
             {
-                ydiff = ydiff * -1;
+                ydiff *= -1;
             }
 
             Vector2 target = new Vector2(playerPos.position.x, rb.position.y);//update player position to target  

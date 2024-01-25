@@ -23,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
 
     public Enemy enemy;
 
+    public GameObject CamTarget;
+
     private Animator anim;
 
     public BoxCollider2D box;
@@ -298,16 +300,35 @@ public class PlayerMovement : MonoBehaviour
         if (IsFacingRight)
         {
             PlayerFacingSide = 1;
+            //CamTarget.transform.localPosition = new Vector3(7.8f, 0, 0);
+
         }
         else
         {
             PlayerFacingSide = -1;
+            //CamTarget.transform.localPosition = new Vector3(17.8f, 0, 0);
         }
 
-        
-        
-       
-        
+
+        //if (enemy.enemyFacingDir > 0 && PlayerFacingSide > 0)
+        //{
+        //    CamTarget.transform.localPosition = new Vector3(-7.8f, 0, 0);
+        //}
+        //if (enemy.enemyFacingDir > 0 && PlayerFacingSide < 0)
+        //{
+        //    CamTarget.transform.localPosition = new Vector3(-7.8f, 0, 0);
+        //}
+        //if (enemy.enemyFacingDir < 0 && PlayerFacingSide > 0)
+        //{
+        //    CamTarget.transform.localPosition = new Vector3(7.8f, 0, 0);
+        //}
+        //if (enemy.enemyFacingDir < 0 && PlayerFacingSide < 0)
+        //{
+        //    CamTarget.transform.localPosition = new Vector3(7.8f, 0, 0);
+        //}
+
+
+
     }
 
     private void FlipCheck()
@@ -591,7 +612,7 @@ public class PlayerMovement : MonoBehaviour
             anim.SetBool("isParrying", true);
             enemy.GetComponent<Enemy>().TakeParryDamage(20);
             Hitstop.instance.doHitStop(0.2f);
-            CameraShake.instance.ShakeCamera(4f);
+            CameraShake.instance.ShakeCamera(10f);
             return;
             
         }
@@ -608,7 +629,7 @@ public class PlayerMovement : MonoBehaviour
                 Die();
             }
 
-            CameraShake.instance.ShakeCamera(4f);
+            CameraShake.instance.ShakeCamera(20f);
         }
         
 
@@ -640,7 +661,7 @@ public class PlayerMovement : MonoBehaviour
             anim.SetBool("isParrying", true);
             enemy.GetComponent<Enemy>().TakeParryDamage(20);
             Hitstop.instance.doHitStop(0.2f);
-            CameraShake.instance.ShakeCamera(4f);
+            CameraShake.instance.ShakeCamera(10f);
             return;
 
         }
@@ -657,7 +678,7 @@ public class PlayerMovement : MonoBehaviour
                 Die();
             }
 
-            CameraShake.instance.ShakeCamera(4f);
+            CameraShake.instance.ShakeCamera(20f);
         }
 
 
@@ -676,7 +697,7 @@ public class PlayerMovement : MonoBehaviour
             Die();
         }
 
-        CameraShake.instance.ShakeCamera(4f);
+        CameraShake.instance.ShakeCamera(20f);
     }
 
     public void Jump()
