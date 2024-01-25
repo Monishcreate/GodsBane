@@ -166,9 +166,10 @@ public class Enemy : MonoBehaviour
                 tploc1 = tp1.transform.position.x;
                 tploc2 = tp2.transform.position.x;
                 tploc3 = tp3.transform.position.x;
+                anim.SetTrigger("Teleport");
 
             }
-            anim.SetTrigger("Teleport");
+            
         }
 
         if (anim.GetBool("isTeleport") )

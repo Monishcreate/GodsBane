@@ -15,6 +15,10 @@ public class PlayerMovement : MonoBehaviour
 
     private SpriteRenderer rend;
 
+    public AudioClip[] backhits;
+
+    int i=0;
+
     private Color color1 = new Color(0.8f,0.8f,0.8f,1);
 
     private Color color2 = new Color(0.84f,0.42f,0,1);
@@ -48,6 +52,9 @@ public class PlayerMovement : MonoBehaviour
     int currentHealth;
 
     public Slider healthBar;
+
+    public Image wings;
+
     float sliderVelocity = 0f;
 
     #region COMPONENTS
@@ -101,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask _groundLayer;
 
 
-    private float JumpCooldown;
+    private float JumpCooldown = 10;
     #endregion
 
     private void Awake()
@@ -132,6 +139,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (i == backhits.Length)
+        {
+            i = 0;
+        }
         CharacterSwitchCounter -= Time.deltaTime;
 
         if (Input.GetKeyDown(KeyCode.Alpha1) && CharacterSwitchCounter <= 0)
@@ -174,12 +185,19 @@ public class PlayerMovement : MonoBehaviour
         #region TIMERS
         LastOnGroundTime -= Time.deltaTime;
         
-        JumpCooldown -= Time.deltaTime;
+        JumpCooldown += Time.deltaTime;
 
-        if (JumpCooldown < 0)
+        if (JumpCooldown > 10)
         {
-            JumpCooldown = 0;
+            JumpCooldown = 10;
         }
+
+        wings.fillAmount = JumpCooldown/10;
+
+        
+        
+
+        
         #endregion
 
         #region INPUT HANDLER
@@ -625,7 +643,9 @@ public class PlayerMovement : MonoBehaviour
         {
             currentHealth -= damage;
 
+            SoundManager.instance.PlaySound(backhits[i]);
 
+            i++;
 
             anim.SetTrigger("Hurt1");
 
@@ -674,7 +694,9 @@ public class PlayerMovement : MonoBehaviour
         {
             currentHealth -= damage;
 
+            SoundManager.instance.PlaySound(backhits[i]);
 
+            i++;
 
             anim.SetTrigger("Hurt2");
 
@@ -693,7 +715,9 @@ public class PlayerMovement : MonoBehaviour
     {
         currentHealth -= damage;
 
+        SoundManager.instance.PlaySound(backhits[i]);
 
+        i++;
 
         anim.SetTrigger("BackHurt");
 
@@ -709,15 +733,15 @@ public class PlayerMovement : MonoBehaviour
     {
         
 
-        if (Input.GetButtonDown("Jump") && isGrounded && JumpCooldown <= 0f)
+        if (Input.GetButtonDown("Jump") && isGrounded && JumpCooldown >= 10f)
         {
             anim.SetBool("isCharging",true);
      
 
         }
-        if (Input.GetButtonUp("Jump") && isGrounded && JumpCooldown <= 0f)
+        if (Input.GetButtonUp("Jump") && isGrounded && JumpCooldown >= 10f)
         {
-            JumpCooldown = 10f; 
+            JumpCooldown = 0f; 
             anim.SetBool("isCharging", false);
             RB.AddForce(new Vector2(RB.velocity.x, jumpForce));
             Hitstop.instance.doHitStop(0.2f);

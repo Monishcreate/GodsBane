@@ -17,7 +17,7 @@ public class EnemyRetreatBehaviour : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         Vector2 target = new Vector2(retreatPos.position.x, rb.position.y);//update player position to target
-        Vector2 newPos = Vector2.MoveTowards(rb.position, target, 10f * Time.fixedDeltaTime);//update new position to reach to newPos
+        Vector2 newPos = Vector2.MoveTowards(rb.position, target, 15f * Time.fixedDeltaTime);//update new position to reach to newPos
         rb.MovePosition(newPos);
     }
 
