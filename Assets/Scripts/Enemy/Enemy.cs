@@ -84,7 +84,7 @@ public class Enemy : MonoBehaviour
                 Die();
             }
 
-            CameraShake.instance.ShakeCamera(4f);
+            CameraShake.instance.ShakeCamera(20f);
         }
 
 
@@ -105,7 +105,7 @@ public class Enemy : MonoBehaviour
                 Die();
             }
 
-            CameraShake.instance.ShakeCamera(4f);
+            CameraShake.instance.ShakeCamera(20f);
         }
 
 
@@ -161,24 +161,34 @@ public class Enemy : MonoBehaviour
         }
         if (anim.GetBool("teleportReady"))
         {
-            tploc1 = tp1.transform.position.x;
-            tploc2 = tp2.transform.position.x;
-            tploc3 = tp3.transform.position.x;
+            if (!Player.GetComponent<Animator>().GetBool("isJumping") && !Player.GetComponent<Animator>().GetBool("isFalling"))
+            {
+                tploc1 = tp1.transform.position.x;
+                tploc2 = tp2.transform.position.x;
+                tploc3 = tp3.transform.position.x;
+
+            }
+            anim.SetTrigger("Teleport");
         }
 
-        if (anim.GetBool("isTeleport"))
+        if (anim.GetBool("isTeleport") )
         {
-            if (Player.GetComponent<Animator>().GetBool("isMovingBack"))
+            
+
+            if (Player.GetComponent<Animator>().GetBool("isMovingBack") && !Player.GetComponent<Animator>().GetBool("isJumping") && !Player.GetComponent<Animator>().GetBool("isFalling"))
             {
                 gameObject.transform.position = new Vector3(tploc1, rb.position.y);
+                anim.SetTrigger("TeleportDone");
             }
-            if (Player.GetComponent<Animator>().GetBool("isMoving") && !Player.GetComponent<Animator>().GetBool("isMovingBack"))
+            if (Player.GetComponent<Animator>().GetBool("isMoving") && !Player.GetComponent<Animator>().GetBool("isMovingBack") && !Player.GetComponent<Animator>().GetBool("isJumping") && !Player.GetComponent<Animator>().GetBool("isFalling"))
             {
                 gameObject.transform.position = new Vector3(tploc2, rb.position.y);
+                anim.SetTrigger("TeleportDone");
             }
-            if (!Player.GetComponent<Animator>().GetBool("isMoving"))
+            if (!Player.GetComponent<Animator>().GetBool("isMoving") && !Player.GetComponent<Animator>().GetBool("isJumping") && !Player.GetComponent<Animator>().GetBool("isFalling"))
             {
                 gameObject.transform.position = new Vector3(tploc3, rb.position.y);
+                anim.SetTrigger("TeleportDone");
             }
 
         }
@@ -268,7 +278,7 @@ public class Enemy : MonoBehaviour
         if (anim.GetBool("isDashing"))
         {
             dashcollider.enabled = true;
-            CameraShake.instance.ShakeCamera(7f);
+            CameraShake.instance.ShakeCamera(30f);
         }
         else
         {

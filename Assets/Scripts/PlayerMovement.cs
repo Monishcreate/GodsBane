@@ -15,11 +15,11 @@ public class PlayerMovement : MonoBehaviour
 
     private SpriteRenderer rend;
 
-    private Color color1 = Color.white;
+    private Color color1 = new Color(0.8f,0.8f,0.8f,1);
 
-    private Color color2 = new Color(1f,0.5f,0f,1f);
+    private Color color2 = new Color(0.84f,0.42f,0,1);
 
-    private Color color3 = new Color(0.75f,0.45f,1f,1f);
+    private Color color3 = new Color(0,0.69f,0.83f,1);
 
     public Enemy enemy;
 
@@ -99,6 +99,9 @@ public class PlayerMovement : MonoBehaviour
     #region LAYERS & TAGS
     [Header("Layers & Tags")]
     [SerializeField] private LayerMask _groundLayer;
+
+
+    private float JumpCooldown;
     #endregion
 
     private void Awake()
@@ -170,12 +173,17 @@ public class PlayerMovement : MonoBehaviour
         LastRMBPressedTime -= Time.deltaTime;
         #region TIMERS
         LastOnGroundTime -= Time.deltaTime;
+        
+        JumpCooldown -= Time.deltaTime;
 
-
+        if (JumpCooldown < 0)
+        {
+            JumpCooldown = 0;
+        }
         #endregion
 
         #region INPUT HANDLER
-        
+
         if (Input.GetMouseButtonDown(1) && enemy.canParry && !isSpamming && anim.GetBool("isWhite"))
         {
            
@@ -226,11 +234,7 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
-        if (Input.GetAxisRaw("Horizontal") != 0)
-        {
-            Debug.Log("bro pressing move");
-        }
-        
+      
 
         if (_moveInput.x != 0)
         {
@@ -412,6 +416,7 @@ public class PlayerMovement : MonoBehaviour
             RB.MovePosition(newPos);
 
         }
+
         if (backhitMovable) // we need to move player based on which side he is attacked from
         {
             Vector2 target = new Vector2(RB.position.x + 3f * PlayerFacingSide, RB.position.y);
@@ -702,15 +707,17 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump()
     {
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        
+
+        if (Input.GetButtonDown("Jump") && isGrounded && JumpCooldown <= 0f)
         {
             anim.SetBool("isCharging",true);
      
 
         }
-        if (Input.GetButtonUp("Jump") && isGrounded)
+        if (Input.GetButtonUp("Jump") && isGrounded && JumpCooldown <= 0f)
         {
-            
+            JumpCooldown = 10f; 
             anim.SetBool("isCharging", false);
             RB.AddForce(new Vector2(RB.velocity.x, jumpForce));
             Hitstop.instance.doHitStop(0.2f);
