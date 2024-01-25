@@ -23,6 +23,11 @@ public class Enemy : MonoBehaviour
     float sliderVelocity = 0f;
     public int enemyFacingDir;
 
+    public AudioClip[] backhits;
+
+    public AudioClip parrySound;
+
+    int i = 0;
 
     [SerializeField] GameObject tp1;
     [SerializeField] GameObject tp2;
@@ -75,7 +80,9 @@ public class Enemy : MonoBehaviour
         {
             currentHealth -= damage;
 
+            SoundManager.instance.PlaySound(backhits[i]);
 
+            i++;
 
             anim.SetTrigger("Hurt1");
 
@@ -96,7 +103,9 @@ public class Enemy : MonoBehaviour
         {
             currentHealth -= damage;
 
+            SoundManager.instance.PlaySound(backhits[i]);
 
+            i++;
 
             anim.SetTrigger("Hurt2");
 
@@ -115,8 +124,10 @@ public class Enemy : MonoBehaviour
         currentHealth -= damage;
 
 
+        SoundManager.instance.PlaySound(parrySound);
 
-     
+    
+
 
         if (currentHealth <= 0)
         {
@@ -130,6 +141,11 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+
+        if (i == backhits.Length)
+        {
+            i = 0;
+        }
 
         tiredTimer -= Time.deltaTime;
 

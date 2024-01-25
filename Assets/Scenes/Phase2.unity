@@ -30025,6 +30025,12 @@ MonoBehaviour:
   canParry: 0
   healthBar: {fileID: 319510837}
   enemyFacingDir: 0
+  backhits:
+  - {fileID: 8300000, guid: 2d8d3fed40b75014980d2a337a913f21, type: 3}
+  - {fileID: 8300000, guid: 6069cb97760fa694d9ff557ef799add3, type: 3}
+  - {fileID: 8300000, guid: 2d8d3fed40b75014980d2a337a913f21, type: 3}
+  - {fileID: 8300000, guid: 2d8d3fed40b75014980d2a337a913f21, type: 3}
+  parrySound: {fileID: 8300000, guid: ba5d01ad20fed53408d4203671d74cf9, type: 3}
   tp1: {fileID: 920854079}
   tp2: {fileID: 1645204614}
   tp3: {fileID: 546253394}
@@ -90837,11 +90843,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 362a7242cf5bc4d49a48f82ddde29310, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -90851,9 +90857,9 @@ AudioSource:
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
+  BypassEffects: 1
+  BypassListenerEffects: 1
+  BypassReverbZones: 1
   rolloffCustomCurve:
     serializedVersion: 2
     m_Curve:
