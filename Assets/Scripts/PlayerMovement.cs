@@ -17,7 +17,11 @@ public class PlayerMovement : MonoBehaviour
 
     public AudioClip[] backhits;
 
-    int i=0;
+    int backhitsindex=0;
+
+    public AudioClip[] footsteps;
+
+    int footstepsindex=0;
 
     private Color color1 = new Color(0.8f,0.8f,0.8f,1);
 
@@ -139,9 +143,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (i == backhits.Length)
+        if (backhitsindex == backhits.Length)
         {
-            i = 0;
+            backhitsindex = 0;
+        }
+        if (footstepsindex == footsteps.Length)
+        {
+            footstepsindex = 0;
         }
         CharacterSwitchCounter -= Time.deltaTime;
 
@@ -649,9 +657,9 @@ public class PlayerMovement : MonoBehaviour
         {
             currentHealth -= damage;
 
-            SoundManager.instance.PlaySound(backhits[i]);
+            SoundManager.instance.PlaySound(backhits[backhitsindex]);
 
-            i++;
+            backhitsindex++;
 
             anim.SetTrigger("Hurt1");
 
@@ -700,9 +708,9 @@ public class PlayerMovement : MonoBehaviour
         {
             currentHealth -= damage;
 
-            SoundManager.instance.PlaySound(backhits[i]);
+            SoundManager.instance.PlaySound(backhits[backhitsindex]);
 
-            i++;
+            backhitsindex++;
 
             anim.SetTrigger("Hurt2");
 
@@ -721,9 +729,9 @@ public class PlayerMovement : MonoBehaviour
     {
         currentHealth -= damage;
 
-        SoundManager.instance.PlaySound(backhits[i]);
+        SoundManager.instance.PlaySound(backhits[backhitsindex]);
 
-        i++;
+        backhitsindex++;
 
         anim.SetTrigger("BackHurt");
 
@@ -832,6 +840,12 @@ public class PlayerMovement : MonoBehaviour
             Vector2 snapPosition = SnapToPoint.transform.position;
             RB.MovePosition(snapPosition);
         }
+    }
+
+    public void PlayFootsteps()
+    {
+        SoundManager.instance.PlaySound(footsteps[footstepsindex]);
+        footstepsindex++;
     }
 
 

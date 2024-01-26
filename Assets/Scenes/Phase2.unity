@@ -61365,6 +61365,13 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 00ba1b476b07c0343acf1feeeaa8f7e3, type: 3}
   - {fileID: 8300000, guid: 6069cb97760fa694d9ff557ef799add3, type: 3}
   - {fileID: 8300000, guid: 5db479cea72661645a65bd375923e55e, type: 3}
+  footsteps:
+  - {fileID: 8300000, guid: 4d11813f5983ce047873c94858e6a6c1, type: 3}
+  - {fileID: 8300000, guid: 6154d2d90f91ac743a30a16a58f9fa32, type: 3}
+  - {fileID: 8300000, guid: 4544cd1f9b0d00a498e3602ecfffcacc, type: 3}
+  - {fileID: 8300000, guid: 2921c47b0bdded540b5b813c1e60001c, type: 3}
+  - {fileID: 8300000, guid: 825d688f717750646b0a05cb2db4ae16, type: 3}
+  - {fileID: 8300000, guid: df0f02816989a0348b801669beb67362, type: 3}
   enemy: {fileID: 680724570}
   CamTarget: {fileID: 221997173}
   box: {fileID: 1994588161}
