@@ -23,9 +23,19 @@ public class Enemy : MonoBehaviour
     float sliderVelocity = 0f;
     public int enemyFacingDir;
 
+    bool dashsoundplayed = false;
+
+    bool teleportsoundplayed = false;
+
     public AudioClip[] backhits;
 
     public AudioClip parrySound;
+
+    public AudioClip dashChargeSound;
+
+    public AudioClip dashSound;
+
+    public AudioClip teleportSound;
 
     int i = 0;
 
@@ -194,20 +204,41 @@ public class Enemy : MonoBehaviour
 
             if (Player.GetComponent<Animator>().GetBool("isMovingBack") && !Player.GetComponent<Animator>().GetBool("isJumping") && !Player.GetComponent<Animator>().GetBool("isFalling"))
             {
+
                 gameObject.transform.position = new Vector3(tploc1, rb.position.y);
                 anim.SetTrigger("TeleportDone");
+                if (!teleportsoundplayed)
+                {
+                    SoundManager.instance.PlaySound(teleportSound);
+                    teleportsoundplayed = true;
+                }
             }
-            if (Player.GetComponent<Animator>().GetBool("isMoving") && !Player.GetComponent<Animator>().GetBool("isMovingBack") && !Player.GetComponent<Animator>().GetBool("isJumping") && !Player.GetComponent<Animator>().GetBool("isFalling"))
+            else if (Player.GetComponent<Animator>().GetBool("isMoving") && !Player.GetComponent<Animator>().GetBool("isMovingBack") && !Player.GetComponent<Animator>().GetBool("isJumping") && !Player.GetComponent<Animator>().GetBool("isFalling"))
             {
                 gameObject.transform.position = new Vector3(tploc2, rb.position.y);
                 anim.SetTrigger("TeleportDone");
+                if (!teleportsoundplayed)
+                {
+                    SoundManager.instance.PlaySound(teleportSound);
+                    teleportsoundplayed = true;
+                }
             }
-            if (!Player.GetComponent<Animator>().GetBool("isMoving") && !Player.GetComponent<Animator>().GetBool("isJumping") && !Player.GetComponent<Animator>().GetBool("isFalling"))
+            else if (!Player.GetComponent<Animator>().GetBool("isMoving") && !Player.GetComponent<Animator>().GetBool("isJumping") && !Player.GetComponent<Animator>().GetBool("isFalling"))
             {
                 gameObject.transform.position = new Vector3(tploc3, rb.position.y);
                 anim.SetTrigger("TeleportDone");
+                if (!teleportsoundplayed)
+                {
+                    SoundManager.instance.PlaySound(teleportSound);
+                    teleportsoundplayed = true;
+                }
             }
+           
 
+        }
+        else
+        {
+            teleportsoundplayed = false;
         }
       
 
@@ -291,15 +322,25 @@ public class Enemy : MonoBehaviour
 
     public void EnemyDash()
     {
-
+        
+        
         if (anim.GetBool("isDashing"))
         {
+            
             dashcollider.enabled = true;
             CameraShake.instance.ShakeCamera(30f);
+            if (!dashsoundplayed)
+            {
+                SoundManager.instance.PlaySound(dashSound);
+                dashsoundplayed = true;
+            }
+            
+            
         }
         else
         {
             dashcollider.enabled = false;
+            dashsoundplayed = false;
         }
     }
 

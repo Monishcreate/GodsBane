@@ -145,8 +145,10 @@ public class PlayerMovement : MonoBehaviour
         }
         CharacterSwitchCounter -= Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.Alpha1) && CharacterSwitchCounter <= 0)
+        if (Input.GetKeyDown(KeyCode.Alpha1) && CharacterSwitchCounter <= 0 && !anim.GetBool("isWhite") && canMove && isGrounded)
         {
+            Hitstop.instance.doSlowDown(1.1f);
+            anim.SetTrigger("switchWhite");
             anim.SetBool("isWhite", true);
             anim.SetBool("isOrange", false);
             anim.SetBool("isPurple", false);
@@ -155,8 +157,10 @@ public class PlayerMovement : MonoBehaviour
             CharacterSwitchCounter = CharacterSwitchCooldown;
 
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2) && CharacterSwitchCounter <= 0)
+        if (Input.GetKeyDown(KeyCode.Alpha2) && CharacterSwitchCounter <= 0 && !anim.GetBool("isOrange") && canMove && isGrounded)
         {
+            Hitstop.instance.doSlowDown(1f);
+            anim.SetTrigger("switchOrange");
             anim.SetBool("isWhite", false);
             anim.SetBool("isOrange", true);
             anim.SetBool("isPurple", false);
@@ -164,8 +168,10 @@ public class PlayerMovement : MonoBehaviour
             CharacterSwitchCounter = CharacterSwitchCooldown;
 
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3) && CharacterSwitchCounter <= 0)
+        if (Input.GetKeyDown(KeyCode.Alpha3) && CharacterSwitchCounter <= 0 && !anim.GetBool("isPurple") && canMove && isGrounded)
         {
+            Hitstop.instance.doSlowDown(0.5f);
+            anim.SetTrigger("switchPurple");
             anim.SetBool("isWhite", false);
             anim.SetBool("isOrange", false);
             anim.SetBool("isPurple", true);
@@ -576,7 +582,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CanMoveCheck()
     {
-        if (anim.GetBool("isAttacking") || anim.GetBool("isHurt") || anim.GetBool("isParrying") || anim.GetBool("isGrabbing") || anim.GetBool("isCharging") )
+        if (anim.GetBool("isAttacking") || anim.GetBool("isHurt") || anim.GetBool("isParrying") || anim.GetBool("isGrabbing") || anim.GetBool("isCharging") || anim.GetBool("isSwitching") )
         {
             canMove = false;
         }
@@ -733,13 +739,13 @@ public class PlayerMovement : MonoBehaviour
     {
         
 
-        if (Input.GetButtonDown("Jump") && isGrounded && JumpCooldown >= 10f)
+        if (Input.GetButtonDown("Jump") && isGrounded && JumpCooldown >= 10f && !anim.GetBool("isSwitching"))
         {
             anim.SetBool("isCharging",true);
      
 
         }
-        if (Input.GetButtonUp("Jump") && isGrounded && JumpCooldown >= 10f)
+        if (Input.GetButtonUp("Jump") && isGrounded && JumpCooldown >= 10f && !anim.GetBool("isSwitching"))
         {
             JumpCooldown = 0f; 
             anim.SetBool("isCharging", false);

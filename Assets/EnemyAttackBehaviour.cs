@@ -32,7 +32,7 @@ public class EnemyAttackBehaviour : StateMachineBehaviour
         }
        
 
-        if (xdiff >= 5f)
+        if (xdiff >= 3f)
         {
             animator.SetTrigger("RunBackAtThatPussy");
         }

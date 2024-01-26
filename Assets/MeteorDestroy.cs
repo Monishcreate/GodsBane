@@ -6,24 +6,45 @@ public class MeteorDestroy : MonoBehaviour
 {
     private PlayerMovement player;
 
+    private Animator anim;
+
+    private bool hitPlayer = false;
+
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        anim = GetComponent<Animator>();
+
+        anim.Play("Spawn");
+      
+        
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground")
         {
-            Destroy(gameObject);
-            CameraShake.instance.ShakeCamera(4f);
+            anim.Play("Destroy");
+           
+            
         }
 
         if(collision.gameObject.tag == "Player")
         {
-            Destroy(gameObject);
-            CameraShake.instance.ShakeCamera(10f);
-            player.PlayerBackDamage(20);
+            anim.Play("Destroy");
 
+            if (!hitPlayer)
+            {
+                
+                player.PlayerBackDamage(20);
+                hitPlayer = true;
+            }
+           
+
+
+        }
+        else
+        {
+            hitPlayer = false;
         }
     }
 

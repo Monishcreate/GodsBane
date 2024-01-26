@@ -22,6 +22,16 @@ public class Hitstop : MonoBehaviour
         StartCoroutine(Wait(duration));
     }
 
+    public void doSlowDown(float duration)
+    {
+        if (waiting)
+        {
+            return;
+        }
+        Time.timeScale = 0.1f;
+        StartCoroutine(Wait(duration));
+    }
+
     IEnumerator Wait(float duration)
     {
         waiting = true;
