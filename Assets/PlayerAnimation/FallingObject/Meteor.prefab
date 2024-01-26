@@ -193,3 +193,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddecef80eef47514aa3f403de0c38ef4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnSound: {fileID: 8300000, guid: 1995e761b6be9b24bbbaa4d77310bc0a, type: 3}
+  destroySounds:
+  - {fileID: 8300000, guid: c401d00c96b512e488d2e3bf5d111509, type: 3}
+  - {fileID: 8300000, guid: 8b3f676fe7b41044495a2964396b8ba3, type: 3}
+  - {fileID: 8300000, guid: f01c623f724825e44a923d1ae50256f2, type: 3}
+  - {fileID: 8300000, guid: fd706038486fee041947a774223dc22e, type: 3}
