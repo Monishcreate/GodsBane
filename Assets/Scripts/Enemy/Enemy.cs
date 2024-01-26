@@ -43,6 +43,14 @@ public class Enemy : MonoBehaviour
 
     public int j;
 
+    public AudioClip[] footsteps;
+
+    int footstepsindex = 0;
+
+    public AudioClip[] backflip;
+
+    int backflipindex = 0;  
+
     [SerializeField] GameObject tp1;
     [SerializeField] GameObject tp2;
     [SerializeField] GameObject tp3;
@@ -155,6 +163,15 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        if (footstepsindex == footsteps.Length)
+        {
+            footstepsindex = 0;
+        }
+
+        if (backflipindex == backflip.Length)
+        {
+            backflipindex = 0;
+        }
 
         if (i == backhits.Length)
         {
@@ -421,6 +438,19 @@ public class Enemy : MonoBehaviour
         box.enabled = false;
         canParry = false;
     }
+
+    public void PlayFootsteps()
+    {
+        SoundManager.instance.PlaySound(footsteps[footstepsindex]);
+        footstepsindex++;
+    }
+
+    public void PlayBackFlip()
+    {
+        SoundManager.instance.PlaySound(backflip[backflipindex]);
+        backflipindex++;
+    }
+
 
 
     void Die()

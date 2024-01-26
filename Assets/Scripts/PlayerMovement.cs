@@ -3,6 +3,7 @@ using System.Collections;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
@@ -807,7 +808,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Die()
     {
-        Debug.Log("you died bro");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void DealDamage()
