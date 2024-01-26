@@ -12,6 +12,7 @@ TagManager:
   - DashPos
   - AddForce
   - Ground
+  - Enemy
   layers:
   - Default
   - TransparentFX

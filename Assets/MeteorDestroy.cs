@@ -8,9 +8,7 @@ public class MeteorDestroy : MonoBehaviour
 
     public AudioClip spawnSound;
 
-    public AudioClip[] destroySounds;
-
-    int i;
+    private Enemy enemy;
 
     private Animator anim;
 
@@ -18,6 +16,7 @@ public class MeteorDestroy : MonoBehaviour
 
     private void Start()
     {
+        enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Enemy>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         anim = GetComponent<Animator>();
 
@@ -29,9 +28,9 @@ public class MeteorDestroy : MonoBehaviour
     }
     private void Update()
     {
-        if (i == destroySounds.Length)
+        if (enemy.j == enemy.destroySounds.Length)
         {
-            i = 0;
+            enemy.j = 0;
         }
     }
     void OnCollisionEnter2D(Collision2D collision)
@@ -39,8 +38,8 @@ public class MeteorDestroy : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             anim.Play("Destroy");
-            SoundManager.instance.PlaySound(destroySounds[i]);
-            i++;
+            SoundManager.instance.PlaySound(enemy.destroySounds[enemy.j]);
+            enemy.j++;
             gameObject.GetComponent<Collider2D>().enabled = false;
            
             
@@ -49,8 +48,8 @@ public class MeteorDestroy : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             anim.Play("Destroy");
-            SoundManager.instance.PlaySound(destroySounds[i]);
-            i++;
+            SoundManager.instance.PlaySound(enemy.destroySounds[enemy.j]);
+            enemy.j++;
 
             if (!hitPlayer)
             {

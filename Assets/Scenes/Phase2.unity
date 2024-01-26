@@ -29835,7 +29835,7 @@ GameObject:
   - component: {fileID: 680724570}
   m_Layer: 8
   m_Name: Black Phase 2
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30034,6 +30034,12 @@ MonoBehaviour:
   dashChargeSound: {fileID: 8300000, guid: 071e5bf24e694414085ebe37c74f3d7d, type: 3}
   dashSound: {fileID: 8300000, guid: d4bb940c292d8cc4a9e3cb27593108a9, type: 3}
   teleportSound: {fileID: 8300000, guid: a16521f01b0edf64db1597d5a44e6e8e, type: 3}
+  destroySounds:
+  - {fileID: 8300000, guid: c401d00c96b512e488d2e3bf5d111509, type: 3}
+  - {fileID: 8300000, guid: 8b3f676fe7b41044495a2964396b8ba3, type: 3}
+  - {fileID: 8300000, guid: f01c623f724825e44a923d1ae50256f2, type: 3}
+  - {fileID: 8300000, guid: fd706038486fee041947a774223dc22e, type: 3}
+  j: 0
   tp1: {fileID: 920854079}
   tp2: {fileID: 1645204614}
   tp3: {fileID: 546253394}

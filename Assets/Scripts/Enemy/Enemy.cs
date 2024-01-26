@@ -39,6 +39,10 @@ public class Enemy : MonoBehaviour
 
     int i = 0;
 
+    public AudioClip[] destroySounds;
+
+    public int j;
+
     [SerializeField] GameObject tp1;
     [SerializeField] GameObject tp2;
     [SerializeField] GameObject tp3;
