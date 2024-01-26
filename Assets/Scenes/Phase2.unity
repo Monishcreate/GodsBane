@@ -30030,15 +30030,13 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6069cb97760fa694d9ff557ef799add3, type: 3}
   - {fileID: 8300000, guid: 2d8d3fed40b75014980d2a337a913f21, type: 3}
   - {fileID: 8300000, guid: 2d8d3fed40b75014980d2a337a913f21, type: 3}
-  parrySound: {fileID: 8300000, guid: ba5d01ad20fed53408d4203671d74cf9, type: 3}
+  parrySound: {fileID: 8300000, guid: 78a4d338584d15b4bb22ecbb47fcae67, type: 3}
   dashChargeSound: {fileID: 8300000, guid: 071e5bf24e694414085ebe37c74f3d7d, type: 3}
   dashSound: {fileID: 8300000, guid: d4bb940c292d8cc4a9e3cb27593108a9, type: 3}
   teleportSound: {fileID: 8300000, guid: a16521f01b0edf64db1597d5a44e6e8e, type: 3}
   destroySounds:
   - {fileID: 8300000, guid: c401d00c96b512e488d2e3bf5d111509, type: 3}
-  - {fileID: 8300000, guid: 8b3f676fe7b41044495a2964396b8ba3, type: 3}
-  - {fileID: 8300000, guid: f01c623f724825e44a923d1ae50256f2, type: 3}
-  - {fileID: 8300000, guid: fd706038486fee041947a774223dc22e, type: 3}
+  - {fileID: 8300000, guid: c401d00c96b512e488d2e3bf5d111509, type: 3}
   j: 0
   tp1: {fileID: 920854079}
   tp2: {fileID: 1645204614}
@@ -77661,15 +77659,15 @@ AudioReverbZone:
   m_Enabled: 1
   m_MinDistance: 584.43
   m_MaxDistance: 584.43
-  m_ReverbPreset: 21
+  m_ReverbPreset: 7
   m_Room: -1000
-  m_RoomHF: 0
-  m_DecayTime: 1.65
-  m_DecayHFRatio: 1.5
-  m_Reflections: -1363
-  m_ReflectionsDelay: 0.008
-  m_Reverb: -1153
-  m_ReverbDelay: 0.012
+  m_RoomHF: -476
+  m_DecayTime: 4.32
+  m_DecayHFRatio: 0.59
+  m_Reflections: -789
+  m_ReflectionsDelay: 0.02
+  m_Reverb: -289
+  m_ReverbDelay: 0.03
   m_HFReference: 5000
   m_Diffusion: 100
   m_Density: 100
