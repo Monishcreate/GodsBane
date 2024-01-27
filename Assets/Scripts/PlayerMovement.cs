@@ -684,6 +684,42 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    public void PlayerTakeJumpDamage(int damage)//we gotta make 2 diff ones for taking damage from front and back and use 2 different colliders to do this
+    {
+
+
+        if (hasParried)
+        {
+
+            anim.SetTrigger("Parry1");
+            anim.SetBool("isParrying", true);
+            enemy.GetComponent<Enemy>().TakeParryDamage(damage);
+            Hitstop.instance.doHitStop(0.5f);
+            CameraShake.instance.ShakeCamera(15f);
+            return;
+
+        }
+        else
+        {
+            currentHealth -= damage;
+
+            SoundManager.instance.PlaySound(backhits[backhitsindex]);
+
+            backhitsindex++;
+
+            anim.SetTrigger("Hurt1");
+
+            if (currentHealth <= 0)
+            {
+                Die();
+            }
+
+            CameraShake.instance.ShakeCamera(20f);
+        }
+
+
+    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

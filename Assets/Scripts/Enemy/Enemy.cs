@@ -318,6 +318,26 @@ public class Enemy : MonoBehaviour
 
     }
 
+    public void EnemyDealJumpDamage()
+    {
+        Collider2D[] PlayersFrontDamage = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, playerfrontlayer);
+        if (PlayersFrontDamage.Length > 0)
+        {
+            Debug.Log("Player HIT");
+            pl.PlayerTakeJumpDamage(250);
+            coolDownCounter = coolDowntime;
+        }
+
+        Collider2D[] PlayersBackDamage = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, playerbacklayer);
+        if (PlayersBackDamage.Length > 0)
+        {
+            Debug.Log("Player HIT");
+            pl.PlayerBackDamage(250);
+            coolDownCounter = coolDowntime;
+        }
+
+    }
+
 
     public void EnemyDealDamageLower()
     {

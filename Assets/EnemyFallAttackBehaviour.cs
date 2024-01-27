@@ -6,6 +6,8 @@ public class EnemyFallAttackBehaviour : StateMachineBehaviour
 {
     private Enemy enemy;
     private Transform playerPos;
+
+
     Rigidbody2D rb;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -15,6 +17,10 @@ public class EnemyFallAttackBehaviour : StateMachineBehaviour
         enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Enemy>();
 
         rb = animator.GetComponent<Rigidbody2D>();
+
+        enemy.ParryableWindowEnable();
+
+
 
     }
 
@@ -39,8 +45,10 @@ public class EnemyFallAttackBehaviour : StateMachineBehaviour
 
         if (xdiff <= 2f && ydiff <= 0.5f)
         {
-            enemy.EnemyDealDamage();
+            enemy.EnemyDealJumpDamage();
+            enemy.ParryableWindowDisable();
             animator.SetTrigger("Attack");
+            
         }
 
 
