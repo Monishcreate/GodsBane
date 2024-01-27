@@ -24,6 +24,8 @@ public class PlayerMovement : MonoBehaviour
 
     int footstepsindex=0;
 
+    public AudioClip jumpSound;
+
     private Color color1 = new Color(0.8f,0.8f,0.8f,1);
 
     private Color color2 = new Color(0.84f,0.42f,0,1);
@@ -134,8 +136,15 @@ public class PlayerMovement : MonoBehaviour
 
         rend.color = color1;
 
+        if (transform.localScale == new Vector3(1, 1, 1))
+        {
+            IsFacingRight = true;
+        }
+        else
+        {
+            IsFacingRight = false;
+        }
         
-        IsFacingRight = true;
         anim = GetComponent<Animator>();
 
         anim.SetBool("isWhite", true);
@@ -648,7 +657,7 @@ public class PlayerMovement : MonoBehaviour
             
             anim.SetTrigger("Parry0");
             anim.SetBool("isParrying", true);
-            enemy.GetComponent<Enemy>().TakeParryDamage(20);
+            enemy.GetComponent<Enemy>().TakeParryDamage(damage);
             Hitstop.instance.doHitStop(0.2f);
             CameraShake.instance.ShakeCamera(10f);
             return;
@@ -688,7 +697,14 @@ public class PlayerMovement : MonoBehaviour
         {
             canMove = true;
         }
+
+        if (collision.tag == "FallDown")
+        {
+            PlayerTakeDamage(500);
+        }
     }
+
+   
 
     public void PlayerTakeDamageLower(int damage)//we gotta make 2 diff ones for taking damage from front and back and use 2 different colliders to do this
     {
@@ -699,7 +715,7 @@ public class PlayerMovement : MonoBehaviour
 
             anim.SetTrigger("Parry1");
             anim.SetBool("isParrying", true);
-            enemy.GetComponent<Enemy>().TakeParryDamage(20);
+            enemy.GetComponent<Enemy>().TakeParryDamage(damage);
             Hitstop.instance.doHitStop(0.2f);
             CameraShake.instance.ShakeCamera(10f);
             return;
@@ -756,6 +772,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetButtonUp("Jump") && isGrounded && JumpCooldown >= 10f && !anim.GetBool("isSwitching"))
         {
+            SoundManager.instance.PlaySound(jumpSound);
             JumpCooldown = 0f; 
             anim.SetBool("isCharging", false);
             RB.AddForce(new Vector2(RB.velocity.x, jumpForce));

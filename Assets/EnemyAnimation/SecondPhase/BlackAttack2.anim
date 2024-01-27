@@ -510,15 +510,15 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.73333335
-    functionName: ParryableWindowEnable
+  - time: 0.6166667
+    functionName: SetBoolAttackMove
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.76666665
-    functionName: SetBoolAttackMove
+  - time: 0.73333335
+    functionName: ParryableWindowEnable
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -545,7 +545,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1.6333333
+  - time: 1.4833333
     functionName: SetBoolAttackMove
     data: 
     objectReferenceParameter: {fileID: 0}

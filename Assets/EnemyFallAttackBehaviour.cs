@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAttackBehaviour : StateMachineBehaviour
+public class EnemyFallAttackBehaviour : StateMachineBehaviour
 {
+    private Enemy enemy;
     private Transform playerPos;
     Rigidbody2D rb;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         playerPos = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+
+        enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Enemy>();
 
         rb = animator.GetComponent<Rigidbody2D>();
 
@@ -23,32 +26,30 @@ public class EnemyAttackBehaviour : StateMachineBehaviour
         float ydiff = playerPos.position.y - rb.position.y;
         if (xdiff < 0)
         {
-            xdiff =  xdiff * -1;
+            xdiff *= -1;
         }
-
         if (ydiff < 0)
         {
-            ydiff = ydiff * -1;
-        }
-       
-
-        if (xdiff >= 4f)
-        {
-            animator.SetTrigger("RunBackAtThatPussy");
+            ydiff *= -1;
         }
 
-        else if (ydiff >= 5f)
+        Vector2 target = new Vector2(playerPos.position.x - 1.5f * enemy.enemyFacingDir, playerPos.position.y);//update player position to target  
+        Vector2 newPos = Vector2.MoveTowards(rb.position, target, 40f * Time.fixedDeltaTime);//update new position to reach to newPos
+        rb.MovePosition(newPos);
+
+        if (xdiff <= 2f && ydiff <= 0.5f)
         {
-            animator.SetTrigger("RunBackAtThatPussy");
+            enemy.EnemyDealDamage();
+            animator.SetTrigger("Attack");
         }
-        
-       
+
 
 
 
 
         //move the enemy to newPos which keeps updating
     }
+
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{
