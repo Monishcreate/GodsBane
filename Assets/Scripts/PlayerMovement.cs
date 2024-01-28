@@ -175,7 +175,7 @@ public class PlayerMovement : MonoBehaviour
             CharacterSwitchCounter = CharacterSwitchCooldown;
 
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2) && CharacterSwitchCounter <= 0 && !anim.GetBool("isOrange") && canMove && isGrounded && !OrangeBossScene.instance.isOrangeScene && OrangeBossScene.instance.isBlackScene)
+        if (Input.GetKeyDown(KeyCode.Alpha2) && CharacterSwitchCounter <= 0 && !anim.GetBool("isOrange") && canMove && isGrounded && (OrangeBossScene.instance.isBlackScene || OrangeBossScene.instance.isBlueScene))
         {
             Hitstop.instance.doSlowDown(1f);
             anim.SetTrigger("switchOrange");
@@ -186,7 +186,7 @@ public class PlayerMovement : MonoBehaviour
             CharacterSwitchCounter = CharacterSwitchCooldown;
 
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3) && CharacterSwitchCounter <= 0 && !anim.GetBool("isPurple") && canMove && isGrounded && !OrangeBossScene.instance.isOrangeScene && OrangeBossScene.instance.isBlackScene)
+        if (Input.GetKeyDown(KeyCode.Alpha3) && CharacterSwitchCounter <= 0 && !anim.GetBool("isPurple") && canMove && isGrounded && OrangeBossScene.instance.isBlackScene)
         {
             Hitstop.instance.doSlowDown(0.5f);
             anim.SetTrigger("switchPurple");

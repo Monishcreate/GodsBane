@@ -40,6 +40,15 @@ public class OrangeBossScene : MonoBehaviour
             
             isBlackScene = false;
         }
+
+        if (SceneManager.GetActiveScene().name == "Blue")
+        {
+            isBlueScene = true;
+        }
+        else
+        {
+            isBlueScene = false;
+        }
     }
 
 }
