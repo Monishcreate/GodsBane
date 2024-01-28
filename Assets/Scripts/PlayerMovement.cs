@@ -175,7 +175,7 @@ public class PlayerMovement : MonoBehaviour
             CharacterSwitchCounter = CharacterSwitchCooldown;
 
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2) && CharacterSwitchCounter <= 0 && !anim.GetBool("isOrange") && canMove && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Alpha2) && CharacterSwitchCounter <= 0 && !anim.GetBool("isOrange") && canMove && isGrounded && !OrangeBossScene.instance.isOrangeScene && OrangeBossScene.instance.isBlackScene)
         {
             Hitstop.instance.doSlowDown(1f);
             anim.SetTrigger("switchOrange");
@@ -186,7 +186,7 @@ public class PlayerMovement : MonoBehaviour
             CharacterSwitchCounter = CharacterSwitchCooldown;
 
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3) && CharacterSwitchCounter <= 0 && !anim.GetBool("isPurple") && canMove && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Alpha3) && CharacterSwitchCounter <= 0 && !anim.GetBool("isPurple") && canMove && isGrounded && !OrangeBossScene.instance.isOrangeScene && OrangeBossScene.instance.isBlackScene)
         {
             Hitstop.instance.doSlowDown(0.5f);
             anim.SetTrigger("switchPurple");
@@ -215,8 +215,11 @@ public class PlayerMovement : MonoBehaviour
         {
             JumpCooldown = 10;
         }
-
-        wings.fillAmount = JumpCooldown/10;
+        if (!OrangeBossScene.instance.isOrangeScene)
+        {
+            wings.fillAmount = JumpCooldown / 10;
+        }
+        
 
         
         
@@ -694,8 +697,8 @@ public class PlayerMovement : MonoBehaviour
             anim.SetTrigger("Parry1");
             anim.SetBool("isParrying", true);
             enemy.GetComponent<Enemy>().TakeParryDamage(damage);
-            Hitstop.instance.doHitStop(0.5f);
-            CameraShake.instance.ShakeCamera(15f);
+            Hitstop.instance.doHitStop(0.2f);
+            CameraShake.instance.ShakeCamera(20f);
             return;
 
         }

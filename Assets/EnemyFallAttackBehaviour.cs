@@ -7,6 +7,10 @@ public class EnemyFallAttackBehaviour : StateMachineBehaviour
     private Enemy enemy;
     private Transform playerPos;
 
+    private Transform enemyPos;
+
+    Vector2 target;
+
 
     Rigidbody2D rb;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -16,9 +20,13 @@ public class EnemyFallAttackBehaviour : StateMachineBehaviour
 
         enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Enemy>();
 
+        enemyPos = animator.GetComponent<Transform>();
+
         rb = animator.GetComponent<Rigidbody2D>();
 
         enemy.ParryableWindowEnable();
+
+        target = new Vector2(playerPos.position.x - 0.1f * enemy.enemyFacingDir, playerPos.position.y);
 
 
 
@@ -39,17 +47,22 @@ public class EnemyFallAttackBehaviour : StateMachineBehaviour
             ydiff *= -1;
         }
 
-        Vector2 target = new Vector2(playerPos.position.x - 1.5f * enemy.enemyFacingDir, playerPos.position.y);//update player position to target  
+        
+
+        //update player position to target  
         Vector2 newPos = Vector2.MoveTowards(rb.position, target, 40f * Time.fixedDeltaTime);//update new position to reach to newPos
         rb.MovePosition(newPos);
 
-        if (xdiff <= 2f && ydiff <= 0.5f)
+        
+
+        if (ydiff <= 0.1f)
         {
             enemy.EnemyDealJumpDamage();
             enemy.ParryableWindowDisable();
             animator.SetTrigger("Attack");
-            
         }
+
+
 
 
 

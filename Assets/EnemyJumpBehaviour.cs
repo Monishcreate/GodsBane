@@ -40,7 +40,7 @@ public class EnemyJumpBehaviour : StateMachineBehaviour
         if (xdiff <= 5f)
         {
             
-            animator.SetTrigger("Attack");
+            animator.SetTrigger("Fall");
             
         }
 
