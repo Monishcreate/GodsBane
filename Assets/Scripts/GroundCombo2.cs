@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class GroundCombo2 : MeleeBaseState
 {
-    public ComboCharacter cc;
+    public PlayerMovement cc;
     public override void OnEnter(StateMachine _stateMachine)
     {
         base.OnEnter(_stateMachine);
 
         //Attack
-        cc = GetComponent<ComboCharacter>();
+        cc = GetComponent<PlayerMovement>();
         cc.cooldown = 1f;
         attackIndex = 3;
         duration = 0.63f;

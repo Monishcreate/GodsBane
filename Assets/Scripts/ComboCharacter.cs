@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class ComboCharacter : MonoBehaviour
 {
-    
+
     private StateMachine meleeStateMachine;
 
-    [SerializeField] public Collider2D hitbox;
-    [SerializeField] public GameObject Hiteffect;
+  
     public float cooldown;
     
     // Start is called before the first frame update
@@ -21,7 +20,7 @@ public class ComboCharacter : MonoBehaviour
     void Update()
     {
         cooldown -= Time.deltaTime;
-        if (Input.GetMouseButtonDown(0) && meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState) && cooldown <= 0)
+        if (Input.GetButtonDown("Fire1") && meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState) && cooldown <= 0)
         {
             meleeStateMachine.SetNextState(new GroundEntry());
         }

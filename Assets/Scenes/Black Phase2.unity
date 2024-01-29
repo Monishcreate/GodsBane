@@ -61360,7 +61360,6 @@ GameObject:
   - component: {fileID: 1484328867}
   - component: {fileID: 1484328866}
   - component: {fileID: 1484328868}
-  - component: {fileID: 1484328869}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -61617,8 +61616,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b99fadeb332a29d48860c7348a92c084, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitbox: {fileID: 1147523527}
-  Hiteffect: {fileID: 0}
   cooldown: 0
 --- !u!114 &1484328868
 MonoBehaviour:
@@ -61632,23 +61629,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a2d673edcdc21f4383b162e8eb065d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!320 &1484328869
-PlayableDirector:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1484328859}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 5ac527b309c5964459a0c674793f8c4e, type: 2}
-  m_InitialState: 1
-  m_WrapMode: 2
-  m_DirectorUpdateMode: 1
-  m_InitialTime: 0
-  m_SceneBindings: []
-  m_ExposedReferences:
-    m_References: []
 --- !u!1 &1486156466
 GameObject:
   m_ObjectHideFlags: 0

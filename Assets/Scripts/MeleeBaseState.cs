@@ -15,11 +15,9 @@ public class MeleeBaseState : State
 
     protected int attackIndex;
 
-    protected Collider2D hitCollider;
+  
 
-    private List<Collider2D> collidersDamaged;
-
-    private GameObject HitEffectPrefab;
+    
 
     private float AttackPressedTimer = 0;
 
@@ -27,9 +25,8 @@ public class MeleeBaseState : State
     {
         base.OnEnter(_stateMachine);
         animator = GetComponent<Animator>();
-        collidersDamaged = new List<Collider2D>();
-        hitCollider = GetComponent<ComboCharacter>().hitbox;
-        HitEffectPrefab = GetComponent<ComboCharacter>().Hiteffect;
+        
+        
         
     }
 
@@ -39,11 +36,6 @@ public class MeleeBaseState : State
         AttackPressedTimer -= Time.deltaTime;
         
 
-        if (animator.GetFloat("Weapon.Active") > 0f )
-        {
-            
-            Attack();
-        }
         
         if(Input.GetMouseButtonDown(0))
         {
@@ -56,32 +48,11 @@ public class MeleeBaseState : State
             shouldCombo = true;
         }
     }
-    protected void Attack()
-    {
-        Collider2D[] collidersToDamage = new Collider2D[10];
-        ContactFilter2D filter = new ContactFilter2D();
-        filter.useTriggers = true;
-        int colliderCount = Physics2D.OverlapCollider(hitCollider, filter, collidersToDamage);
-        for ( int i = 0; i < colliderCount; i++ )
-        {
-            if(!collidersDamaged.Contains(collidersToDamage[i] ) )
-            {
-                TeamComponent hitTeamComponent = collidersToDamage[i].GetComponentInChildren<TeamComponent>();
-                
-                if( hitTeamComponent && hitTeamComponent.teamIndex == TeamIndex.Enemy)
-                {
-                    GameObject.Instantiate(HitEffectPrefab, collidersToDamage[i].transform);
-                    Debug.Log("Enemy Has Taken:" + attackIndex + "Damage");
-                    collidersDamaged.Add(collidersToDamage[i]);
-                }
-            }
-        }
-    }
 
-    protected void MyAttack()
-    {
-        
-    }
+
+
+
+
 
     public override void OnExit()
     {

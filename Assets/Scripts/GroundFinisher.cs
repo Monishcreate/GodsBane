@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class GroundFinisher : MeleeBaseState
 {
-    public ComboCharacter cc;
+    public PlayerMovement cc;
     public override void OnEnter(StateMachine _stateMachine)
     {
         base.OnEnter(_stateMachine);
 
         //Attack
-        cc = GetComponent<ComboCharacter>();
+        cc = GetComponent<PlayerMovement>();
         cc.cooldown = 1f;
         attackIndex = 5;
         duration = 1.18f;

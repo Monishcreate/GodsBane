@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GroundEntry : MeleeBaseState
 {
-    public ComboCharacter cc;
+    public PlayerMovement cc;
     
 
    
@@ -17,7 +17,7 @@ public class GroundEntry : MeleeBaseState
         
 
         //Attack
-        cc = GetComponent<ComboCharacter>();
+        cc = GetComponent<PlayerMovement>();
         attackIndex = 1;
         cc.cooldown = 1f;
         

@@ -34,6 +34,8 @@ public class PlayerMovement : MonoBehaviour
 
     public Enemy enemy;
 
+   
+
     public GameObject CamTarget;
 
     private Animator anim;
@@ -116,18 +118,33 @@ public class PlayerMovement : MonoBehaviour
 
 
     private float JumpCooldown = 10;
+
+
     #endregion
+
+    private StateMachine meleeStateMachine;
+
+
+    public float cooldown;
+
+    // Start is called before the first frame update
+   
 
     private void Awake()
     {
        
         RB = GetComponent<Rigidbody2D>();
+        
      
       
     }
 
     private void Start()
+
+        
     {
+        meleeStateMachine = GetComponent<StateMachine>();
+        //ib = GameObject.FindGameObjectWithTag("IceBall").GetComponent<IceBall>();
         hitMovable = false;
         canMove = true;
         currentHealth = maxHealth;
@@ -153,7 +170,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (backhitsindex == backhits.Length)
+        cooldown -= Time.deltaTime;
+
+
+        if (Input.GetButtonDown("Fire1") /*&& meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState) */&& cooldown <= 0)
+        {
+             meleeStateMachine.SetNextState(new GroundEntry());
+        }
+
+    if (backhitsindex == backhits.Length)
         {
             backhitsindex = 0;
         }
@@ -253,7 +278,7 @@ public class PlayerMovement : MonoBehaviour
             
         }
        
-        else if (enemy.canParry == false)
+        else if (enemy.canParry == false )
         {
             if (Input.GetMouseButtonDown(1))
             {
@@ -283,6 +308,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (_moveInput.x != 0)
         {
+
             CheckDirectionToFace(_moveInput.x > 0);
             anim.SetBool("isMoving", true);
             
@@ -666,6 +692,7 @@ public class PlayerMovement : MonoBehaviour
             return;
             
         }
+       
         else
         {
             currentHealth -= damage;
@@ -743,7 +770,8 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-   
+
+
 
     public void PlayerTakeDamageLower(int damage)//we gotta make 2 diff ones for taking damage from front and back and use 2 different colliders to do this
     {
@@ -780,6 +808,10 @@ public class PlayerMovement : MonoBehaviour
 
 
     }
+
+
+
+
 
     public void PlayerBackDamage(int damage)
     {

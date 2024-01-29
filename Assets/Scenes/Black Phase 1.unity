@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.268676, g: 0.18628193, b: 0.07123283, a: 1}
+  m_IndirectSpecularColor: {r: 0.46938, g: 0.49845943, b: 0.5110744, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -17885,6 +17885,53 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &412442528
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 412442530}
+  - component: {fileID: 412442529}
+  m_Layer: 0
+  m_Name: OrangeBossScene
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &412442529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 412442528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5580a63664c4a1d4580860b570d94c0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isOrangeScene: 0
+  isBlueScene: 0
+  isBlackScene: 0
+--- !u!4 &412442530
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 412442528}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -106.07391, y: -1.7153577, z: 2.0361893}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &415995260
 GameObject:
   m_ObjectHideFlags: 0
@@ -41056,7 +41103,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963820933}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
@@ -61413,6 +61460,7 @@ MonoBehaviour:
   _groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  cooldown: 0
 --- !u!95 &1484328865
 Animator:
   serializedVersion: 5
@@ -61459,8 +61507,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b99fadeb332a29d48860c7348a92c084, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitbox: {fileID: 1147523527}
-  Hiteffect: {fileID: 0}
   cooldown: 0
 --- !u!114 &1484328868
 MonoBehaviour:
@@ -91726,6 +91772,7 @@ SceneRoots:
   - {fileID: 1250511982}
   - {fileID: 1474894039}
   - {fileID: 2065382145}
+  - {fileID: 412442530}
   - {fileID: 1386629325}
   - {fileID: 322139159}
   - {fileID: 580820146}
