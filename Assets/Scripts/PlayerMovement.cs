@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     //just paste in all the parameters, though you will need to manuly change all references in this script
     public PlayerData Data;
 
+    
+
     private SpriteRenderer rend;
 
     public AudioClip[] backhits;
@@ -23,6 +25,8 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip[] footsteps;
 
     int footstepsindex=0;
+
+    public AudioClip parrySound;
 
     public AudioClip jumpSound;
 
@@ -51,6 +55,7 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask enemyLayers;
     public LayerMask snaptoLayers;
     public LayerMask parryLayers;
+    public LayerMask iceparryLayers;
 
     private bool hitMovable;
     private bool backhitMovable;
@@ -59,6 +64,9 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private int maxHealth = 100;
     int currentHealth;
+
+    [SerializeField] private int maxFreezeHealth = 4;
+    int currentFreezeHealth;
 
     public Slider healthBar;
 
@@ -79,6 +87,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isGrounded = true;
     private bool canMove = true;
     private bool hasParried = false;
+    private bool hasiceParried = false;
     private bool isSpamming = false;
     public bool IsFacingRight { get; private set; }
     public float LastOnGroundTime { get; private set; }
@@ -149,7 +158,12 @@ public class PlayerMovement : MonoBehaviour
         canMove = true;
         currentHealth = maxHealth;
 
+        currentFreezeHealth = maxFreezeHealth;
+
         rend = GetComponent<SpriteRenderer>();
+
+        
+        
 
         rend.color = color1;
 
@@ -244,17 +258,26 @@ public class PlayerMovement : MonoBehaviour
         {
             wings.fillAmount = JumpCooldown / 10;
         }
-        
 
-        
-        
 
-        
+
+
+
+
         #endregion
 
         #region INPUT HANDLER
+        Collider2D[] IceParryTargets = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, iceparryLayers);
+        if (IceParryTargets.Length > 0f)
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                hasiceParried = true;
+            }
+        }
 
-        if (Input.GetMouseButtonDown(1) && enemy.canParry && !isSpamming && anim.GetBool("isWhite"))
+
+        if (Input.GetMouseButtonDown(1) && enemy.canParry  && !isSpamming && anim.GetBool("isWhite"))
         {
            
             Collider2D[] ParryTargets = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, parryLayers);
@@ -277,8 +300,10 @@ public class PlayerMovement : MonoBehaviour
            
             
         }
-       
-        else if (enemy.canParry == false )
+
+        
+
+        else if (enemy.canParry == false)
         {
             if (Input.GetMouseButtonDown(1))
             {
@@ -714,6 +739,55 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    public bool PlayerTakeFreezeDamage(int damage)//we gotta make 2 diff ones for taking damage from front and back and use 2 different colliders to do this
+    {
+
+
+        if(hasiceParried)
+        {
+
+            anim.SetTrigger("Parry1");
+            anim.SetBool("isParrying", true);
+            SoundManager.instance.PlaySound(parrySound);
+            Hitstop.instance.doHitStop(0.2f);
+            CameraShake.instance.ShakeCamera(10f);
+            hasiceParried = false;
+            return true;
+
+        }
+
+        else
+        {
+            currentHealth -= 10;
+
+            currentFreezeHealth -= damage;
+
+            SoundManager.instance.PlaySound(backhits[backhitsindex]);
+
+            backhitsindex++;
+
+            anim.SetTrigger("Hurt1");
+
+            if (currentHealth <= 0)
+            {
+                Die();
+            }
+            if (currentFreezeHealth <= 0)
+            {
+                FreezePlayer();
+            }
+            CameraShake.instance.ShakeCamera(20f);
+
+            return false;
+        }
+
+
+    }
+    void FreezePlayer()
+    {
+        anim.SetTrigger("GoToFreeze");
+    }
+
     public void PlayerTakeJumpDamage(int damage)//we gotta make 2 diff ones for taking damage from front and back and use 2 different colliders to do this
     {
 
@@ -768,6 +842,7 @@ public class PlayerMovement : MonoBehaviour
         {
             PlayerTakeDamage(500);
         }
+
     }
 
 

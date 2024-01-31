@@ -6,6 +6,16 @@ public class IceBall : MonoBehaviour
 {
     private PlayerMovement player;
 
+    private Transform playerPos;
+
+ 
+
+    private bool deflected = false;
+
+    
+
+    private Enemy enemy;
+
     public AudioClip spawnSound;
 
     public bool canParry;
@@ -20,6 +30,10 @@ public class IceBall : MonoBehaviour
        
       
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        
+        enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Enemy>();
+
+        
 
         canParry = true;
 
@@ -29,9 +43,29 @@ public class IceBall : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RB.velocity = new Vector2( movement, RB.velocity.y); 
+        if (!deflected)
+        {
+
+            Vector2 target = new Vector2(player.RB.position.x, RB.position.y);//update player position to target  
+            Vector2 newPos = Vector2.MoveTowards(RB.position, target, 20f * Time.fixedDeltaTime);//update new position to reach to newPos
+            RB.MovePosition(newPos);
+
+        }
+        else
+        {
+            Vector2 target = new Vector2(enemy.rb.position.x, RB.position.y);//update player position to target  
+            Vector2 newPos = Vector2.MoveTowards(RB.position, target, 20f * Time.fixedDeltaTime);//update new position to reach to newPos
+            RB.MovePosition(newPos);
+        }
+       
+
+        
         
     }
+
+    
+
+    
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Player")
@@ -42,13 +76,18 @@ public class IceBall : MonoBehaviour
             if (!hitPlayer)
             {
 
-                player.PlayerTakeDamage(20);
+                deflected = player.PlayerTakeFreezeDamage(2);
                 canParry = false;
 
                 hitPlayer = true;
                 gameObject.GetComponent<Collider2D>().enabled = false;
 
-                Destroy(gameObject);
+               
+                if (!deflected)
+                {
+                    Destroy(gameObject);
+                }
+                
             }
 
 
@@ -63,6 +102,7 @@ public class IceBall : MonoBehaviour
         {
             
             gameObject.GetComponent<Collider2D>().enabled = false;
+         
             Destroy(gameObject);
 
 

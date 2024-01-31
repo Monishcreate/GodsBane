@@ -61982,8 +61982,12 @@ MonoBehaviour:
     m_Bits: 1024
   parryLayers:
     serializedVersion: 2
-    m_Bits: 2105344
+    m_Bits: 8192
+  iceparryLayers:
+    serializedVersion: 2
+    m_Bits: 2097152
   maxHealth: 400
+  maxFreezeHealth: 4
   healthBar: {fileID: 1347357742}
   wings: {fileID: 1866456325}
   isGrounded: 1
@@ -62034,7 +62038,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1484328859}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b99fadeb332a29d48860c7348a92c084, type: 3}
   m_Name: 
@@ -80240,7 +80244,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1882094533
