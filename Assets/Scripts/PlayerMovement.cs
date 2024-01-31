@@ -98,6 +98,8 @@ public class PlayerMovement : MonoBehaviour
 
     private float CharacterSwitchCounter;
 
+    private float freezeTimer;
+
     
 
 
@@ -185,6 +187,18 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         cooldown -= Time.deltaTime;
+
+        freezeTimer -= Time.deltaTime;
+
+        if (anim.GetBool("freezeTimer"))
+        {
+            freezeTimer = 7f;
+        }
+
+        if (anim.GetBool("frozen") && freezeTimer <= 0)
+        {
+            anim.SetTrigger("ExitFreeze");
+        }
 
 
         if (Input.GetButtonDown("Fire1") /*&& meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState) */&& cooldown <= 0)
@@ -654,7 +668,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CanMoveCheck()
     {
-        if (anim.GetBool("isAttacking") || anim.GetBool("isHurt") || anim.GetBool("isParrying") || anim.GetBool("isGrabbing") || anim.GetBool("isCharging") || anim.GetBool("isSwitching") )
+        if (anim.GetBool("isAttacking") || anim.GetBool("isHurt") || anim.GetBool("isParrying") || anim.GetBool("isGrabbing") || anim.GetBool("isCharging") || anim.GetBool("isSwitching") || anim.GetBool("frozen" ))
         {
             canMove = false;
         }
@@ -758,7 +772,7 @@ public class PlayerMovement : MonoBehaviour
 
         else
         {
-            currentHealth -= 10;
+            currentHealth -= 50;
 
             currentFreezeHealth -= damage;
 

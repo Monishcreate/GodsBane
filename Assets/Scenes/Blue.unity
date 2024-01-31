@@ -61967,6 +61967,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 2921c47b0bdded540b5b813c1e60001c, type: 3}
   - {fileID: 8300000, guid: 825d688f717750646b0a05cb2db4ae16, type: 3}
   - {fileID: 8300000, guid: df0f02816989a0348b801669beb67362, type: 3}
+  parrySound: {fileID: 0}
   jumpSound: {fileID: 8300000, guid: 91fa59f76dfa20940bc4d79ca0af234f, type: 3}
   enemy: {fileID: 680724570}
   CamTarget: {fileID: 221997173}

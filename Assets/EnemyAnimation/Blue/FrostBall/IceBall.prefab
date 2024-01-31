@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 8594818213489687748}
   - component: {fileID: 4947947538321413284}
   - component: {fileID: 6629669687299320876}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: IceBall
   m_TagString: IceBall
   m_Icon: {fileID: 0}
@@ -208,7 +208,7 @@ CircleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4194304
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
