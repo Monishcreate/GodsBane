@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     //WE GOTTA MAKE SOME CHANGES TO FACILITATE ENEMY DIRECTION TURNING AS WELL
     //AND ALSOOO OUR ENEMY IS USING KINEMATIC RIGIDBODY SO WE GOTTA MAKE CODE TO DETECT WALLS AND SHIT AS WELL :SOB:
     //AND WE GOTTA HANDLE SOME GLITCHES WHEN ENEMY ATTACKS OUR PLAYER
+
     public Rigidbody2D rb;
     public Animator anim;
     public bool hitMovable;
@@ -87,15 +88,54 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private int maxHealth = 100;
     int currentHealth;
+
+    private int maxFreezeHealth = 4;
+    int currentFreezeHealth;
+
     // Start is called before the first frame update
     void Start()
     {
+        currentFreezeHealth = maxFreezeHealth;
         currentHealth = maxHealth;
         rb = GetComponent<Rigidbody2D>();
         hitMovable = false;
         coolDownCounter = coolDowntime;
     }
 
+    public void CheckPlayerFreeze()
+    {
+        
+        anim.SetTrigger("TakeAdvantage");
+    }
+
+    public void TakeFreezeDamage(int damage, int freezedamage)
+    {
+        currentHealth -= damage;
+
+        currentFreezeHealth -= freezedamage;
+
+        SoundManager.instance.PlaySound(backhits[i]);
+
+        i++;
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+
+        if (currentFreezeHealth <= 0)
+        {
+            EnemyFreeze();
+        }
+
+        CameraShake.instance.ShakeCamera(20f);
+    }
+
+    public void EnemyFreeze()
+    {
+        anim.SetTrigger("GoToFreeze");
+        currentFreezeHealth = maxFreezeHealth;
+    }
     public void TakeDamage(int damage)
     {
         if (anim.GetBool("isTired"))

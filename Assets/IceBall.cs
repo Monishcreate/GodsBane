@@ -12,7 +12,7 @@ public class IceBall : MonoBehaviour
 
     private bool deflected = false;
 
-    
+    private Animator anim;
 
     private Enemy enemy;
 
@@ -30,12 +30,13 @@ public class IceBall : MonoBehaviour
     void Start()
     {
         
+        anim = GetComponent<Animator>();
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         
         enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Enemy>();
 
-        
+        anim.SetTrigger("spawn");
 
         canParry = true;
 
@@ -54,30 +55,41 @@ public class IceBall : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!deflected)
+        if (!deflected && !anim.GetBool("isDestroying"))
         {
             
             if (targetisinleft)
             {
                 RB.velocity = new Vector2(-movement, RB.velocity.y);
+                gameObject.transform.localScale = new Vector3(-6,6,6);
             }
             else
             {
                 RB.velocity = new Vector2(movement, RB.velocity.y);
+                gameObject.transform.localScale = new Vector3(6,6,6);
             }
             
 
         }
         else
         {
-            Vector2 target = new Vector2(enemy.rb.position.x, RB.position.y);//update player position to target  
-            Vector2 newPos = Vector2.MoveTowards(RB.position, target, 20f * Time.fixedDeltaTime);//update new position to reach to newPos
-            RB.MovePosition(newPos);
+            if (!anim.GetBool("isDestroying"))
+            {
+                Vector2 target = new Vector2(enemy.rb.position.x, RB.position.y);//update player position to target  
+                Vector2 newPos = Vector2.MoveTowards(RB.position, target, 20f * Time.fixedDeltaTime);//update new position to reach to newPos
+                RB.MovePosition(newPos);
+            }
+            
         }
-       
 
-        
-        
+        if (anim.GetBool("isDestroying"))
+        {
+            RB.velocity = Vector2.zero;
+        }
+
+
+
+
     }
 
     
@@ -103,7 +115,7 @@ public class IceBall : MonoBehaviour
                 if (!deflected)
                 {
                     gameObject.GetComponent<Collider2D>().enabled = false;
-                    Destroy(gameObject);
+                    anim.SetTrigger("destroy");
                 }
                 
             }
@@ -120,8 +132,8 @@ public class IceBall : MonoBehaviour
         {
             
             gameObject.GetComponent<Collider2D>().enabled = false;
-         
-            Destroy(gameObject);
+
+            anim.SetTrigger("destroy");
 
 
         }
@@ -130,12 +142,12 @@ public class IceBall : MonoBehaviour
         {
             if (!hitEnemy)
             {
-                enemy.TakeDamageLower(30);
+                enemy.TakeDamageLower(100);
                 canParry = false;
 
                 hitEnemy = true;
                 gameObject.GetComponent<Collider2D>().enabled = false;
-                Destroy(gameObject);
+                anim.SetTrigger("destroy");
 
                 
             }

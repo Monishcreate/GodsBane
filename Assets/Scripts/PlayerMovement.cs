@@ -72,6 +72,8 @@ public class PlayerMovement : MonoBehaviour
 
     public Image wings;
 
+    public Image iceicon;
+
     float sliderVelocity = 0f;
 
     #region COMPONENTS
@@ -99,6 +101,8 @@ public class PlayerMovement : MonoBehaviour
     private float CharacterSwitchCounter;
 
     private float freezeTimer;
+
+    private float PewCooldown = 30;
 
     
 
@@ -190,6 +194,8 @@ public class PlayerMovement : MonoBehaviour
 
         freezeTimer -= Time.deltaTime;
 
+        PewCooldown += Time.deltaTime;
+
         if (anim.GetBool("freezeTimer"))
         {
             freezeTimer = 7f;
@@ -200,8 +206,15 @@ public class PlayerMovement : MonoBehaviour
             anim.SetTrigger("ExitFreeze");
         }
 
+        if (anim.GetBool("isPurple") && PewCooldown >= 30)
+        {
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                Shoot();
+            }
+        }
 
-        if (Input.GetButtonDown("Fire1") /*&& meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState) */&& cooldown <= 0)
+        if (Input.GetButtonDown("Fire1") /*&& meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState) */&& cooldown <= 0 && !anim.GetBool("frozen"))
         {
              meleeStateMachine.SetNextState(new GroundEntry());
         }
@@ -216,7 +229,7 @@ public class PlayerMovement : MonoBehaviour
         }
         CharacterSwitchCounter -= Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.Alpha1) && CharacterSwitchCounter <= 0 && !anim.GetBool("isWhite") && canMove && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Alpha1) && CharacterSwitchCounter <= 0 && !anim.GetBool("isWhite") && canMove && isGrounded && !anim.GetBool("frozen"))
         {
             Hitstop.instance.doSlowDown(1.1f);
             anim.SetTrigger("switchWhite");
@@ -228,7 +241,7 @@ public class PlayerMovement : MonoBehaviour
             CharacterSwitchCounter = CharacterSwitchCooldown;
 
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2) && CharacterSwitchCounter <= 0 && !anim.GetBool("isOrange") && canMove && isGrounded && (OrangeBossScene.instance.isBlackScene || OrangeBossScene.instance.isBlueScene))
+        if (Input.GetKeyDown(KeyCode.Alpha2) && CharacterSwitchCounter <= 0 && !anim.GetBool("isOrange") && canMove && isGrounded && (OrangeBossScene.instance.isBlackScene || OrangeBossScene.instance.isBlueScene) && !anim.GetBool("frozen"))
         {
             Hitstop.instance.doSlowDown(1f);
             anim.SetTrigger("switchOrange");
@@ -263,7 +276,10 @@ public class PlayerMovement : MonoBehaviour
         LastOnGroundTime -= Time.deltaTime;
         
         JumpCooldown += Time.deltaTime;
-
+        if (PewCooldown > 30)
+        {
+            PewCooldown = 30;
+        }
         if (JumpCooldown > 10)
         {
             JumpCooldown = 10;
@@ -271,6 +287,11 @@ public class PlayerMovement : MonoBehaviour
         if (!OrangeBossScene.instance.isOrangeScene)
         {
             wings.fillAmount = JumpCooldown / 10;
+        }
+
+        if (OrangeBossScene.instance.isBlackScene)
+        {
+            iceicon.fillAmount = PewCooldown / 30;
         }
 
 
@@ -281,17 +302,20 @@ public class PlayerMovement : MonoBehaviour
         #endregion
 
         #region INPUT HANDLER
-        Collider2D[] IceParryTargets = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, iceparryLayers);
-        if (IceParryTargets.Length > 0f)
-        {
-            if (Input.GetMouseButtonDown(1))
+        
+            if (Input.GetMouseButtonDown(1) && !anim.GetBool("frozen"))
             {
-                hasiceParried = true;
+                Collider2D[] IceParryTargets = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, iceparryLayers);
+                if (IceParryTargets.Length > 0f)
+                {
+                    hasiceParried = true;
+                }
+                   
             }
-        }
+        
 
 
-        if (Input.GetMouseButtonDown(1) && enemy.canParry  && !isSpamming && anim.GetBool("isWhite"))
+        if (Input.GetMouseButtonDown(1) && enemy.canParry  && !isSpamming && anim.GetBool("isWhite") && !anim.GetBool("frozen"))
         {
            
             Collider2D[] ParryTargets = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, parryLayers);
@@ -522,7 +546,7 @@ public class PlayerMovement : MonoBehaviour
         if (hitMovable) // we need to move player based on which side he is attacked from
         {
             Vector2 target = new Vector2(RB.position.x - 3f * PlayerFacingSide, RB.position.y);
-            Vector2 newPos = Vector2.MoveTowards(RB.position, target, 3f * Time.fixedDeltaTime);//update new position to reach to newPos
+            Vector2 newPos = Vector2.MoveTowards(RB.position, target, 5f * Time.fixedDeltaTime);//update new position to reach to newPos
             RB.MovePosition(newPos);
 
         }
@@ -530,17 +554,13 @@ public class PlayerMovement : MonoBehaviour
         if (backhitMovable) // we need to move player based on which side he is attacked from
         {
             Vector2 target = new Vector2(RB.position.x + 3f * PlayerFacingSide, RB.position.y);
-            Vector2 newPos = Vector2.MoveTowards(RB.position, target, 3f * Time.fixedDeltaTime);//update new position to reach to newPos
+            Vector2 newPos = Vector2.MoveTowards(RB.position, target, 5f * Time.fixedDeltaTime);//update new position to reach to newPos
             RB.MovePosition(newPos);
 
         }
         
 
-        if (anim.GetBool("isPurple"))
-        {
-            initGrab();
-            grabDamage();
-        }
+        
 
 
 
@@ -668,7 +688,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CanMoveCheck()
     {
-        if (anim.GetBool("isAttacking") || anim.GetBool("isHurt") || anim.GetBool("isParrying") || anim.GetBool("isGrabbing") || anim.GetBool("isCharging") || anim.GetBool("isSwitching") || anim.GetBool("frozen" ))
+        if (anim.GetBool("isAttacking") || anim.GetBool("isHurt") || anim.GetBool("isParrying") || anim.GetBool("isGrabbing") || anim.GetBool("isCharging") || anim.GetBool("isSwitching") || anim.GetBool("frozen" ) || anim.GetBool("isShooting"))
         {
             canMove = false;
         }
@@ -716,6 +736,11 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("isParrying", false);
     }
 
+    private void Shoot()
+    {
+        anim.SetTrigger("PewPew");
+        PewCooldown = 0f;
+    }
     public void PlayerTakeDamage(int damage)//we gotta make 2 diff ones for taking damage from front and back and use 2 different colliders to do this
     {
         
@@ -780,7 +805,7 @@ public class PlayerMovement : MonoBehaviour
 
             backhitsindex++;
 
-            anim.SetTrigger("Hurt1");
+            
 
             if (currentHealth <= 0)
             {
@@ -800,6 +825,8 @@ public class PlayerMovement : MonoBehaviour
     void FreezePlayer()
     {
         anim.SetTrigger("GoToFreeze");
+        currentFreezeHealth = maxFreezeHealth;
+        enemy.CheckPlayerFreeze();
     }
 
     public void PlayerTakeJumpDamage(int damage)//we gotta make 2 diff ones for taking damage from front and back and use 2 different colliders to do this
@@ -924,7 +951,7 @@ public class PlayerMovement : MonoBehaviour
     {
         
 
-        if (Input.GetButtonDown("Jump") && isGrounded && JumpCooldown >= 10f && !anim.GetBool("isSwitching"))
+        if (Input.GetButtonDown("Jump") && isGrounded && JumpCooldown >= 10f && !anim.GetBool("isSwitching") && !anim.GetBool("frozen"))
         {
             anim.SetBool("isCharging",true);
      
@@ -943,38 +970,7 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    public void initGrab()
-    {
-        if (Input.GetKeyDown(KeyCode.F) && !anim.GetBool("isParrying") && !anim.GetBool("isAttacking") && !anim.GetBool("isHurt"))
-        {
-            anim.SetBool("isGrabbing", true);
-            anim.SetTrigger("Grab");
-
-        }
-        else
-        {
-            anim.ResetTrigger("Grab");
-        }
-
-    }
-
-    public void grabDamage()
-    {
-        if (anim.GetBool("isGrabbing"))
-        {
-            Collider2D[] EnemiesToDamage = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
-            if(EnemiesToDamage.Length > 0) 
-            {
-                anim.SetTrigger("grabAttacking");
-                anim.SetBool("isGrabbing", false);
-                
-            }
-            else
-            {
-                anim.ResetTrigger("grabAttacking");
-            }
-        }
-    }
+    
 
 
 
