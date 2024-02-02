@@ -5,13 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
+    path: Assets/Scenes/OrangeIntro.unity
+    guid: d48c27e8f49d7cb4db1d4d4140921029
+  - enabled: 1
     path: Assets/Scenes/Orange.unity
     guid: 40aee73a018ad974185a6b32e69f8bdd
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Blue.unity
     guid: a129a9c94b57b5340b0e284666e4fbef
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Black Phase 1.unity
     guid: 238d772e7363d2a4399fe26824df9749
   - enabled: 1
