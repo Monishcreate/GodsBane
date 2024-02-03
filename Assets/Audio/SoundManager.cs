@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SoundManager : MonoBehaviour
 {
@@ -13,15 +14,19 @@ public class SoundManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            
+      
         }
         else
         {
             Destroy(gameObject);
         }
+
+       
     }
     public void PlaySound(AudioClip clip)
     {
         _SFX.PlayOneShot(clip);
     }
+
+  
 }

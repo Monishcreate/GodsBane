@@ -10,6 +10,7 @@ public class Hitstop : MonoBehaviour
     void Start()
     {
         instance = this;
+        Time.timeScale = 1.0f;
     }
 
     public void doHitStop(float duration)
