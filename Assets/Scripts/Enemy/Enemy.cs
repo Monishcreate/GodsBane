@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
@@ -29,6 +30,16 @@ public class Enemy : MonoBehaviour
     bool teleportsoundplayed = false;
 
     public AudioClip[] backhits;
+
+    public AudioClip FrostCharge;
+
+    public AudioClip freezeSound;
+
+    public AudioClip freezeBreak;
+
+    public AudioClip freezeHit;
+
+
 
     public AudioClip parrySound;
 
@@ -114,7 +125,7 @@ public class Enemy : MonoBehaviour
 
         currentFreezeHealth -= freezedamage;
 
-        SoundManager.instance.PlaySound(backhits[i]);
+        SoundManager.instance.PlaySound(freezeHit);
 
         i++;
 
@@ -131,6 +142,10 @@ public class Enemy : MonoBehaviour
         CameraShake.instance.ShakeCamera(20f);
     }
 
+    public void Charge()
+    {
+        SoundManager.instance.PlaySound(FrostCharge);
+    }
     public void EnemyFreeze()
     {
         anim.SetTrigger("GoToFreeze");
@@ -178,6 +193,28 @@ public class Enemy : MonoBehaviour
 
             CameraShake.instance.ShakeCamera(20f);
         }
+
+
+    }
+
+    public void TakeFrostDamage(int damage)
+    {
+        
+        
+            currentHealth -= damage;
+
+            SoundManager.instance.PlaySound(freezeHit);
+
+            i++;
+
+        
+            if (currentHealth <= 0)
+            {
+                Die();
+            }
+
+            CameraShake.instance.ShakeCamera(20f);
+        
 
 
     }
@@ -515,7 +552,7 @@ public class Enemy : MonoBehaviour
 
     void Die()
     {
-        Debug.Log("Bro died");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     private void OnDrawGizmosSelected()

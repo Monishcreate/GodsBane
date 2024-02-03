@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.46938, g: 0.49845943, b: 0.5110744, a: 1}
+  m_IndirectSpecularColor: {r: 0.741949, g: 0.77493554, b: 0.7521593, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -30404,10 +30404,17 @@ MonoBehaviour:
   healthBar: {fileID: 319510837}
   enemyFacingDir: 0
   backhits:
-  - {fileID: 8300000, guid: 2d8d3fed40b75014980d2a337a913f21, type: 3}
-  - {fileID: 8300000, guid: 6069cb97760fa694d9ff557ef799add3, type: 3}
-  - {fileID: 8300000, guid: 2d8d3fed40b75014980d2a337a913f21, type: 3}
-  - {fileID: 8300000, guid: 2d8d3fed40b75014980d2a337a913f21, type: 3}
+  - {fileID: 8300000, guid: e9d37bf4f526fca4fa38be0d363cd17d, type: 3}
+  - {fileID: 8300000, guid: a2fb717f07f0ffc4891fbc4b187bf4ce, type: 3}
+  - {fileID: 8300000, guid: 3ec131b29d90317479fc830396f50a95, type: 3}
+  - {fileID: 8300000, guid: 3d1952c59d27df84f8ca73cfc512134d, type: 3}
+  - {fileID: 8300000, guid: cb375fc1e32dc3444bb224ef16cfc381, type: 3}
+  - {fileID: 8300000, guid: 43c9c6504c81e28439bea8263e0869da, type: 3}
+  - {fileID: 8300000, guid: f76cf1aaf4ebc484fb218e4eb8e2ea1c, type: 3}
+  FrostCharge: {fileID: 8300000, guid: edc0362e587f41c429b0043adc68564b, type: 3}
+  freezeSound: {fileID: 8300000, guid: ea25d3d740a4d3f4fb31fec39e30db08, type: 3}
+  freezeBreak: {fileID: 8300000, guid: a74ac81807ee73345a3921e928784531, type: 3}
+  freezeHit: {fileID: 8300000, guid: bee7d74b01e02624993d3abc366d2243, type: 3}
   parrySound: {fileID: 8300000, guid: 78a4d338584d15b4bb22ecbb47fcae67, type: 3}
   dashChargeSound: {fileID: 8300000, guid: 071e5bf24e694414085ebe37c74f3d7d, type: 3}
   dashSound: {fileID: 8300000, guid: d4bb940c292d8cc4a9e3cb27593108a9, type: 3}
@@ -62256,6 +62263,7 @@ Transform:
   - {fileID: 2090687201}
   - {fileID: 1023660642}
   - {fileID: 221997174}
+  - {fileID: 1509875811}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1484328864
@@ -62272,10 +62280,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Data: {fileID: 11400000, guid: bcfbcf8bf8c4c07429228faa7a73b1e7, type: 2}
   backhits:
-  - {fileID: 8300000, guid: 2d8d3fed40b75014980d2a337a913f21, type: 3}
-  - {fileID: 8300000, guid: 00ba1b476b07c0343acf1feeeaa8f7e3, type: 3}
-  - {fileID: 8300000, guid: 6069cb97760fa694d9ff557ef799add3, type: 3}
-  - {fileID: 8300000, guid: 5db479cea72661645a65bd375923e55e, type: 3}
+  - {fileID: 8300000, guid: e9d37bf4f526fca4fa38be0d363cd17d, type: 3}
+  - {fileID: 8300000, guid: a2fb717f07f0ffc4891fbc4b187bf4ce, type: 3}
+  - {fileID: 8300000, guid: 3ec131b29d90317479fc830396f50a95, type: 3}
+  - {fileID: 8300000, guid: 3d1952c59d27df84f8ca73cfc512134d, type: 3}
+  - {fileID: 8300000, guid: cb375fc1e32dc3444bb224ef16cfc381, type: 3}
+  - {fileID: 8300000, guid: 43c9c6504c81e28439bea8263e0869da, type: 3}
+  - {fileID: 8300000, guid: f76cf1aaf4ebc484fb218e4eb8e2ea1c, type: 3}
+  freezeSound: {fileID: 8300000, guid: ea25d3d740a4d3f4fb31fec39e30db08, type: 3}
+  freezebreak: {fileID: 8300000, guid: a74ac81807ee73345a3921e928784531, type: 3}
+  freezeHit: {fileID: 8300000, guid: bee7d74b01e02624993d3abc366d2243, type: 3}
   footsteps:
   - {fileID: 8300000, guid: 4d11813f5983ce047873c94858e6a6c1, type: 3}
   - {fileID: 8300000, guid: 6154d2d90f91ac743a30a16a58f9fa32, type: 3}
@@ -63888,6 +63902,90 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!1 &1509875810
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1509875811}
+  - component: {fileID: 1509875812}
+  m_Layer: 0
+  m_Name: Freeeeeze
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1509875811
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1509875810}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.06, y: -0.05, z: 2.355939}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1484328863}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &1509875812
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1509875810}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 0.41194963, g: 1, b: 1, a: 0.6862745}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 10.24, y: 10.24}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1510467216

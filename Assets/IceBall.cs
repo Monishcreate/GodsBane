@@ -8,6 +8,8 @@ public class IceBall : MonoBehaviour
 
     private Transform playerPos;
 
+    public SpriteRenderer sprite;
+
     bool targetisinleft;
 
     private bool deflected = false;
@@ -17,6 +19,8 @@ public class IceBall : MonoBehaviour
     private Enemy enemy;
 
     public AudioClip spawnSound;
+
+    public AudioClip breakSound;
 
     public bool canParry;
 
@@ -29,7 +33,9 @@ public class IceBall : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        SoundManager.instance.PlaySound(spawnSound);
         
+        sprite = GetComponent<SpriteRenderer>();    
         anim = GetComponent<Animator>();
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
@@ -62,11 +68,14 @@ public class IceBall : MonoBehaviour
             {
                 RB.velocity = new Vector2(-movement, RB.velocity.y);
                 gameObject.transform.localScale = new Vector3(-6,6,6);
+                sprite.flipX = false;
             }
             else
             {
                 RB.velocity = new Vector2(movement, RB.velocity.y);
                 gameObject.transform.localScale = new Vector3(6,6,6);
+                
+                sprite.flipX = true;
             }
             
 
@@ -105,7 +114,7 @@ public class IceBall : MonoBehaviour
             if (!hitPlayer)
             {
 
-                deflected = player.PlayerTakeFreezeDamage(2);
+                deflected = player.PlayerTakeFreezeDamage(4);
                 canParry = false;
 
                 hitPlayer = true;
@@ -116,6 +125,7 @@ public class IceBall : MonoBehaviour
                 {
                     gameObject.GetComponent<Collider2D>().enabled = false;
                     anim.SetTrigger("destroy");
+                    SoundManager.instance.PlaySound(breakSound);
                 }
                 
             }
@@ -142,14 +152,16 @@ public class IceBall : MonoBehaviour
         {
             if (!hitEnemy)
             {
-                enemy.TakeDamageLower(100);
+                enemy.TakeFrostDamage(100);
                 canParry = false;
 
                 hitEnemy = true;
                 gameObject.GetComponent<Collider2D>().enabled = false;
                 anim.SetTrigger("destroy");
 
-                
+                SoundManager.instance.PlaySound(breakSound);
+
+
             }
         }
         else

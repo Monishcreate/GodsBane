@@ -18,6 +18,8 @@ public class PlayerIceBall : MonoBehaviour
 
     public AudioClip spawnSound;
 
+    public AudioClip breakSound;
+
     public bool canParry;
 
 
@@ -28,6 +30,8 @@ public class PlayerIceBall : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        SoundManager.instance.PlaySound(spawnSound);
+
         enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Enemy>();
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
@@ -49,6 +53,8 @@ public class PlayerIceBall : MonoBehaviour
         {
             targetisinleft = false;
         }
+
+        
     }
 
     // Update is called once per frame
@@ -116,6 +122,8 @@ public class PlayerIceBall : MonoBehaviour
                 hitEnemy = true;
                 gameObject.GetComponent<Collider2D>().enabled = false;
                 anim.SetTrigger("destroy");
+
+                SoundManager.instance.PlaySound(breakSound);
 
 
             }

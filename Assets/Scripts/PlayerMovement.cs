@@ -14,11 +14,18 @@ public class PlayerMovement : MonoBehaviour
     //just paste in all the parameters, though you will need to manuly change all references in this script
     public PlayerData Data;
 
-    
+
 
     private SpriteRenderer rend;
 
     public AudioClip[] backhits;
+
+    public AudioClip freezeSound;
+
+    public AudioClip freezebreak;
+
+    public AudioClip freezeHit;
+
 
     int backhitsindex=0;
 
@@ -204,6 +211,7 @@ public class PlayerMovement : MonoBehaviour
         if (anim.GetBool("frozen") && freezeTimer <= 0)
         {
             anim.SetTrigger("ExitFreeze");
+            SoundManager.instance.PlaySound(freezebreak);
         }
 
         if (anim.GetBool("isPurple") && PewCooldown >= 30)
@@ -214,12 +222,14 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        
+
         if (Input.GetButtonDown("Fire1") /*&& meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState) */&& cooldown <= 0 && !anim.GetBool("frozen"))
         {
              meleeStateMachine.SetNextState(new GroundEntry());
         }
 
-    if (backhitsindex == backhits.Length)
+        if (backhitsindex == backhits.Length)
         {
             backhitsindex = 0;
         }
@@ -674,7 +684,7 @@ public class PlayerMovement : MonoBehaviour
     private void Turn()
     {
         //stores scale and flips the player along the x axis, 
-        if (Input.GetKey(KeyCode.LeftShift) || DoublePress || anim.GetBool("isOrange"))
+        if ((Input.GetKey(KeyCode.LeftShift) || DoublePress || anim.GetBool("isOrange")) && !anim.GetBool("frozen"))
         {
             Vector3 scale = transform.localScale;
             scale.x *= -1;
@@ -751,7 +761,7 @@ public class PlayerMovement : MonoBehaviour
             anim.SetTrigger("Parry0");
             anim.SetBool("isParrying", true);
             enemy.GetComponent<Enemy>().TakeParryDamage(damage);
-            Hitstop.instance.doHitStop(0.2f);
+            //Hitstop.instance.doHitStop(0.2f);
             CameraShake.instance.ShakeCamera(10f);
             return;
             
@@ -782,7 +792,7 @@ public class PlayerMovement : MonoBehaviour
     {
 
 
-        if(hasiceParried)
+        if (hasiceParried && !anim.GetBool("frozen"))
         {
 
             anim.SetTrigger("Parry1");
@@ -797,26 +807,30 @@ public class PlayerMovement : MonoBehaviour
 
         else
         {
-            currentHealth -= 50;
-
-            currentFreezeHealth -= damage;
-
-            SoundManager.instance.PlaySound(backhits[backhitsindex]);
-
-            backhitsindex++;
-
-            
-
-            if (currentHealth <= 0)
+            if (!anim.GetBool("frozen"))
             {
-                Die();
-            }
-            if (currentFreezeHealth <= 0)
-            {
-                FreezePlayer();
-            }
-            CameraShake.instance.ShakeCamera(20f);
+                currentHealth -= 50;
 
+                currentFreezeHealth -= damage;
+
+                SoundManager.instance.PlaySound(freezeHit);
+
+                backhitsindex++;
+
+
+
+                if (currentHealth <= 0)
+                {
+                    Die();
+                }
+                if (currentFreezeHealth <= 0)
+                {
+                    FreezePlayer();
+                }
+                CameraShake.instance.ShakeCamera(20f);
+
+                
+            }
             return false;
         }
 
@@ -824,8 +838,12 @@ public class PlayerMovement : MonoBehaviour
     }
     void FreezePlayer()
     {
+        SoundManager.instance.PlaySound(freezeSound);
         anim.SetTrigger("GoToFreeze");
         currentFreezeHealth = maxFreezeHealth;
+        Hitstop.instance.doHitStop(0.2f);
+        CameraShake.instance.ShakeCamera(20f);
+     
         enemy.CheckPlayerFreeze();
     }
 
@@ -899,7 +917,7 @@ public class PlayerMovement : MonoBehaviour
             anim.SetTrigger("Parry1");
             anim.SetBool("isParrying", true);
             enemy.GetComponent<Enemy>().TakeParryDamage(damage);
-            Hitstop.instance.doHitStop(0.2f);
+            //Hitstop.instance.doHitStop(0.2f);
             CameraShake.instance.ShakeCamera(10f);
             return;
 
