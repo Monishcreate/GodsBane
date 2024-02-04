@@ -28,7 +28,7 @@ public class OrangeBossScene : MonoBehaviour
         {
             isOrangeScene = false;
         }
-        if (SceneManager.GetActiveScene().name == "Black Phase 1" || SceneManager.GetActiveScene().name == "Black Phase2")
+        if (SceneManager.GetActiveScene().name == "Black Phase 1" || SceneManager.GetActiveScene().name == "Black Phase2" || SceneManager.GetActiveScene().name == "Tut3")
         {
             isBlackScene = true;
            

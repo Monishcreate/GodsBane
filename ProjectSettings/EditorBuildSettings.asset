@@ -24,6 +24,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Blue.unity
     guid: a129a9c94b57b5340b0e284666e4fbef
   - enabled: 1
+    path: Assets/Scenes/Tut3.unity
+    guid: a3f71e4b569b75c4b9cc360c5cbe5c6a
+  - enabled: 1
     path: Assets/Scenes/BlackIntro.unity
     guid: 319cff4a193fc454fb6a46e2ae3d4ce6
   - enabled: 1

@@ -28,10 +28,7 @@ public class PlayerIceBall : MonoBehaviour
     Rigidbody2D RB;
     float movement = 15f;
 
-    private void Awake()
-    {
-        
-    }
+   
     // Start is called before the first frame update
     void Start()
     {
