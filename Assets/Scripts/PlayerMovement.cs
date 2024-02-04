@@ -109,7 +109,7 @@ public class PlayerMovement : MonoBehaviour
 
     private float freezeTimer;
 
-    private float PewCooldown = 30;
+    private float PewCooldown = 45;
 
     
 
@@ -214,7 +214,7 @@ public class PlayerMovement : MonoBehaviour
             SoundManager.instance.PlaySound(freezebreak);
         }
 
-        if (anim.GetBool("isPurple") && PewCooldown >= 30)
+        if (anim.GetBool("isPurple") && PewCooldown >= 45)
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
@@ -286,9 +286,9 @@ public class PlayerMovement : MonoBehaviour
         LastOnGroundTime -= Time.deltaTime;
         
         JumpCooldown += Time.deltaTime;
-        if (PewCooldown > 30)
+        if (PewCooldown > 45)
         {
-            PewCooldown = 30;
+            PewCooldown = 45;
         }
         if (JumpCooldown > 10)
         {
@@ -301,7 +301,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (OrangeBossScene.instance.isBlackScene)
         {
-            iceicon.fillAmount = PewCooldown / 30;
+            iceicon.fillAmount = PewCooldown / 45;
         }
 
 

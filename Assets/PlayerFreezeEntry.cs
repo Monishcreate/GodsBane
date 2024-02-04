@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyFreezeEntry : StateMachineBehaviour
+public class PlayerFreezeEntry : StateMachineBehaviour
 {
-    //PLAYER NOT ENEMY
+    // THIS IS FOR ENEMY EVEN THO IT SAYS PLAYER
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+    
         animator.SetBool("freezeTimer", true);
     }
 
@@ -20,6 +21,7 @@ public class EnemyFreezeEntry : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+    
         animator.SetBool("freezeTimer", false);
     }
 

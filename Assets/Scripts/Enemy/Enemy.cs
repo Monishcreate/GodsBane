@@ -25,11 +25,15 @@ public class Enemy : MonoBehaviour
     float sliderVelocity = 0f;
     public int enemyFacingDir;
 
+    private bool tiredplayed = false;
+    float freezeTimer;
     bool dashsoundplayed = false;
 
     bool teleportsoundplayed = false;
 
     public AudioClip[] backhits;
+
+    public AudioClip tiredSound;
 
     public AudioClip FrostCharge;
 
@@ -39,7 +43,11 @@ public class Enemy : MonoBehaviour
 
     public AudioClip freezeHit;
 
+    public AudioClip jump;
 
+    public AudioClip indicate;
+
+    public AudioClip fall;
 
     public AudioClip parrySound;
 
@@ -145,15 +153,31 @@ public class Enemy : MonoBehaviour
     {
         SoundManager.instance.PlaySound(FrostCharge);
     }
+
+    public void PlayJump()
+    {
+        SoundManager.instance.PlaySound(jump);
+    }
+
+    public void Indicate()
+    {
+        SoundManager.instance.PlaySound(indicate);
+    }
+
+    public void Fall()
+    {
+        SoundManager.instance.PlaySound(fall);
+    }
     public void EnemyFreeze()
     {
+        SoundManager.instance.PlaySound(freezeSound);
         anim.SetTrigger("GoToFreeze");
         currentFreezeHealth = maxFreezeHealth;
     }
     public void TakeDamage(int damage)
     {
         
-        if (anim.GetBool("isTired"))
+        if (anim.GetBool("isTired") || anim.GetBool("frozen"))
         {
             currentHealth -= damage;
 
@@ -177,7 +201,7 @@ public class Enemy : MonoBehaviour
     public void TakeDamageLower(int damage)
     {
         
-        if (anim.GetBool("isTired"))
+        if (anim.GetBool("isTired") || anim.GetBool("frozen"))
         {
             currentHealth -= damage;
 
@@ -238,6 +262,7 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        
         if (footstepsindex == footsteps.Length)
         {
             footstepsindex = 0;
@@ -269,17 +294,42 @@ public class Enemy : MonoBehaviour
         //DetectPlayer();
         EnemyDash();
 
-        
+        freezeTimer -= Time.deltaTime;
+
+       
+
+        if (anim.GetBool("freezeTimer"))
+        {
+            freezeTimer = 7f;
+        }
+
+        if (anim.GetBool("frozen") && freezeTimer <= 0)
+        {
+            SoundManager.instance.PlaySound(freezeBreak);
+            anim.SetTrigger("ExitFreeze");
+            
+        }
 
 
         if (anim.GetBool("tiredTimer"))
         {
             tiredTimer = 7f;
+            if (!tiredplayed)
+            {
+                SoundManager.instance.PlaySound(tiredSound);
+                tiredplayed = true;
+            }
+            
+        }
+        else
+        {
+            tiredplayed = false;
         }
 
         if (anim.GetBool("isTired") && tiredTimer <= 0)
         {
             anim.SetTrigger("ExitTired");
+            
         }
         if (anim.GetBool("teleportReady"))
         {

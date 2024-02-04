@@ -30322,6 +30322,9 @@ MonoBehaviour:
   freezeSound: {fileID: 0}
   freezeBreak: {fileID: 0}
   freezeHit: {fileID: 0}
+  jump: {fileID: 8300000, guid: 91fa59f76dfa20940bc4d79ca0af234f, type: 3}
+  indicate: {fileID: 8300000, guid: 018d2102751246142b40f2adaaa7f2b5, type: 3}
+  fall: {fileID: 8300000, guid: 5b1dbfa89cb967f44aeecdd0ca319ae0, type: 3}
   parrySound: {fileID: 8300000, guid: 78a4d338584d15b4bb22ecbb47fcae67, type: 3}
   dashChargeSound: {fileID: 8300000, guid: 071e5bf24e694414085ebe37c74f3d7d, type: 3}
   dashSound: {fileID: 8300000, guid: d4bb940c292d8cc4a9e3cb27593108a9, type: 3}
@@ -60201,7 +60204,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.8
   m_Pitch: 1
   Loop: 0
   Mute: 0

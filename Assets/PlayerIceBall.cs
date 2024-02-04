@@ -27,23 +27,33 @@ public class PlayerIceBall : MonoBehaviour
 
     Rigidbody2D RB;
     float movement = 15f;
+
+    private void Awake()
+    {
+        
+    }
     // Start is called before the first frame update
     void Start()
     {
         SoundManager.instance.PlaySound(spawnSound);
 
-        enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Enemy>();
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
-        
-        
+
+        enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Enemy>();
+
+
+
         anim = GetComponent<Animator>();
+
+        RB = GetComponent<Rigidbody2D>();
+
 
         anim.SetTrigger("spawn");
 
         canParry = true;
 
-        RB = GetComponent<Rigidbody2D>();
+        
 
         if (!player.IsFacingRight)
         {

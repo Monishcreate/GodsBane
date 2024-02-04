@@ -41,7 +41,7 @@ public class OrangeBossScene : MonoBehaviour
             isBlackScene = false;
         }
 
-        if (SceneManager.GetActiveScene().name == "Blue")
+        if (SceneManager.GetActiveScene().name == "Blue" || SceneManager.GetActiveScene().name == "Tut2")
         {
             isBlueScene = true;
         }
