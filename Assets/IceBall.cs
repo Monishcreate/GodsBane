@@ -68,14 +68,14 @@ public class IceBall : MonoBehaviour
             {
                 RB.velocity = new Vector2(-movement, RB.velocity.y);
                 gameObject.transform.localScale = new Vector3(-6,6,6);
-                sprite.flipX = false;
+               
             }
             else
             {
                 RB.velocity = new Vector2(movement, RB.velocity.y);
                 gameObject.transform.localScale = new Vector3(6,6,6);
                 
-                sprite.flipX = true;
+              
             }
             
 
@@ -89,6 +89,10 @@ public class IceBall : MonoBehaviour
                 RB.MovePosition(newPos);
             }
             
+        }
+        if (deflected)
+        {
+            sprite.flipX = true;
         }
 
         if (anim.GetBool("isDestroying"))
