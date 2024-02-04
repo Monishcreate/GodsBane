@@ -49,7 +49,7 @@ public class Enemy : MonoBehaviour
 
     public AudioClip teleportSound;
 
-    int i = 0;
+    int i;
 
     public AudioClip[] destroySounds;
 
@@ -121,13 +121,12 @@ public class Enemy : MonoBehaviour
 
     public void TakeFreezeDamage(int damage, int freezedamage)
     {
+        SoundManager.instance.PlaySound(freezeHit);
+
         currentHealth -= damage;
 
         currentFreezeHealth -= freezedamage;
 
-        SoundManager.instance.PlaySound(freezeHit);
-
-        i++;
 
         if (currentHealth <= 0)
         {
@@ -153,6 +152,7 @@ public class Enemy : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
+        
         if (anim.GetBool("isTired"))
         {
             currentHealth -= damage;
@@ -176,6 +176,7 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamageLower(int damage)
     {
+        
         if (anim.GetBool("isTired"))
         {
             currentHealth -= damage;
@@ -204,9 +205,6 @@ public class Enemy : MonoBehaviour
             currentHealth -= damage;
 
             SoundManager.instance.PlaySound(freezeHit);
-
-            i++;
-
         
             if (currentHealth <= 0)
             {

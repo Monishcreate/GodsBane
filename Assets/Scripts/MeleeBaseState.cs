@@ -37,9 +37,9 @@ public class MeleeBaseState : State
         
 
         
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButtonDown(0) && animator.GetBool("isPurple"))
         {
-            AttackPressedTimer = 2;
+            AttackPressedTimer = 1;
             
         }
 

@@ -54,7 +54,7 @@ public class MeteorDestroy : MonoBehaviour
             if (!hitPlayer)
             {
                 
-                player.PlayerBackDamage(20);
+                player.PlayerBackDamage(50);
                 hitPlayer = true;
                 gameObject.GetComponent<Collider2D>().enabled = false;
             }

@@ -156,7 +156,7 @@ public class IceBall : MonoBehaviour
         {
             if (!hitEnemy)
             {
-                enemy.TakeFrostDamage(100);
+                enemy.TakeFrostDamage(60);
                 canParry = false;
 
                 hitEnemy = true;

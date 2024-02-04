@@ -224,7 +224,7 @@ public class PlayerMovement : MonoBehaviour
 
         
 
-        if (Input.GetButtonDown("Fire1") /*&& meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState) */&& cooldown <= 0 && !anim.GetBool("frozen"))
+        if (Input.GetMouseButtonDown(0) /*&& meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState) */&& cooldown <= 0 && !anim.GetBool("frozen"))
         {
              meleeStateMachine.SetNextState(new GroundEntry());
         }
@@ -319,8 +319,9 @@ public class PlayerMovement : MonoBehaviour
                 if (IceParryTargets.Length > 0f)
                 {
                     hasiceParried = true;
+                
                 }
-                   
+                anim.SetTrigger("FakeParry");
             }
         
 
@@ -809,7 +810,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (!anim.GetBool("frozen"))
             {
-                currentHealth -= 50;
+                currentHealth -= 100;
 
                 currentFreezeHealth -= damage;
 
@@ -1005,7 +1006,7 @@ public class PlayerMovement : MonoBehaviour
     public void DealDamage()
     {
         Collider2D[] EnemiesToDamage = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
-        foreach (Collider2D enemy in EnemiesToDamage)
+        if (EnemiesToDamage.Length > 0f)
         {
          
             enemy.GetComponent<Enemy>().TakeDamage(20);
@@ -1015,7 +1016,7 @@ public class PlayerMovement : MonoBehaviour
     public void DealDamageLower()
     {
         Collider2D[] EnemiesToDamage = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
-        foreach (Collider2D enemy in EnemiesToDamage)
+        if (EnemiesToDamage.Length > 0f)
         {
            
             enemy.GetComponent<Enemy>().TakeDamageLower(20);

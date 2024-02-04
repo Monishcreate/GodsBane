@@ -20,7 +20,7 @@ public class OrangeBossScene : MonoBehaviour
     }
     private void Update()
     {
-        if (SceneManager.GetActiveScene().name == "Orange")
+        if (SceneManager.GetActiveScene().name == "Orange" || SceneManager.GetActiveScene().name == "Tut1")
         {
             isOrangeScene = true;
         }

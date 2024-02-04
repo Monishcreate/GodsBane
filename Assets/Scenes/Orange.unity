@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.46938, g: 0.49845943, b: 0.5110744, a: 1}
+  m_IndirectSpecularColor: {r: 0.741949, g: 0.77493554, b: 0.7521593, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -30311,10 +30311,17 @@ MonoBehaviour:
   healthBar: {fileID: 319510837}
   enemyFacingDir: 0
   backhits:
-  - {fileID: 8300000, guid: 2d8d3fed40b75014980d2a337a913f21, type: 3}
-  - {fileID: 8300000, guid: 6069cb97760fa694d9ff557ef799add3, type: 3}
-  - {fileID: 8300000, guid: 2d8d3fed40b75014980d2a337a913f21, type: 3}
-  - {fileID: 8300000, guid: 2d8d3fed40b75014980d2a337a913f21, type: 3}
+  - {fileID: 8300000, guid: e9d37bf4f526fca4fa38be0d363cd17d, type: 3}
+  - {fileID: 8300000, guid: a2fb717f07f0ffc4891fbc4b187bf4ce, type: 3}
+  - {fileID: 8300000, guid: cb375fc1e32dc3444bb224ef16cfc381, type: 3}
+  - {fileID: 8300000, guid: 43c9c6504c81e28439bea8263e0869da, type: 3}
+  - {fileID: 8300000, guid: 3ec131b29d90317479fc830396f50a95, type: 3}
+  - {fileID: 8300000, guid: 3d1952c59d27df84f8ca73cfc512134d, type: 3}
+  - {fileID: 8300000, guid: f76cf1aaf4ebc484fb218e4eb8e2ea1c, type: 3}
+  FrostCharge: {fileID: 0}
+  freezeSound: {fileID: 0}
+  freezeBreak: {fileID: 0}
+  freezeHit: {fileID: 0}
   parrySound: {fileID: 8300000, guid: 78a4d338584d15b4bb22ecbb47fcae67, type: 3}
   dashChargeSound: {fileID: 8300000, guid: 071e5bf24e694414085ebe37c74f3d7d, type: 3}
   dashSound: {fileID: 8300000, guid: d4bb940c292d8cc4a9e3cb27593108a9, type: 3}
@@ -61815,10 +61822,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Data: {fileID: 11400000, guid: bcfbcf8bf8c4c07429228faa7a73b1e7, type: 2}
   backhits:
-  - {fileID: 8300000, guid: 2d8d3fed40b75014980d2a337a913f21, type: 3}
-  - {fileID: 8300000, guid: 00ba1b476b07c0343acf1feeeaa8f7e3, type: 3}
-  - {fileID: 8300000, guid: 6069cb97760fa694d9ff557ef799add3, type: 3}
-  - {fileID: 8300000, guid: 5db479cea72661645a65bd375923e55e, type: 3}
+  - {fileID: 8300000, guid: e9d37bf4f526fca4fa38be0d363cd17d, type: 3}
+  - {fileID: 8300000, guid: a2fb717f07f0ffc4891fbc4b187bf4ce, type: 3}
+  - {fileID: 8300000, guid: cb375fc1e32dc3444bb224ef16cfc381, type: 3}
+  - {fileID: 8300000, guid: 3ec131b29d90317479fc830396f50a95, type: 3}
+  - {fileID: 8300000, guid: 3d1952c59d27df84f8ca73cfc512134d, type: 3}
+  - {fileID: 8300000, guid: 43c9c6504c81e28439bea8263e0869da, type: 3}
+  - {fileID: 8300000, guid: f76cf1aaf4ebc484fb218e4eb8e2ea1c, type: 3}
+  freezeSound: {fileID: 0}
+  freezebreak: {fileID: 0}
+  freezeHit: {fileID: 0}
   footsteps:
   - {fileID: 8300000, guid: 4d11813f5983ce047873c94858e6a6c1, type: 3}
   - {fileID: 8300000, guid: 6154d2d90f91ac743a30a16a58f9fa32, type: 3}
