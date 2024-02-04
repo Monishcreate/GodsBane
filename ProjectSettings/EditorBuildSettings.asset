@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Orange.unity
     guid: 40aee73a018ad974185a6b32e69f8bdd
   - enabled: 1
+    path: Assets/Scenes/OrangeEnd.unity
+    guid: f9fad4a5e3f24784fb0ca1af72a4a507
+  - enabled: 1
     path: Assets/Scenes/Tut2.unity
     guid: fed42e837688b504298d0214dd569743
   - enabled: 1
