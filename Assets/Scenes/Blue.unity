@@ -62304,7 +62304,7 @@ MonoBehaviour:
   box: {fileID: 1994588161}
   attackPoint: {fileID: 1147523525}
   attackRange: 0.77
-  jumpForce: 1550
+  jumpForce: 1675
   enemyLayers:
     serializedVersion: 2
     m_Bits: 256
