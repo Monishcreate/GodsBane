@@ -810,7 +810,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (!anim.GetBool("frozen"))
             {
-                currentHealth -= 100;
+                currentHealth -= 50;
 
                 currentFreezeHealth -= damage;
 
@@ -991,7 +991,12 @@ public class PlayerMovement : MonoBehaviour
 
     
 
-
+    public void ResetMovable()
+    {
+        attackMove = false;
+        hitMovable = false;
+        backhitMovable = false;
+    }
 
     public void setGrabBool()
     {

@@ -278,7 +278,7 @@ public class Enemy : MonoBehaviour
             i = 0;
         }
 
-        tiredTimer -= Time.deltaTime;
+        
 
         EnemyFlip();
 
@@ -296,7 +296,9 @@ public class Enemy : MonoBehaviour
 
         freezeTimer -= Time.deltaTime;
 
-       
+        tiredTimer -= Time.deltaTime;
+
+
 
         if (anim.GetBool("freezeTimer"))
         {
@@ -314,11 +316,7 @@ public class Enemy : MonoBehaviour
         if (anim.GetBool("tiredTimer"))
         {
             tiredTimer = 7f;
-            if (!tiredplayed)
-            {
-                SoundManager.instance.PlaySound(tiredSound);
-                tiredplayed = true;
-            }
+            
             
         }
         else
