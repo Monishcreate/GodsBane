@@ -19782,7 +19782,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 464893591}
-  - component: {fileID: 464893590}
+  - component: {fileID: 464893592}
   m_Layer: 0
   m_Name: gotophase2
   m_TagString: Untagged
@@ -19790,19 +19790,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &464893590
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 464893589}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6889bb78c988295438ed1eb5db96577b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneToLoad: Black Phase2
 --- !u!4 &464893591
 Transform:
   m_ObjectHideFlags: 0
@@ -19818,6 +19805,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &464893592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 464893589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978a3194d7e79704f8141e6382d0b5eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &465702258
 PrefabInstance:
   m_ObjectHideFlags: 0

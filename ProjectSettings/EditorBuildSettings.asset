@@ -47,4 +47,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Black Phase2.unity
     guid: e7d39e8ee6d25434088a88325d7a8326
+  - enabled: 1
+    path: Assets/Scenes/BlackEnd.unity
+    guid: 51340285c9976cc47bc659f4f8b873b4
+  - enabled: 1
+    path: Assets/Assets/Scenes/LevelSelector.unity
+    guid: ea04de5dfd6ceeb49b7fca7655c11b3b
   m_configObjects: {}

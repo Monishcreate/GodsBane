@@ -486,7 +486,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FlipCheck()
     {
-        if (OrangeBossScene.isPaused)
+        if (!OrangeBossScene.isPaused)
         {
             if (Input.GetKeyDown(KeyCode.D))
             {
