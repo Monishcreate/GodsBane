@@ -30404,13 +30404,14 @@ MonoBehaviour:
   healthBar: {fileID: 319510837}
   enemyFacingDir: 0
   backhits:
-  - {fileID: 8300000, guid: e9d37bf4f526fca4fa38be0d363cd17d, type: 3}
-  - {fileID: 8300000, guid: a2fb717f07f0ffc4891fbc4b187bf4ce, type: 3}
-  - {fileID: 8300000, guid: 3ec131b29d90317479fc830396f50a95, type: 3}
-  - {fileID: 8300000, guid: 3d1952c59d27df84f8ca73cfc512134d, type: 3}
-  - {fileID: 8300000, guid: cb375fc1e32dc3444bb224ef16cfc381, type: 3}
-  - {fileID: 8300000, guid: 43c9c6504c81e28439bea8263e0869da, type: 3}
-  - {fileID: 8300000, guid: f76cf1aaf4ebc484fb218e4eb8e2ea1c, type: 3}
+  - {fileID: 8300000, guid: d190f8c7eb0dd2442b573871f7f38587, type: 3}
+  - {fileID: 8300000, guid: 4709f87eb88e887429dbb5df067af969, type: 3}
+  - {fileID: 8300000, guid: aca99f60b10ada446a57f969e2f2d48a, type: 3}
+  - {fileID: 8300000, guid: a769df47dcd6b0e42a414a7992f24221, type: 3}
+  - {fileID: 8300000, guid: bc1effa078348274fbaf71aec9bbd142, type: 3}
+  - {fileID: 8300000, guid: 2c95bf0f0da8bfd48bc8f67825ad5412, type: 3}
+  - {fileID: 8300000, guid: 5ef4290181b059a45a6bdc4c2b87ad2f, type: 3}
+  - {fileID: 8300000, guid: d3d5fe4a50fef6d40829c3f777e73d5e, type: 3}
   tiredSound: {fileID: 0}
   FrostCharge: {fileID: 8300000, guid: edc0362e587f41c429b0043adc68564b, type: 3}
   freezeSound: {fileID: 8300000, guid: ea25d3d740a4d3f4fb31fec39e30db08, type: 3}
@@ -62284,13 +62285,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Data: {fileID: 11400000, guid: bcfbcf8bf8c4c07429228faa7a73b1e7, type: 2}
   backhits:
-  - {fileID: 8300000, guid: e9d37bf4f526fca4fa38be0d363cd17d, type: 3}
-  - {fileID: 8300000, guid: a2fb717f07f0ffc4891fbc4b187bf4ce, type: 3}
-  - {fileID: 8300000, guid: 3ec131b29d90317479fc830396f50a95, type: 3}
-  - {fileID: 8300000, guid: 3d1952c59d27df84f8ca73cfc512134d, type: 3}
-  - {fileID: 8300000, guid: cb375fc1e32dc3444bb224ef16cfc381, type: 3}
-  - {fileID: 8300000, guid: 43c9c6504c81e28439bea8263e0869da, type: 3}
-  - {fileID: 8300000, guid: f76cf1aaf4ebc484fb218e4eb8e2ea1c, type: 3}
+  - {fileID: 8300000, guid: d190f8c7eb0dd2442b573871f7f38587, type: 3}
+  - {fileID: 8300000, guid: 4709f87eb88e887429dbb5df067af969, type: 3}
+  - {fileID: 8300000, guid: aca99f60b10ada446a57f969e2f2d48a, type: 3}
+  - {fileID: 8300000, guid: a769df47dcd6b0e42a414a7992f24221, type: 3}
+  - {fileID: 8300000, guid: bc1effa078348274fbaf71aec9bbd142, type: 3}
+  - {fileID: 8300000, guid: 2c95bf0f0da8bfd48bc8f67825ad5412, type: 3}
+  - {fileID: 8300000, guid: 5ef4290181b059a45a6bdc4c2b87ad2f, type: 3}
+  - {fileID: 8300000, guid: d3d5fe4a50fef6d40829c3f777e73d5e, type: 3}
   freezeSound: {fileID: 8300000, guid: ea25d3d740a4d3f4fb31fec39e30db08, type: 3}
   freezebreak: {fileID: 8300000, guid: a74ac81807ee73345a3921e928784531, type: 3}
   freezeHit: {fileID: 8300000, guid: bee7d74b01e02624993d3abc366d2243, type: 3}

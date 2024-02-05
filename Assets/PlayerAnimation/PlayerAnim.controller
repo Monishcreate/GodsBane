@@ -128,10 +128,10 @@ AnimatorStateMachine:
     m_Position: {x: 950, y: 990, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5140903314019235143}
-    m_Position: {x: 950, y: 910, z: 0}
+    m_Position: {x: 950, y: 820, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3185162529717096883}
-    m_Position: {x: 950, y: 810, z: 0}
+    m_Position: {x: 950, y: 910, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5347749718803986121}
     m_Position: {x: 950, y: 730, z: 0}
@@ -1104,7 +1104,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Attack4
+    m_ConditionEvent: Attack3
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: isHurt
@@ -1684,7 +1684,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Attack3
+    m_ConditionEvent: Attack4
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: isHurt
@@ -2191,7 +2191,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Combo 4
+  m_Name: Combo 3
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -2425,7 +2425,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Combo 3
+  m_Name: Combo 4
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:

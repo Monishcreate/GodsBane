@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class LeaveTut3 : MonoBehaviour
 {
     // Start is called before the first frame update
-    float changeTime = 11f;
+    float changeTime = 17f;
 
 
     // Update is called once per frame

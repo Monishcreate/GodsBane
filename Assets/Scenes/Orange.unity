@@ -30318,6 +30318,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3ec131b29d90317479fc830396f50a95, type: 3}
   - {fileID: 8300000, guid: 3d1952c59d27df84f8ca73cfc512134d, type: 3}
   - {fileID: 8300000, guid: f76cf1aaf4ebc484fb218e4eb8e2ea1c, type: 3}
+  tiredSound: {fileID: 0}
   FrostCharge: {fileID: 0}
   freezeSound: {fileID: 0}
   freezeBreak: {fileID: 0}
@@ -91282,9 +91283,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: c497a1abc2d766646b05261737fa587d, type: 3}
+  m_audioClip: {fileID: 8300000, guid: f95cc7407d843bd44b70a6051f00d215, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.37
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0

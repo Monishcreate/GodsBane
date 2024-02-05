@@ -1880,10 +1880,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6069cb97760fa694d9ff557ef799add3, type: 3}
   - {fileID: 8300000, guid: 2d8d3fed40b75014980d2a337a913f21, type: 3}
   - {fileID: 8300000, guid: 2d8d3fed40b75014980d2a337a913f21, type: 3}
+  tiredSound: {fileID: 0}
   FrostCharge: {fileID: 0}
   freezeSound: {fileID: 0}
   freezeBreak: {fileID: 0}
   freezeHit: {fileID: 0}
+  jump: {fileID: 0}
+  indicate: {fileID: 0}
+  fall: {fileID: 0}
   parrySound: {fileID: 8300000, guid: 78a4d338584d15b4bb22ecbb47fcae67, type: 3}
   dashChargeSound: {fileID: 8300000, guid: 071e5bf24e694414085ebe37c74f3d7d, type: 3}
   dashSound: {fileID: 8300000, guid: d4bb940c292d8cc4a9e3cb27593108a9, type: 3}
@@ -3257,7 +3261,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: RMB - PARRY
+  m_text: RMB - Reflect (time it right before any enemy's attacks)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c4b6d79baf1be3444a7c460907184762, type: 2}
   m_sharedMaterial: {fileID: 184241143422532375, guid: c4b6d79baf1be3444a7c460907184762, type: 2}
@@ -3351,7 +3355,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -327}
-  m_SizeDelta: {x: 377.65, y: 50}
+  m_SizeDelta: {x: 553.4, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1308909216
 GameObject:
@@ -5749,7 +5753,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: c497a1abc2d766646b05261737fa587d, type: 3}
+  m_audioClip: {fileID: 8300000, guid: f95cc7407d843bd44b70a6051f00d215, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1
@@ -5875,7 +5879,7 @@ AudioLowPassFilter:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.14124602
+      value: 0.028467486
       inSlope: 0
       outSlope: 0
       tangentMode: 0
