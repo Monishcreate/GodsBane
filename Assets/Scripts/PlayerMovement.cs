@@ -197,6 +197,242 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (!OrangeBossScene.isPaused)
+        {
+            if (Input.GetMouseButtonDown(0) /*&& meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState) */&& cooldown <= 0 && !anim.GetBool("frozen"))
+            {
+                meleeStateMachine.SetNextState(new GroundEntry());
+            }
+
+            if (backhitsindex == backhits.Length)
+            {
+                backhitsindex = 0;
+            }
+            if (footstepsindex == footsteps.Length)
+            {
+                footstepsindex = 0;
+            }
+            CharacterSwitchCounter -= Time.deltaTime;
+
+            if (Input.GetKeyDown(KeyCode.Alpha1) && CharacterSwitchCounter <= 0 && !anim.GetBool("isWhite") && canMove && isGrounded && !anim.GetBool("frozen"))
+            {
+                Hitstop.instance.doSlowDown(1.1f);
+                anim.SetTrigger("switchWhite");
+                anim.SetBool("isWhite", true);
+                anim.SetBool("isOrange", false);
+                anim.SetBool("isPurple", false);
+                rend.color = color1;
+
+                CharacterSwitchCounter = CharacterSwitchCooldown;
+
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2) && CharacterSwitchCounter <= 0 && !anim.GetBool("isOrange") && canMove && isGrounded && (OrangeBossScene.instance.isBlackScene || OrangeBossScene.instance.isBlueScene) && !anim.GetBool("frozen"))
+            {
+                Hitstop.instance.doSlowDown(1f);
+                anim.SetTrigger("switchOrange");
+                anim.SetBool("isWhite", false);
+                anim.SetBool("isOrange", true);
+                anim.SetBool("isPurple", false);
+                rend.color = color2;
+                CharacterSwitchCounter = CharacterSwitchCooldown;
+
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3) && CharacterSwitchCounter <= 0 && !anim.GetBool("isPurple") && canMove && isGrounded && OrangeBossScene.instance.isBlackScene)
+            {
+                Hitstop.instance.doSlowDown(0.5f);
+                anim.SetTrigger("switchPurple");
+                anim.SetBool("isWhite", false);
+                anim.SetBool("isOrange", false);
+                anim.SetBool("isPurple", true);
+                rend.color = color3;
+                CharacterSwitchCounter = CharacterSwitchCooldown;
+
+            }
+
+
+
+            float healthUpdate = Mathf.SmoothDamp(healthBar.value, currentHealth, ref sliderVelocity, 25 * Time.deltaTime);
+            healthBar.value = healthUpdate;
+            CanMoveCheck();
+            FlipCheck();
+
+            LastRMBPressedTime -= Time.deltaTime;
+            #region TIMERS
+            LastOnGroundTime -= Time.deltaTime;
+
+            JumpCooldown += Time.deltaTime;
+            if (PewCooldown > 45)
+            {
+                PewCooldown = 45;
+            }
+            if (JumpCooldown > 10)
+            {
+                JumpCooldown = 10;
+            }
+            if (!OrangeBossScene.instance.isOrangeScene)
+            {
+                wings.fillAmount = JumpCooldown / 10;
+            }
+
+            if (OrangeBossScene.instance.isBlackScene)
+            {
+                iceicon.fillAmount = PewCooldown / 45;
+            }
+
+
+
+
+
+
+            #endregion
+
+            #region INPUT HANDLER
+
+            if (Input.GetMouseButtonDown(1) && !anim.GetBool("frozen"))
+            {
+                Collider2D[] IceParryTargets = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, iceparryLayers);
+                if (IceParryTargets.Length > 0f)
+                {
+                    hasiceParried = true;
+
+                }
+                anim.SetTrigger("FakeParry");
+            }
+
+
+
+            if (Input.GetMouseButtonDown(1) && enemy.canParry && !isSpamming && anim.GetBool("isWhite") && !anim.GetBool("frozen"))
+            {
+
+                Collider2D[] ParryTargets = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, parryLayers);
+                if (ParryTargets.Length > 0f)
+                {
+
+                    hasParried = true;
+                    if (Parry < 1)
+                    {
+                        Parry++;
+                    }
+                    else
+                    {
+                        Parry = 0;
+                    }
+
+
+                }
+                LastRMBPressedTime = 0.3f;
+
+
+            }
+
+
+
+            else if (enemy.canParry == false)
+            {
+                if (Input.GetMouseButtonDown(1))
+                {
+                    LastRMBPressedTime = 0.5f;
+                    isSpamming = true;
+
+                }
+
+                hasParried = false;
+            }
+
+            if (LastRMBPressedTime <= 0f)
+            {
+                isSpamming = false;
+            }
+
+
+
+
+            if (canMove)
+            {
+                _moveInput.x = Input.GetAxisRaw("Horizontal");
+
+            }
+
+
+
+            if (_moveInput.x != 0)
+            {
+
+                CheckDirectionToFace(_moveInput.x > 0);
+                anim.SetBool("isMoving", true);
+
+
+            }
+
+            if (_moveInput.x > 0)
+            {
+
+                anim.SetBool("isMoving", true);
+                if (IsFacingRight)
+                {
+                    anim.SetBool("isMovingBack", false);
+                }
+                else if (!IsFacingRight)
+                {
+                    anim.SetBool("isMovingBack", true);
+                }
+
+
+
+            }
+
+            if (_moveInput.x < 0)
+            {
+                anim.SetBool("isMoving", true);
+                if (!anim.GetBool("isRunning"))
+                {
+                    if (IsFacingRight)
+                    {
+                        anim.SetBool("isMovingBack", true);
+                    }
+                    else if (!IsFacingRight)
+                    {
+                        anim.SetBool("isMovingBack", false);
+                    }
+
+                }
+            }
+
+
+            if (_moveInput.x == 0)
+            {
+                anim.SetBool("isMoving", false);
+                anim.SetBool("isMovingBack", false);
+            }
+
+            #endregion
+
+            #region COLLISION CHECKS
+            //Ground Check
+            if (Physics2D.OverlapBox(_groundCheckPoint.position, _groundCheckSize, 0, _groundLayer))//checks if set box overlaps with ground
+            {
+                LastOnGroundTime = 0.1f;
+                isGrounded = true;
+            }
+            else
+            {
+                isGrounded = false;
+            }
+
+            #endregion
+
+            if (IsFacingRight)
+            {
+                PlayerFacingSide = 1;
+                //CamTarget.transform.localPosition = new Vector3(7.8f, 0, 0);
+
+            }
+            else
+            {
+                PlayerFacingSide = -1;
+                //CamTarget.transform.localPosition = new Vector3(17.8f, 0, 0);
+            }
+        }
         cooldown -= Time.deltaTime;
 
         freezeTimer -= Time.deltaTime;
@@ -224,239 +460,7 @@ public class PlayerMovement : MonoBehaviour
 
         
 
-        if (Input.GetMouseButtonDown(0) /*&& meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState) */&& cooldown <= 0 && !anim.GetBool("frozen"))
-        {
-             meleeStateMachine.SetNextState(new GroundEntry());
-        }
-
-        if (backhitsindex == backhits.Length)
-        {
-            backhitsindex = 0;
-        }
-        if (footstepsindex == footsteps.Length)
-        {
-            footstepsindex = 0;
-        }
-        CharacterSwitchCounter -= Time.deltaTime;
-
-        if (Input.GetKeyDown(KeyCode.Alpha1) && CharacterSwitchCounter <= 0 && !anim.GetBool("isWhite") && canMove && isGrounded && !anim.GetBool("frozen"))
-        {
-            Hitstop.instance.doSlowDown(1.1f);
-            anim.SetTrigger("switchWhite");
-            anim.SetBool("isWhite", true);
-            anim.SetBool("isOrange", false);
-            anim.SetBool("isPurple", false);
-            rend.color = color1;
-
-            CharacterSwitchCounter = CharacterSwitchCooldown;
-
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2) && CharacterSwitchCounter <= 0 && !anim.GetBool("isOrange") && canMove && isGrounded && (OrangeBossScene.instance.isBlackScene || OrangeBossScene.instance.isBlueScene) && !anim.GetBool("frozen"))
-        {
-            Hitstop.instance.doSlowDown(1f);
-            anim.SetTrigger("switchOrange");
-            anim.SetBool("isWhite", false);
-            anim.SetBool("isOrange", true);
-            anim.SetBool("isPurple", false);
-            rend.color = color2;
-            CharacterSwitchCounter = CharacterSwitchCooldown;
-
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3) && CharacterSwitchCounter <= 0 && !anim.GetBool("isPurple") && canMove && isGrounded && OrangeBossScene.instance.isBlackScene)
-        {
-            Hitstop.instance.doSlowDown(0.5f);
-            anim.SetTrigger("switchPurple");
-            anim.SetBool("isWhite", false);
-            anim.SetBool("isOrange", false);
-            anim.SetBool("isPurple", true);
-            rend.color = color3;
-            CharacterSwitchCounter = CharacterSwitchCooldown;
-
-        }
-
-        
-
-        float healthUpdate = Mathf.SmoothDamp(healthBar.value, currentHealth, ref sliderVelocity, 25 * Time.deltaTime);
-        healthBar.value = healthUpdate;
-        CanMoveCheck();
-        FlipCheck();
-        
-        LastRMBPressedTime -= Time.deltaTime;
-        #region TIMERS
-        LastOnGroundTime -= Time.deltaTime;
-        
-        JumpCooldown += Time.deltaTime;
-        if (PewCooldown > 45)
-        {
-            PewCooldown = 45;
-        }
-        if (JumpCooldown > 10)
-        {
-            JumpCooldown = 10;
-        }
-        if (!OrangeBossScene.instance.isOrangeScene)
-        {
-            wings.fillAmount = JumpCooldown / 10;
-        }
-
-        if (OrangeBossScene.instance.isBlackScene)
-        {
-            iceicon.fillAmount = PewCooldown / 45;
-        }
-
-
-
-
-
-
-        #endregion
-
-        #region INPUT HANDLER
-        
-            if (Input.GetMouseButtonDown(1) && !anim.GetBool("frozen"))
-            {
-                Collider2D[] IceParryTargets = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, iceparryLayers);
-                if (IceParryTargets.Length > 0f)
-                {
-                    hasiceParried = true;
-                
-                }
-                anim.SetTrigger("FakeParry");
-            }
-        
-
-
-        if (Input.GetMouseButtonDown(1) && enemy.canParry  && !isSpamming && anim.GetBool("isWhite") && !anim.GetBool("frozen"))
-        {
-           
-            Collider2D[] ParryTargets = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, parryLayers);
-            if (ParryTargets.Length > 0f)
-            {
-
-                hasParried = true;
-                if (Parry < 1)
-                {
-                    Parry++;
-                }
-                else
-                {
-                    Parry = 0;
-                }
-                
-
-            }
-            LastRMBPressedTime = 0.3f;
-           
-            
-        }
-
-        
-
-        else if (enemy.canParry == false)
-        {
-            if (Input.GetMouseButtonDown(1))
-            {
-                LastRMBPressedTime = 0.5f;
-                isSpamming = true;
-                
-            }
-            
-            hasParried = false;
-        }
-
-        if (LastRMBPressedTime <= 0f)
-        {
-            isSpamming = false;
-        }
-
-
-
-
-        if (canMove)
-        {
-            _moveInput.x = Input.GetAxisRaw("Horizontal");
-
-        }
-
-      
-
-        if (_moveInput.x != 0)
-        {
-
-            CheckDirectionToFace(_moveInput.x > 0);
-            anim.SetBool("isMoving", true);
-            
-
-        }
-            
-        if (_moveInput.x > 0)
-        {
-            
-            anim.SetBool("isMoving", true);
-            if (IsFacingRight)
-            {
-                anim.SetBool("isMovingBack", false);
-            }
-            else if (!IsFacingRight)
-            {
-                anim.SetBool("isMovingBack", true);
-            }
-            
-           
-            
-        }
-            
-        if (_moveInput.x < 0)
-        {
-            anim.SetBool("isMoving", true);
-            if (!anim.GetBool("isRunning"))
-            {
-                if (IsFacingRight)
-                {
-                    anim.SetBool("isMovingBack", true);
-                }
-                else if (!IsFacingRight)
-                {
-                    anim.SetBool("isMovingBack", false);
-                }
-                
-            }
-        }
-
-        
-        if (_moveInput.x == 0)
-        {
-            anim.SetBool("isMoving", false);
-            anim.SetBool("isMovingBack", false);
-        }
-
-        #endregion
-
-        #region COLLISION CHECKS
-        //Ground Check
-        if (Physics2D.OverlapBox(_groundCheckPoint.position, _groundCheckSize, 0, _groundLayer))//checks if set box overlaps with ground
-        {
-            LastOnGroundTime = 0.1f;
-            isGrounded = true;
-        }
-        else
-        {
-            isGrounded = false;
-        }
-
-        #endregion
-
-        if (IsFacingRight)
-        {
-            PlayerFacingSide = 1;
-            //CamTarget.transform.localPosition = new Vector3(7.8f, 0, 0);
-
-        }
-        else
-        {
-            PlayerFacingSide = -1;
-            //CamTarget.transform.localPosition = new Vector3(17.8f, 0, 0);
-        }
+       
 
 
         //if (enemy.enemyFacingDir > 0 && PlayerFacingSide > 0)
@@ -482,45 +486,49 @@ public class PlayerMovement : MonoBehaviour
 
     private void FlipCheck()
     {
-        if (Input.GetKeyDown(KeyCode.D))
+        if (OrangeBossScene.isPaused)
         {
-            
-            float DoublePressTime = 0.2f;
-           
-            float TimeSinceLastClick = Time.time - LastDTime;
-            if (TimeSinceLastClick < DoublePressTime)
+            if (Input.GetKeyDown(KeyCode.D))
             {
-                DoublePress = true;
-            }
-            else
-            {
-                DoublePress = false;
-            }
-            LastDTime = Time.time;
 
+                float DoublePressTime = 0.2f;
+
+                float TimeSinceLastClick = Time.time - LastDTime;
+                if (TimeSinceLastClick < DoublePressTime)
+                {
+                    DoublePress = true;
+                }
+                else
+                {
+                    DoublePress = false;
+                }
+                LastDTime = Time.time;
+
+            }
+
+            else if (Input.GetKeyDown(KeyCode.A))
+            {
+
+                float DoublePressTime = 0.2f;
+                float TimeSinceLastClick = Time.time - LastATime;
+                if (TimeSinceLastClick <= DoublePressTime)
+                {
+                    DoublePress = true;
+                }
+                else
+                {
+                    DoublePress = false;
+                }
+                LastATime = Time.time;
+
+            }
+
+            if (anim.GetBool("isOrange"))
+            {
+                Jump();
+            }
         }
-
-        else if (Input.GetKeyDown(KeyCode.A))
-        {
-            
-            float DoublePressTime = 0.2f;
-            float TimeSinceLastClick = Time.time - LastATime;
-            if (TimeSinceLastClick <= DoublePressTime)
-            {
-                DoublePress = true;
-            }
-            else
-            {
-                DoublePress = false;
-            }
-            LastATime = Time.time;
-
-        }
-
-        if (anim.GetBool("isOrange"))
-        {
-            Jump();
-        }
+        
 
         if (RB.velocity.y > 0f && !isGrounded)
         {

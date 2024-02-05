@@ -13,9 +13,14 @@ public class OrangeBossScene : MonoBehaviour
 
     public bool isBlackScene;
 
+    public GameObject PauseMenu;
+
+    public static bool isPaused;
+
     private void Start()
     {
         instance = this;
+        PauseMenu.SetActive(false);
         
     }
     private void Update()
@@ -49,6 +54,43 @@ public class OrangeBossScene : MonoBehaviour
         {
             isBlueScene = false;
         }
+
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isPaused)
+            {
+                ContinueGame();
+            }
+            else
+            {
+                PauseGame();
+            }
+        }
     }
 
+    public void PauseGame()
+    {
+        PauseMenu.SetActive(true);
+        Time.timeScale = 0.0f;
+        isPaused = true;
+    }
+
+    public void ContinueGame()
+    {
+        PauseMenu.SetActive(false);
+        Time.timeScale = 1.0f;
+        isPaused = false;
+    }
+
+    public void GoToMainMenu()
+    {
+        Time.timeScale = 1.0f;
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
