@@ -51,6 +51,9 @@ EditorBuildSettings:
     path: Assets/Scenes/BlackEnd.unity
     guid: 51340285c9976cc47bc659f4f8b873b4
   - enabled: 1
+    path: Assets/Scenes/Throne.unity
+    guid: 1f686bfbf9105294bbf453cbd0a84846
+  - enabled: 1
     path: Assets/Assets/Scenes/LevelSelector.unity
     guid: ea04de5dfd6ceeb49b7fca7655c11b3b
   m_configObjects: {}

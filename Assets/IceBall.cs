@@ -162,7 +162,7 @@ public class IceBall : MonoBehaviour
 
         if (collision.gameObject.tag == "Enemy")
         {
-            if (!hitEnemy)
+            if (!hitEnemy && deflected)
             {
                 enemy.TakeFrostDamage(60);
                 canParry = false;

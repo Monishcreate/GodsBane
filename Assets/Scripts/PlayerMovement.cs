@@ -197,8 +197,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (!OrangeBossScene.isPaused)
-        {
+       
+        
             if (Input.GetMouseButtonDown(0) /*&& meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState) */&& cooldown <= 0 && !anim.GetBool("frozen"))
             {
                 meleeStateMachine.SetNextState(new GroundEntry());
@@ -296,7 +296,7 @@ public class PlayerMovement : MonoBehaviour
                     hasiceParried = true;
 
                 }
-                anim.SetTrigger("FakeParry");
+               
             }
 
 
@@ -432,7 +432,7 @@ public class PlayerMovement : MonoBehaviour
                 PlayerFacingSide = -1;
                 //CamTarget.transform.localPosition = new Vector3(17.8f, 0, 0);
             }
-        }
+        
         cooldown -= Time.deltaTime;
 
         freezeTimer -= Time.deltaTime;
@@ -486,8 +486,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FlipCheck()
     {
-        if (!OrangeBossScene.isPaused)
-        {
+        
             if (Input.GetKeyDown(KeyCode.D))
             {
 
@@ -527,7 +526,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 Jump();
             }
-        }
+        
         
 
         if (RB.velocity.y > 0f && !isGrounded)
@@ -807,7 +806,7 @@ public class PlayerMovement : MonoBehaviour
             anim.SetTrigger("Parry1");
             anim.SetBool("isParrying", true);
             SoundManager.instance.PlaySound(parrySound);
-            Hitstop.instance.doHitStop(0.2f);
+           
             CameraShake.instance.ShakeCamera(10f);
             hasiceParried = false;
             return true;

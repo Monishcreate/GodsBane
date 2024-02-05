@@ -13954,7 +13954,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 3000
+  m_MaxValue: 2250
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
@@ -30787,7 +30787,7 @@ MonoBehaviour:
   Player: {fileID: 1484328859}
   pl: {fileID: 1484328864}
   meteor: {fileID: 0}
-  maxHealth: 3000
+  maxHealth: 2250
 --- !u!95 &680724571
 Animator:
   serializedVersion: 5
